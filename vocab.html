@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>단어 복습</title>
+<style>
+  :root{--bg:#f6f8fc;--card:#fff;--ink:#1e2433;--sub:#5b6478;--accent:#e0763b;--accent-soft:#fdeee3;--line:#e3e8f2;--kr:#7a3fa8;--ok:#1f9d55;--no:#d64545;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Apple SD Gothic Neo','Noto Sans KR','Hiragino Sans','Noto Sans JP',sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;padding-bottom:80px;}
+  header{background:linear-gradient(135deg,#d96a2f,#f0a06a);color:#fff;padding:40px 20px 32px;text-align:center;}
+  header h1{font-size:1.6rem;}
+  header p{opacity:.92;font-size:.92rem;}
+  nav.topnav{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.95);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);overflow-x:auto;white-space:nowrap;padding:8px 12px;text-align:center;}
+  nav.topnav a{display:inline-block;padding:6px 12px;margin:2px;border-radius:16px;font-size:.85rem;color:var(--sub);text-decoration:none;}
+  nav.topnav a:hover{background:var(--accent-soft);color:var(--accent);}
+  .wrap{max-width:860px;margin:0 auto;padding:0 14px;}
+  section{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px 20px;margin:20px 0;}
+  h2{font-size:1.2rem;color:var(--accent);border-left:5px solid var(--accent);padding-left:12px;margin-bottom:14px;}
+  .controls{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;align-items:center;}
+  .controls button, .controls select{border:1.5px solid var(--accent);background:#fff;color:var(--accent);padding:6px 14px;border-radius:18px;font-size:.85rem;cursor:pointer;font-weight:600;}
+  .controls button.on{background:var(--accent);color:#fff;}
+  /* flashcard */
+  .cardzone{text-align:center;padding:6px 0;}
+  .flash{width:min(420px,92%);height:220px;margin:10px auto;perspective:1000px;cursor:pointer;}
+  .flash-inner{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d;}
+  .flash.flipped .flash-inner{transform:rotateY(180deg);}
+  .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:16px;border:2px solid var(--line);
+        display:flex;flex-direction:column;align-items:center;justify-content:center;background:#fff;padding:16px;}
+  .face.back{transform:rotateY(180deg);background:var(--accent-soft);border-color:var(--accent);}
+  .face .big{font-size:2.3rem;font-weight:700;line-height:1.4;}
+  .face .big rt{font-size:.42em;color:#8a93a8;font-weight:500;}
+  .face .mid{font-size:1.15rem;color:var(--sub);margin-top:6px;}
+  .face .small{font-size:.8rem;color:#aab2c4;margin-top:12px;}
+  .fbtns{margin-top:8px;}
+  .fbtns button{border:none;padding:10px 20px;border-radius:22px;font-size:.95rem;font-weight:700;cursor:pointer;margin:4px;color:#fff;}
+  .b-know{background:var(--ok);} .b-dont{background:var(--no);} .b-flip{background:#5b6478;}
+  .progress{font-size:.88rem;color:var(--sub);margin-top:8px;}
+  .done{font-size:1.1rem;font-weight:700;color:var(--ok);padding:20px 0;}
+  /* list */
+  table{width:100%;border-collapse:collapse;margin-top:6px;}
+  th,td{border:1px solid var(--line);padding:8px 12px;text-align:left;font-size:.95rem;}
+  th{background:var(--accent-soft);color:#8a4a1e;font-size:.85rem;}
+  td.jp{font-weight:600;font-size:1.05rem;}
+  td.yomi{color:var(--sub);}
+  td.kr{color:var(--kr);}
+  body.hide-yomi td.yomi span{filter:blur(6px);cursor:pointer;}
+  body.hide-kr td.kr span{filter:blur(6px);cursor:pointer;}
+  body.hide-yomi td.yomi span:hover,body.hide-yomi td.yomi span:active,
+  body.hide-kr td.kr span:hover,body.hide-kr td.kr span:active{filter:none;}
+  .lesson-tag{display:inline-block;background:#eef1f8;color:var(--sub);border-radius:6px;font-size:.72rem;padding:1px 7px;}
+  .hint{font-size:.8rem;color:var(--sub);text-align:center;margin-top:6px;}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html">🏠 홈</a>
+  <a href="lesson1.html">Lesson 1</a>
+  <a href="kana.html">가나 연습</a>
+  <a href="vocab.html"><b>단어 복습</b></a>
+  <a href="records.html">🏆 기록</a>
+</nav>
+
+<header>
+  <h1>🃏 단어 복습</h1>
+  <p>수업에서 배운 단어를 플래시카드로 복습하세요 — 레슨이 늘어나면 여기에 계속 쌓입니다</p>
+</header>
+
+<div class="wrap">
+
+<section>
+  <h2>플래시카드</h2>
+  <div class="controls">
+    <select id="fLesson" onchange="startDeck()"></select>
+    <select id="fMode" onchange="startDeck()">
+      <option value="j2k">일본어 → 뜻</option>
+      <option value="k2j">뜻 → 일본어</option>
+    </select>
+    <button onclick="startDeck()">🔀 다시 섞기</button>
+  </div>
+  <div class="cardzone" id="cardzone">
+    <div class="flash" id="flash" onclick="flip()">
+      <div class="flash-inner">
+        <div class="face front"><span class="big" id="fFront"></span><span class="mid" id="fFrontSub"></span><span class="small">카드를 클릭하면 뒤집혀요</span></div>
+        <div class="face back"><span class="big" id="fBack"></span><span class="mid" id="fBackSub"></span><span class="small" id="fLessonTag"></span></div>
+      </div>
+    </div>
+    <div class="fbtns">
+      <button class="b-speak" style="background:#3b6fe0;" onclick="speakCurrent()">🔊 발음 듣기</button>
+      <button class="b-flip" onclick="flip()">뒤집기</button>
+      <button class="b-know" onclick="grade(true)">⭕ 알아요</button>
+      <button class="b-dont" onclick="grade(false)">❌ 몰라요</button>
+    </div>
+    <div class="progress" id="fProg"></div>
+  </div>
+  <p class="hint">"몰라요"한 카드는 뒤로 다시 들어가서 한 번 더 나옵니다.</p>
+</section>
+
+<section>
+  <h2>🎤 말하기 연습</h2>
+  <div class="controls">
+    <select id="sLesson" onchange="startSpeak()"></select>
+    <button onclick="startSpeak()">🔀 다시 시작</button>
+  </div>
+  <div class="cardzone">
+    <div style="font-size:.85rem;color:var(--sub);">이 뜻을 일본어로 말해 보세요</div>
+    <div id="sPrompt" style="font-size:2rem;font-weight:700;margin:12px 0;color:var(--kr);"></div>
+    <div id="sHint" style="min-height:28px;font-size:1.1rem;color:var(--sub);"></div>
+    <div class="fbtns">
+      <button id="sMicBtn" style="background:#d64545;font-size:1.05rem;padding:12px 28px;" onclick="toggleListen()">🎤 연습 시작</button>
+      <button class="b-flip" onclick="showHint()">💡 힌트</button>
+      <button class="b-flip" style="background:#aab2c4;" onclick="speakNext()">건너뛰기 →</button>
+    </div>
+    <div class="feedback" id="sFb" style="min-height:52px;font-size:1rem;font-weight:600;margin-top:8px;"></div>
+    <div class="progress" id="sProg"></div>
+  </div>
+  <p class="hint">🎤 연습 시작을 누르면 마이크가 계속 켜진 상태로 진행됩니다 — 정답이면 자동으로 다음 단어로 넘어가요. 크롬(Chrome)에서 가장 잘 작동합니다.</p>
+</section>
+
+<section>
+  <h2>전체 단어 목록</h2>
+  <div class="controls">
+    <select id="lLesson" onchange="renderList()"></select>
+    <button onclick="document.body.classList.toggle('hide-yomi');this.classList.toggle('on')">읽기 가리기</button>
+    <button onclick="document.body.classList.toggle('hide-kr');this.classList.toggle('on')">뜻 가리기</button>
+  </div>
+  <table id="vTable"></table>
+  <p class="hint">가린 칸은 마우스를 올리면(터치하면) 보입니다.</p>
+</section>
+
+</div>
+
+<script>
+// ---------- 발음 재생: 구글 번역 TTS (실패 시 브라우저 내장 음성으로 자동 전환) ----------
+let _audio=null, _gttsFail=false;
+function speakJa(text){
+  if(!text) return;
+  if(_audio){_audio.pause();_audio=null;}
+  if('speechSynthesis' in window) speechSynthesis.cancel();
+  if(_gttsFail){ speakLocal(text); return; }
+  const url='https://translate.google.com/translate_tts?ie=UTF-8&tl=ja&client=tw-ob&q='+encodeURIComponent(text);
+  _audio=new Audio(url);
+  _audio.onerror=()=>{_gttsFail=true;speakLocal(text);};
+  _audio.play().catch(()=>{_gttsFail=true;speakLocal(text);});
+}
+function speakLocal(text){
+  if(!('speechSynthesis' in window)) return;
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang='ja-JP'; u.rate=0.85;
+  const v=speechSynthesis.getVoices().find(v=>v.lang && v.lang.startsWith('ja'));
+  if(v)u.voice=v;
+  speechSynthesis.speak(u);
+}
+if('speechSynthesis' in window){speechSynthesis.getVoices();}
+function speakWord(w){ speakJa(w.yomi || w.jp); }
+
+// ---------- 정답/오답 효과음 ----------
+function sfx(ok){
+  try{
+    const ctx = window._actx || (window._actx = new (window.AudioContext||window.webkitAudioContext)());
+    if(ctx.state==='suspended') ctx.resume();
+    const t=ctx.currentTime;
+    const tone=(freq,start,dur,type,gain)=>{
+      const o=ctx.createOscillator(),g=ctx.createGain();
+      o.type=type||'sine'; o.frequency.value=freq;
+      g.gain.setValueAtTime(gain||0.15,t+start);
+      g.gain.exponentialRampToValueAtTime(0.001,t+start+dur);
+      o.connect(g); g.connect(ctx.destination);
+      o.start(t+start); o.stop(t+start+dur);
+    };
+    if(ok){ tone(880,0,0.15); tone(1319,0.12,0.3); }       // 딩동↑
+    else  { tone(233,0,0.25,'square',0.07); tone(196,0.12,0.35,'square',0.07); } // 부부↓
+  }catch(e){}
+}
+
+// ---------- 학습 기록 저장 (기록 페이지에서 확인) ----------
+function saveRecord(type,ok){
+  try{
+    const d=new Date();
+    const date=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+    const all=JSON.parse(localStorage.getItem('jpRecords')||'{}');
+    if(!all[date]) all[date]={};
+    if(!all[date][type]) all[date][type]={c:0,t:0};
+    all[date][type].t++; if(ok) all[date][type].c++;
+    localStorage.setItem('jpRecords',JSON.stringify(all));
+  }catch(e){}
+}
+
+/* ============================================================
+   단어 데이터 — 새 레슨이 추가되면 아래에 계속 추가하면 됩니다.
+   {jp: 일본어, yomi: 읽기(히라가나), kr: 뜻, lesson: "L1", cat: 분류}
+   ============================================================ */
+const WORDS = [
+  // ---- Lesson 1: 자기소개 ----
+  {jp:"名前", yomi:"なまえ", romaji:"namae", kr:"이름", lesson:"L1", cat:"단어"},
+  {jp:"国", yomi:"くに", romaji:"kuni", kr:"나라", lesson:"L1", cat:"단어"},
+  {jp:"韓国", yomi:"かんこく", romaji:"kankoku", kr:"한국", lesson:"L1", cat:"단어"},
+  {jp:"日本", yomi:"にほん", romaji:"nihon", kr:"일본", lesson:"L1", cat:"단어"},
+  {jp:"旅行", yomi:"りょこう", romaji:"ryokou", kr:"여행", lesson:"L1", cat:"단어"},
+  {jp:"趣味", yomi:"しゅみ", romaji:"shumi", kr:"취미", lesson:"L1", cat:"단어"},
+  {jp:"写真", yomi:"しゃしん", romaji:"shashin", kr:"사진", lesson:"L1", cat:"단어"},
+  {jp:"映画", yomi:"えいが", romaji:"eiga", kr:"영화", lesson:"L1", cat:"단어"},
+  {jp:"料理", yomi:"りょうり", romaji:"ryouri", kr:"요리", lesson:"L1", cat:"단어"},
+  {jp:"音楽", yomi:"おんがく", romaji:"ongaku", kr:"음악", lesson:"L1", cat:"단어"},
+  {jp:"東京", yomi:"とうきょう", romaji:"toukyou", kr:"도쿄", lesson:"L1", cat:"단어"},
+  {jp:"京都", yomi:"きょうと", romaji:"kyouto", kr:"교토", lesson:"L1", cat:"단어"},
+  {jp:"大阪", yomi:"おおさか", romaji:"oosaka", kr:"오사카", lesson:"L1", cat:"단어"},
+  {jp:"はじめまして", yomi:"", romaji:"hajimemashite", kr:"처음 뵙겠습니다", lesson:"L1", cat:"표현"},
+  {jp:"よろしくお願いします", yomi:"よろしくおねがいします", romaji:"yoroshiku onegaishimasu", kr:"잘 부탁드립니다", lesson:"L1", cat:"표현"},
+  // ---- Lesson 1: 인사 (복습) ----
+  {jp:"おはよう", yomi:"", romaji:"ohayou", kr:"좋은 아침", lesson:"L1", cat:"인사"},
+  {jp:"おはようございます", yomi:"", romaji:"ohayou gozaimasu", kr:"안녕하세요 (아침)", lesson:"L1", cat:"인사"},
+  {jp:"こんにちは", yomi:"", romaji:"konnichiwa", kr:"안녕하세요 (낮)", lesson:"L1", cat:"인사"},
+  {jp:"こんばんは", yomi:"", romaji:"konbanwa", kr:"안녕하세요 (저녁)", lesson:"L1", cat:"인사"},
+  {jp:"いただきます", yomi:"", romaji:"itadakimasu", kr:"잘 먹겠습니다", lesson:"L1", cat:"인사"},
+  {jp:"ごちそうさまでした", yomi:"", romaji:"gochisousama deshita", kr:"잘 먹었습니다", lesson:"L1", cat:"인사"},
+  {jp:"お休みなさい", yomi:"おやすみなさい", romaji:"oyasuminasai", kr:"잘 자요 / 안녕히 주무세요", lesson:"L1", cat:"인사"}
+];
+const LESSON_NAMES = { "L1": "Lesson 1 · 자기소개" };
+/* ============================================================ */
+
+// 레슨 선택 옵션 채우기
+function fillLessonSelects(){
+  const lessons = [...new Set(WORDS.map(w=>w.lesson))];
+  const opts = '<option value="all">전체 레슨</option>' +
+    lessons.map(l=>`<option value="${l}">${LESSON_NAMES[l]||l}</option>`).join('');
+  document.getElementById('fLesson').innerHTML=opts;
+  document.getElementById('lLesson').innerHTML=opts;
+  document.getElementById('sLesson').innerHTML=opts;
+}
+function wordsFor(sel){ return sel==='all' ? WORDS.slice() : WORDS.filter(w=>w.lesson===sel); }
+
+// ---------- 플래시카드 ----------
+let deck=[], idx=0, knownCount=0, totalCount=0;
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function startDeck(){
+  deck=shuffle(wordsFor(document.getElementById('fLesson').value));
+  totalCount=deck.length; knownCount=0; idx=0;
+  showCard();
+}
+function showCard(){
+  const zone=document.getElementById('flash');
+  zone.classList.remove('flipped');
+  if(idx>=deck.length){
+    document.getElementById('fFront').textContent='🎉 완료!';
+    document.getElementById('fFrontSub').textContent=`${totalCount}단어 복습 끝 — 다시 섞기를 눌러 반복하세요`;
+    document.getElementById('fProg').textContent='';
+    return;
+  }
+  const w=deck[idx];
+  const mode=document.getElementById('fMode').value;
+  setTimeout(()=>{ // 뒤집힘 애니메이션 후 내용 교체
+    const sub=[w.yomi, w.romaji].filter(Boolean).join(' · ');
+    // 한자 단어는 위에 후리가나(히라가나)를 함께 표시
+    const jpRuby=(w.yomi && w.yomi!==w.jp) ? `<ruby>${w.jp}<rt>${w.yomi}</rt></ruby>` : w.jp;
+    if(mode==='j2k'){
+      document.getElementById('fFront').innerHTML=jpRuby;
+      document.getElementById('fFrontSub').textContent=w.romaji||'';
+      document.getElementById('fBack').textContent=w.kr;
+      document.getElementById('fBackSub').textContent=sub;
+    }else{
+      document.getElementById('fFront').textContent=w.kr;
+      document.getElementById('fFrontSub').textContent='';
+      document.getElementById('fBack').innerHTML=jpRuby;
+      document.getElementById('fBackSub').textContent=w.romaji||'';
+    }
+    document.getElementById('fLessonTag').textContent=(LESSON_NAMES[w.lesson]||w.lesson)+' · '+w.cat;
+  }, 120);
+  document.getElementById('fProg').textContent=`${Math.min(idx+1,deck.length)} / ${deck.length} · 아는 단어 ${knownCount}`;
+}
+function flip(){ document.getElementById('flash').classList.toggle('flipped'); }
+function speakCurrent(){ if(idx<deck.length) speakWord(deck[idx]); }
+function grade(know){
+  if(idx>=deck.length) return;
+  saveRecord('flash',know);
+  if(know){ knownCount++; }
+  else { deck.push(deck[idx]); } // 모르는 카드는 맨 뒤로
+  idx++;
+  showCard();
+}
+
+// ---------- 목록 ----------
+function renderList(){
+  const ws=wordsFor(document.getElementById('lLesson').value);
+  let html='<tr><th>🔊</th><th>일본어</th><th>읽기</th><th>로마자</th><th>뜻</th><th>레슨</th></tr>';
+  html+=ws.map(w=>`<tr>
+    <td style="text-align:center;"><button style="border:none;background:none;font-size:1.1rem;cursor:pointer;" title="발음 듣기" onclick="speakJa('${w.yomi||w.jp}')">🔊</button></td>
+    <td class="jp" style="cursor:pointer;" title="클릭하면 발음 재생" onclick="speakJa('${w.yomi||w.jp}')">${(w.yomi&&w.yomi!==w.jp)?`<ruby>${w.jp}<rt style="font-size:.6em;color:#8a93a8;font-weight:400;">${w.yomi}</rt></ruby>`:w.jp}</td>
+    <td class="yomi"><span>${w.yomi||'—'}</span></td>
+    <td class="yomi"><span>${w.romaji||''}</span></td>
+    <td class="kr"><span>${w.kr}</span></td>
+    <td><span class="lesson-tag">${w.lesson} ${w.cat}</span></td>
+  </tr>`).join('');
+  document.getElementById('vTable').innerHTML=html;
+}
+
+// ---------- 말하기 연습 (음성 인식) ----------
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+let sDeck=[], sIdx=0, sCorrect=0, sTry=0, sHintUsed=false;
+
+function kata2hira(s){return s.replace(/[ァ-ヶ]/g,c=>String.fromCharCode(c.charCodeAt(0)-0x60));}
+function norm(s){return kata2hira((s||'')).replace(/[\s。、．，,.!?！？・〜~ー－]/g,'');}
+function isMatch(heard,w){
+  const n=norm(heard);
+  if(!n) return false;
+  return n.includes(norm(w.jp)) || (w.yomi && n.includes(norm(w.yomi)));
+}
+function startSpeak(){
+  sDeck=shuffle(wordsFor(document.getElementById('sLesson').value));
+  sIdx=0; sCorrect=0; sTry=0;
+  showSpeak();
+}
+function showSpeak(){
+  sHintUsed=false;
+  document.getElementById('sHint').textContent='';
+  document.getElementById('sFb').textContent=''; document.getElementById('sFb').className='feedback';
+  if(sIdx>=sDeck.length){
+    document.getElementById('sPrompt').textContent='🎉 완료!';
+    document.getElementById('sProg').textContent=`${sDeck.length}단어 중 ${sCorrect}개 성공 — 다시 시작을 눌러 반복하세요`;
+    return;
+  }
+  document.getElementById('sPrompt').textContent=sDeck[sIdx].kr;
+  document.getElementById('sProg').textContent=`${sIdx+1} / ${sDeck.length} · 성공 ${sCorrect}`;
+}
+function showHint(){
+  if(sIdx>=sDeck.length) return;
+  const w=sDeck[sIdx]; sHintUsed=true;
+  document.getElementById('sHint').textContent=`${w.jp}${w.yomi?' ('+w.yomi+')':''} · ${w.romaji||''}`;
+}
+function speakNext(){ if(sIdx<sDeck.length){ sIdx++; } showSpeak(); }
+
+// 마이크 스트림을 한 번 열어두면 페이지를 닫을 때까지 권한 요청이 다시 뜨지 않음
+let _micStream=null;
+async function ensureMic(){
+  if(_micStream && _micStream.active) return true;
+  try{
+    _micStream=await navigator.mediaDevices.getUserMedia({audio:true});
+    return true;
+  }catch(e){
+    const fb=document.getElementById('sFb');
+    fb.className='feedback no';
+    fb.textContent='마이크 권한이 필요해요. 주소창 옆 🔒에서 마이크를 허용해 주세요.';
+    return false;
+  }
+}
+// 연습 시작을 한 번 누르면 세션이 끝날 때까지 계속 듣는다 (권한 요청 1회)
+let sRec=null, sSession=false;
+function setMicBtn(on){
+  const b=document.getElementById('sMicBtn');
+  b.textContent = on ? '⏹ 연습 중지 (👂 듣는 중…)' : '🎤 연습 시작';
+  b.style.background = on ? '#1f9d55' : '#d64545';
+}
+async function toggleListen(){
+  const fb=document.getElementById('sFb');
+  if(sSession){ // 중지
+    sSession=false;
+    if(sRec){ try{sRec.stop();}catch(e){} }
+    setMicBtn(false);
+    return;
+  }
+  if(!SR){
+    fb.textContent='이 브라우저는 음성 인식을 지원하지 않아요. 크롬(Chrome)에서 열어 주세요.';
+    fb.className='feedback no';
+    return;
+  }
+  if(sIdx>=sDeck.length) startSpeak();
+  if(!(await ensureMic())) return;
+  sSession=true; setMicBtn(true);
+  fb.textContent='일본어로 말해 보세요!'; fb.className='feedback';
+  startRec();
+}
+function startRec(){
+  sRec=new SR();
+  sRec.lang='ja-JP'; sRec.continuous=true; sRec.interimResults=false; sRec.maxAlternatives=3;
+  sRec.onresult=(e)=>{
+    const res=e.results[e.results.length-1];
+    handleHeard([...res].map(r=>r.transcript));
+  };
+  sRec.onerror=(e)=>{
+    const fb=document.getElementById('sFb');
+    if(e.error==='not-allowed'){
+      sSession=false; setMicBtn(false);
+      fb.className='feedback no';
+      fb.textContent='마이크 권한이 필요해요. 주소창 옆 🔒에서 마이크를 "허용"으로 바꿔 주세요.';
+    }
+    // no-speech 등은 무시하고 계속 듣기
+  };
+  sRec.onend=()=>{ // 크롬이 인식을 스스로 끝내면 세션 중에는 다시 시작
+    if(sSession){ try{sRec.start();}catch(e){ setTimeout(()=>{if(sSession)startRec();},300); } }
+    else setMicBtn(false);
+  };
+  sRec.start();
+}
+function handleHeard(alts){
+  if(!sSession || sIdx>=sDeck.length) return;
+  const fb=document.getElementById('sFb');
+  const w=sDeck[sIdx]; sTry++;
+  const hit=alts.some(a=>isMatch(a,w));
+  sfx(hit); saveRecord('speak',hit);
+  if(hit){
+    sCorrect++;
+    fb.innerHTML=`⭕ 정답! 「${alts[0]}」<br><span style="font-weight:400;">${w.jp}${w.yomi?' ('+w.yomi+')':''} = ${w.kr}</span>`;
+    fb.className='feedback ok';
+    sIdx++;
+    setTimeout(()=>{
+      showSpeak();
+      if(sIdx>=sDeck.length){ // 덱 완료 시 세션 종료
+        sSession=false; if(sRec){try{sRec.stop();}catch(e){}} setMicBtn(false);
+      } else if(sSession){
+        document.getElementById('sFb').textContent='일본어로 말해 보세요!';
+      }
+    },1500);
+  }else{
+    fb.innerHTML=`❌ 들린 말: 「${alts[0]||'(인식 실패)'}」<br><span style="font-weight:400;">다시 말해 보거나 💡 힌트를 눌러 보세요</span>`;
+    fb.className='feedback no';
+  }
+  document.getElementById('sProg').textContent=`${Math.min(sIdx+1,sDeck.length)} / ${sDeck.length} · 성공 ${sCorrect}`;
+}
+
+fillLessonSelects();
+startDeck();
+renderList();
+startSpeak();
+</script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>학습 기록</title>
+<style>
+  :root{--bg:#f6f8fc;--card:#fff;--ink:#1e2433;--sub:#5b6478;--accent:#1f9d55;--accent-soft:#e5f6ec;--line:#e3e8f2;--kr:#7a3fa8;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Apple SD Gothic Neo','Noto Sans KR','Hiragino Sans','Noto Sans JP',sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;padding-bottom:80px;}
+  header{background:linear-gradient(135deg,#178a49,#3fbf77);color:#fff;padding:40px 20px 32px;text-align:center;}
+  header h1{font-size:1.6rem;}
+  header p{opacity:.92;font-size:.92rem;}
+  nav.topnav{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.95);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);overflow-x:auto;white-space:nowrap;padding:8px 12px;text-align:center;}
+  nav.topnav a{display:inline-block;padding:6px 12px;margin:2px;border-radius:16px;font-size:.85rem;color:var(--sub);text-decoration:none;}
+  nav.topnav a:hover{background:var(--accent-soft);color:var(--accent);}
+  .wrap{max-width:860px;margin:0 auto;padding:0 14px;}
+  section{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px 20px;margin:20px 0;}
+  h2{font-size:1.2rem;color:var(--accent);border-left:5px solid var(--accent);padding-left:12px;margin-bottom:14px;}
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;}
+  .stat{background:var(--accent-soft);border-radius:12px;padding:16px;text-align:center;}
+  .stat .num{font-size:1.9rem;font-weight:800;color:var(--accent);}
+  .stat .lbl{font-size:.82rem;color:var(--sub);}
+  table{width:100%;border-collapse:collapse;margin-top:6px;}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:center;font-size:.9rem;}
+  th{background:var(--accent-soft);color:#14663a;font-size:.82rem;}
+  td.date{font-weight:600;}
+  .medal{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;margin:8px 0;background:#fafbfe;border:1px solid var(--line);}
+  .medal.got{background:#fff8e1;border-color:#f0c36d;}
+  .medal .ico{font-size:1.5rem;filter:grayscale(1);opacity:.4;}
+  .medal.got .ico{filter:none;opacity:1;}
+  .medal .txt{font-size:.9rem;}
+  .medal .txt b{display:block;}
+  .empty{text-align:center;color:var(--sub);padding:30px 0;}
+  .hint{font-size:.8rem;color:var(--sub);text-align:center;margin-top:8px;}
+  .danger{border:1.5px solid #d64545;background:#fff;color:#d64545;padding:6px 14px;border-radius:18px;font-size:.82rem;cursor:pointer;font-weight:600;margin-top:10px;}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html">🏠 홈</a>
+  <a href="lesson1.html">Lesson 1</a>
+  <a href="kana.html">가나 연습</a>
+  <a href="vocab.html">단어 복습</a>
+  <a href="records.html"><b>기록</b></a>
+</nav>
+
+<header>
+  <h1>🏆 나의 학습 기록</h1>
+  <p>퀴즈·말하기 연습 기록이 자동으로 쌓입니다</p>
+</header>
+
+<div class="wrap">
+
+<section>
+  <h2>요약</h2>
+  <div class="stats">
+    <div class="stat"><div class="num" id="stStreak">0</div><div class="lbl">🔥 연속 학습일</div></div>
+    <div class="stat"><div class="num" id="stDays">0</div><div class="lbl">📅 총 학습일</div></div>
+    <div class="stat"><div class="num" id="stTotal">0</div><div class="lbl">✏️ 총 문제 풀이</div></div>
+    <div class="stat"><div class="num" id="stAcc">-</div><div class="lbl">🎯 전체 정답률</div></div>
+  </div>
+</section>
+
+<section>
+  <h2>오늘</h2>
+  <div id="todayBox"></div>
+</section>
+
+<section>
+  <h2>최근 14일</h2>
+  <div id="histBox"></div>
+</section>
+
+<section>
+  <h2>달성 뱃지</h2>
+  <div id="medalBox"></div>
+  <button class="danger" onclick="resetAll()">기록 전체 초기화</button>
+</section>
+
+</div>
+
+<script>
+const TYPE_LABEL={kana:'가나 퀴즈',flash:'플래시카드',speak:'단어 말하기',sentence:'문장 말하기'};
+function load(){ try{return JSON.parse(localStorage.getItem('jpRecords')||'{}');}catch(e){return {};} }
+function dateStr(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+
+function render(){
+  const all=load();
+  const dates=Object.keys(all).sort();
+  // 요약
+  let total=0, correct=0;
+  dates.forEach(dt=>{ for(const t in all[dt]){ total+=all[dt][t].t; correct+=all[dt][t].c; } });
+  // 연속 학습일
+  let streak=0;
+  const today=new Date();
+  let cur=new Date(today);
+  if(!all[dateStr(cur)]) cur.setDate(cur.getDate()-1); // 오늘 아직 안 했으면 어제부터
+  while(all[dateStr(cur)]){ streak++; cur.setDate(cur.getDate()-1); }
+  document.getElementById('stStreak').textContent=streak;
+  document.getElementById('stDays').textContent=dates.length;
+  document.getElementById('stTotal').textContent=total;
+  document.getElementById('stAcc').textContent= total? Math.round(correct/total*100)+'%' : '-';
+
+  // 오늘
+  const td=all[dateStr(today)];
+  const tb=document.getElementById('todayBox');
+  if(!td){ tb.innerHTML='<div class="empty">오늘은 아직 기록이 없어요. 퀴즈나 말하기 연습을 해 보세요! 💪</div>'; }
+  else{
+    let rows='';
+    for(const t in td){ const r=td[t]; rows+=`<tr><td>${TYPE_LABEL[t]||t}</td><td>${r.c} / ${r.t}</td><td>${Math.round(r.c/r.t*100)}%</td></tr>`; }
+    tb.innerHTML='<table><tr><th>활동</th><th>정답/시도</th><th>정답률</th></tr>'+rows+'</table>';
+  }
+
+  // 최근 14일
+  const hb=document.getElementById('histBox');
+  if(!dates.length){ hb.innerHTML='<div class="empty">아직 기록이 없어요.</div>'; }
+  else{
+    const recent=dates.slice(-14).reverse();
+    let rows='';
+    recent.forEach(dt=>{
+      let dTot=0,dCor=0,acts=[];
+      for(const t in all[dt]){ dTot+=all[dt][t].t; dCor+=all[dt][t].c; acts.push((TYPE_LABEL[t]||t).slice(0,2)); }
+      rows+=`<tr><td class="date">${dt.slice(5)}</td><td>${[...new Set(acts)].join(', ')}</td><td>${dCor} / ${dTot}</td><td>${dTot?Math.round(dCor/dTot*100)+'%':'-'}</td></tr>`;
+    });
+    hb.innerHTML='<table><tr><th>날짜</th><th>활동</th><th>정답/시도</th><th>정답률</th></tr>'+rows+'</table>';
+  }
+
+  // 뱃지
+  const medals=[
+    {ico:'🌱',need:1,unit:'문제',label:'첫걸음',desc:'첫 문제 풀기'},
+    {ico:'🥉',need:50,unit:'문제',label:'초심자',desc:'누적 50문제'},
+    {ico:'🥈',need:200,unit:'문제',label:'꾸준함',desc:'누적 200문제'},
+    {ico:'🥇',need:500,unit:'문제',label:'열공러',desc:'누적 500문제'},
+    {ico:'👑',need:1000,unit:'문제',label:'마스터',desc:'누적 1000문제'}
+  ];
+  const streakMedals=[
+    {ico:'🔥',need:3,label:'3일 연속'},
+    {ico:'🚀',need:7,label:'7일 연속'},
+    {ico:'🌟',need:30,label:'30일 연속'}
+  ];
+  let mh='';
+  medals.forEach(m=>{ const got=total>=m.need;
+    mh+=`<div class="medal ${got?'got':''}"><span class="ico">${m.ico}</span><span class="txt"><b>${m.label}</b>${m.desc} ${got?'— 달성!':'('+total+'/'+m.need+')'}</span></div>`; });
+  streakMedals.forEach(m=>{ const got=streak>=m.need;
+    mh+=`<div class="medal ${got?'got':''}"><span class="ico">${m.ico}</span><span class="txt"><b>${m.label} 학습</b>${got?'달성!':'현재 '+streak+'일'}</span></div>`; });
+  document.getElementById('medalBox').innerHTML=mh;
+}
+function resetAll(){
+  if(confirm('정말 모든 기록을 지울까요?')){ localStorage.removeItem('jpRecords'); render(); }
+}
+render();
+</script>
+</body>
+</html>

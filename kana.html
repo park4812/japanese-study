@@ -86,7 +86,7 @@
     <div class="feedback" id="qFb"></div>
     <div class="score" id="qScore">정답 0 / 시도 0</div>
   </div>
-  <p class="hint">し=shi/si, ち=chi/ti, つ=tsu/tu, ふ=fu/hu, じ=ji/zi, しゃ=sha/sya 모두 정답 처리됩니다.</p>
+  <p class="hint">し=shi/si, ち=chi/ti, つ=tsu/tu, ふ=fu/hu, じ=ji/zi, しゃ=sha/sya 모두 정답 처리됩니다.<br>📊 자주 틀리는 글자일수록 더 자주 출제됩니다 (기록은 이 기기에 저장).</p>
 </section>
 
 <section>
@@ -109,23 +109,32 @@
 
 <script>
 // ---------- 발음 재생: 구글 번역 TTS (실패 시 브라우저 내장 음성으로 자동 전환) ----------
-let _audio=null, _gttsFail=false;
+const TTS_URLS=[
+  t=>'https://translate.googleapis.com/translate_tts?client=gtx&ie=UTF-8&tl=ja&q='+encodeURIComponent(t),
+  t=>'https://translate.google.com/translate_tts?ie=UTF-8&tl=ja&client=tw-ob&q='+encodeURIComponent(t)
+];
+let _audio=null, _ttsIdx=0;
 function speakJa(text){
   if(!text) return;
   if(_audio){_audio.pause();_audio=null;}
   if('speechSynthesis' in window) speechSynthesis.cancel();
-  if(_gttsFail){ speakLocal(text); return; }
-  const url='https://translate.google.com/translate_tts?ie=UTF-8&tl=ja&client=tw-ob&q='+encodeURIComponent(text);
-  _audio=new Audio(url);
-  _audio.onerror=()=>{_gttsFail=true;speakLocal(text);};
-  _audio.play().catch(()=>{_gttsFail=true;speakLocal(text);});
+  tryTts(text,_ttsIdx,TTS_URLS.length);
+}
+function tryTts(text,idx,left){
+  if(left<=0){ speakLocal(text); return; }
+  idx=idx%TTS_URLS.length;
+  const a=new Audio(TTS_URLS[idx](text));
+  _audio=a;
+  a.onerror=()=>{ if(_audio===a) tryTts(text,idx+1,left-1); };
+  a.play().then(()=>{ _ttsIdx=idx; }).catch(()=>{ if(_audio===a) tryTts(text,idx+1,left-1); });
 }
 function speakLocal(text){
   if(!('speechSynthesis' in window)) return;
   speechSynthesis.cancel();
   const u=new SpeechSynthesisUtterance(text);
   u.lang='ja-JP'; u.rate=0.85;
-  const v=speechSynthesis.getVoices().find(v=>v.lang && v.lang.startsWith('ja'));
+  const vs=speechSynthesis.getVoices().filter(v=>v.lang && v.lang.startsWith('ja'));
+  const v=vs.find(v=>/Google/i.test(v.name)) || vs.find(v=>/Kyoko/i.test(v.name)) || vs[0];
   if(v)u.voice=v;
   speechSynthesis.speak(u);
 }
@@ -239,10 +248,33 @@ function pool(){
   if(document.getElementById('setYoon').checked) p=p.concat(YOON);
   return p.length?p:BASIC;
 }
+// 글자별 정답/오답 기록 → 틀린 글자가 더 자주 나오게 가중치 부여
+function kanaStats(){ try{return JSON.parse(localStorage.getItem('kanaStats')||'{}');}catch(e){return {};} }
+function saveKanaStat(key,ok){
+  try{
+    const s=kanaStats();
+    if(!s[key]) s[key]={c:0,t:0};
+    s[key].t++; if(ok) s[key].c++;
+    localStorage.setItem('kanaStats',JSON.stringify(s));
+  }catch(e){}
+}
+function weightFor(item,stats){
+  const s=stats[item[0]];
+  if(!s) return 3;                        // 아직 안 풀어본 글자: 약간 우선
+  const wrong=s.t-s.c;
+  return 1 + Math.min(wrong,6)*2;         // 틀린 횟수만큼 최대 13배까지 자주 출제
+}
+function pickWeighted(p){
+  const stats=kanaStats();
+  const ws=p.map(it=>weightFor(it,stats));
+  let total=ws.reduce((a,b)=>a+b,0), r=Math.random()*total;
+  for(let i=0;i<p.length;i++){ r-=ws[i]; if(r<=0) return p[i]; }
+  return p[p.length-1];
+}
 function nextQuiz(){
   const p=pool();
-  let item=p[Math.floor(Math.random()*p.length)];
-  if(current && p.length>1){ while(item===current.item){ item=p[Math.floor(Math.random()*p.length)]; } }
+  let item=pickWeighted(p);
+  if(current && p.length>1){ let guard=0; while(item===current.item && guard++<10){ item=pickWeighted(p); } }
   const s=document.querySelector('input[name="qscript"]:checked').value;
   const script = s==='b' ? (Math.random()<0.5?'h':'k') : s;
   current={item, kana: script==='h'?item[0]:item[1]};
@@ -259,6 +291,7 @@ function checkAnswer(){
   const answers=current.item.slice(2);
   const fb=document.getElementById('qFb');
   saveRecord('kana', answers.includes(v));
+  saveKanaStat(current.item[0], answers.includes(v));
   if(answers.includes(v)){ correct++; answered=true;
     sfx(true);
     fb.textContent='⭕ 정답! '+current.kana+' = '+answers[0]; fb.className='feedback ok';

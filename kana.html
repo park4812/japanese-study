@@ -109,37 +109,48 @@
 
 <script>
 // ---------- 발음 재생: 구글 번역 TTS (실패 시 브라우저 내장 음성으로 자동 전환) ----------
+// 발음 재생 전략: ① 브라우저 일본어 음성 (Google 日本語 우선, Eddy 같은 장난 음성 제외)
+//               ② 음성이 없을 때만 구글 번역 오디오 (2초 타임아웃 → 무한대기 방지)
 const TTS_URLS=[
   t=>'https://translate.googleapis.com/translate_tts?client=gtx&ie=UTF-8&tl=ja&q='+encodeURIComponent(t),
   t=>'https://translate.google.com/translate_tts?ie=UTF-8&tl=ja&client=tw-ob&q='+encodeURIComponent(t)
 ];
-let _audio=null, _ttsIdx=0;
-const _acache={}; // 한 번 성공한 발음은 캐시 → 재클릭 시 즉시 재생
+let _audio=null;
+const _acache={};
+function jaVoice(){
+  if(!('speechSynthesis' in window)) return null;
+  const vs=speechSynthesis.getVoices().filter(v=>v.lang && v.lang.startsWith('ja'));
+  return vs.find(v=>/Google/i.test(v.name))
+      || vs.find(v=>/Kyoko|Nanami|Haruka|Sayaka|Ichiro|O-?ren/i.test(v.name))
+      || vs.find(v=>!/Eddy|Flo|Grandma|Grandpa|Reed|Rocko|Sandy|Shelley|Albert|Bahh|Bells|Boing|Bubbles|Cellos|Jester|Organ|Superstar|Trinoids|Whisper|Wobble|Zarvox/i.test(v.name))
+      || vs[0] || null;
+}
 function speakJa(text){
   if(!text) return;
-  if(_audio){_audio.pause();_audio=null;}
+  if(_audio){try{_audio.pause();}catch(e){} _audio=null;}
   if('speechSynthesis' in window) speechSynthesis.cancel();
+  const v=jaVoice();
+  if(v){
+    const u=new SpeechSynthesisUtterance(text);
+    u.voice=v; u.lang='ja-JP'; u.rate=0.85;
+    speechSynthesis.speak(u);
+    return;
+  }
   const c=_acache[text];
-  if(c){ _audio=c; c.currentTime=0; c.play().catch(()=>{ delete _acache[text]; tryTts(text,_ttsIdx,TTS_URLS.length); }); return; }
-  tryTts(text,_ttsIdx,TTS_URLS.length);
+  if(c){ _audio=c; c.currentTime=0; c.play().catch(()=>{ delete _acache[text]; tryTts(text,0,TTS_URLS.length); }); return; }
+  tryTts(text,0,TTS_URLS.length);
 }
 function tryTts(text,idx,left){
-  if(left<=0){ speakLocal(text); return; }
+  if(left<=0) return;
   idx=idx%TTS_URLS.length;
   const a=new Audio(TTS_URLS[idx](text));
   _audio=a;
-  a.onerror=()=>{ if(_audio===a) tryTts(text,idx+1,left-1); };
-  a.play().then(()=>{ _ttsIdx=idx; _acache[text]=a; }).catch(()=>{ if(_audio===a) tryTts(text,idx+1,left-1); });
-}
-function speakLocal(text){
-  if(!('speechSynthesis' in window)) return;
-  speechSynthesis.cancel();
-  const u=new SpeechSynthesisUtterance(text);
-  u.lang='ja-JP'; u.rate=0.85;
-  const vs=speechSynthesis.getVoices().filter(v=>v.lang && v.lang.startsWith('ja'));
-  const v=vs.find(v=>/Google/i.test(v.name)) || vs.find(v=>/Kyoko/i.test(v.name)) || vs[0];
-  if(v)u.voice=v;
-  speechSynthesis.speak(u);
+  let done=false;
+  const fail=()=>{ if(done||_audio!==a) return; done=true; try{a.pause();}catch(e){} tryTts(text,idx+1,left-1); };
+  const timer=setTimeout(fail,2000);
+  a.onplaying=()=>{ if(_audio===a){ done=true; clearTimeout(timer); _acache[text]=a; } };
+  a.onerror=fail;
+  a.play().catch(fail);
 }
 if('speechSynthesis' in window){speechSynthesis.getVoices();} // 음성 목록 미리 로드
 

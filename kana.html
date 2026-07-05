@@ -114,10 +114,13 @@ const TTS_URLS=[
   t=>'https://translate.google.com/translate_tts?ie=UTF-8&tl=ja&client=tw-ob&q='+encodeURIComponent(t)
 ];
 let _audio=null, _ttsIdx=0;
+const _acache={}; // 한 번 성공한 발음은 캐시 → 재클릭 시 즉시 재생
 function speakJa(text){
   if(!text) return;
   if(_audio){_audio.pause();_audio=null;}
   if('speechSynthesis' in window) speechSynthesis.cancel();
+  const c=_acache[text];
+  if(c){ _audio=c; c.currentTime=0; c.play().catch(()=>{ delete _acache[text]; tryTts(text,_ttsIdx,TTS_URLS.length); }); return; }
   tryTts(text,_ttsIdx,TTS_URLS.length);
 }
 function tryTts(text,idx,left){
@@ -126,7 +129,7 @@ function tryTts(text,idx,left){
   const a=new Audio(TTS_URLS[idx](text));
   _audio=a;
   a.onerror=()=>{ if(_audio===a) tryTts(text,idx+1,left-1); };
-  a.play().then(()=>{ _ttsIdx=idx; }).catch(()=>{ if(_audio===a) tryTts(text,idx+1,left-1); });
+  a.play().then(()=>{ _ttsIdx=idx; _acache[text]=a; }).catch(()=>{ if(_audio===a) tryTts(text,idx+1,left-1); });
 }
 function speakLocal(text){
   if(!('speechSynthesis' in window)) return;

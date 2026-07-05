@@ -128,12 +128,14 @@ function jaVoice(){
 function speakJa(text){
   if(!text) return;
   if(_audio){try{_audio.pause();}catch(e){} _audio=null;}
-  if('speechSynthesis' in window) speechSynthesis.cancel();
-  const v=jaVoice();
-  if(v){
+  if('speechSynthesis' in window){
+    if(speechSynthesis.speaking||speechSynthesis.pending) speechSynthesis.cancel();
     const u=new SpeechSynthesisUtterance(text);
-    u.voice=v; u.lang='ja-JP'; u.rate=0.85;
+    const v=jaVoice();
+    if(v) u.voice=v;           // 음성 목록이 아직 비어 있어도 lang으로 재생 (모바일 대응)
+    u.lang='ja-JP'; u.rate=0.85;
     speechSynthesis.speak(u);
+    setTimeout(()=>{ try{speechSynthesis.resume();}catch(e){} },100); // iOS 멈춤 방지
     return;
   }
   const c=_acache[text];

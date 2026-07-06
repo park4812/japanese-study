@@ -57,8 +57,10 @@
 <nav class="topnav">
   <a href="index.html">🏠 홈</a>
   <a href="lesson1.html">Lesson 1</a>
+  <a href="lesson2.html">Lesson 2</a>
   <a href="kana.html">가나 연습</a>
   <a href="vocab.html"><b>단어 복습</b></a>
+  <a href="quiz.html">🎲 퀴즈</a>
   <a href="records.html">🏆 기록</a>
 </nav>
 
@@ -241,9 +243,34 @@ const WORDS = [
   {jp:"こんばんは", yomi:"", romaji:"konbanwa", kr:"안녕하세요 (저녁)", lesson:"L1", cat:"인사"},
   {jp:"いただきます", yomi:"", romaji:"itadakimasu", kr:"잘 먹겠습니다", lesson:"L1", cat:"인사"},
   {jp:"ごちそうさまでした", yomi:"", romaji:"gochisousama deshita", kr:"잘 먹었습니다", lesson:"L1", cat:"인사"},
-  {jp:"お休みなさい", yomi:"おやすみなさい", romaji:"oyasuminasai", kr:"잘 자요 / 안녕히 주무세요", lesson:"L1", cat:"인사"}
+  {jp:"お休みなさい", yomi:"おやすみなさい", romaji:"oyasuminasai", kr:"잘 자요 / 안녕히 주무세요", lesson:"L1", cat:"인사"},
+  // ---- Lesson 2: 레스토랑 주문 ----
+  {jp:"メニュー", yomi:"", romaji:"menyuu", kr:"메뉴", lesson:"L2", cat:"단어"},
+  {jp:"水", yomi:"みず", romaji:"mizu", kr:"물", lesson:"L2", cat:"단어"},
+  {jp:"お茶", yomi:"おちゃ", romaji:"ocha", kr:"차", lesson:"L2", cat:"단어"},
+  {jp:"ご飯", yomi:"ごはん", romaji:"gohan", kr:"밥", lesson:"L2", cat:"단어"},
+  {jp:"肉", yomi:"にく", romaji:"niku", kr:"고기", lesson:"L2", cat:"단어"},
+  {jp:"魚", yomi:"さかな", romaji:"sakana", kr:"생선", lesson:"L2", cat:"단어"},
+  {jp:"ラーメン", yomi:"", romaji:"raamen", kr:"라멘", lesson:"L2", cat:"단어"},
+  {jp:"寿司", yomi:"すし", romaji:"sushi", kr:"초밥", lesson:"L2", cat:"단어"},
+  {jp:"天ぷら", yomi:"てんぷら", romaji:"tenpura", kr:"튀김", lesson:"L2", cat:"단어"},
+  {jp:"飲み物", yomi:"のみもの", romaji:"nomimono", kr:"음료", lesson:"L2", cat:"단어"},
+  {jp:"食べ物", yomi:"たべもの", romaji:"tabemono", kr:"음식", lesson:"L2", cat:"단어"},
+  {jp:"一つ", yomi:"ひとつ", romaji:"hitotsu", kr:"하나 (1개)", lesson:"L2", cat:"숫자"},
+  {jp:"二つ", yomi:"ふたつ", romaji:"futatsu", kr:"둘 (2개)", lesson:"L2", cat:"숫자"},
+  {jp:"三つ", yomi:"みっつ", romaji:"mittsu", kr:"셋 (3개)", lesson:"L2", cat:"숫자"},
+  {jp:"四つ", yomi:"よっつ", romaji:"yottsu", kr:"넷 (4개)", lesson:"L2", cat:"숫자"},
+  {jp:"五つ", yomi:"いつつ", romaji:"itsutsu", kr:"다섯 (5개)", lesson:"L2", cat:"숫자"},
+  {jp:"六つ", yomi:"むっつ", romaji:"muttsu", kr:"여섯 (6개)", lesson:"L2", cat:"숫자"},
+  {jp:"七つ", yomi:"ななつ", romaji:"nanatsu", kr:"일곱 (7개)", lesson:"L2", cat:"숫자"},
+  {jp:"八つ", yomi:"やっつ", romaji:"yattsu", kr:"여덟 (8개)", lesson:"L2", cat:"숫자"},
+  {jp:"九つ", yomi:"ここのつ", romaji:"kokonotsu", kr:"아홉 (9개)", lesson:"L2", cat:"숫자"},
+  {jp:"十", yomi:"とお", romaji:"too", kr:"열 (10개)", lesson:"L2", cat:"숫자"},
+  {jp:"すみません", yomi:"", romaji:"sumimasen", kr:"저기요 / 실례합니다", lesson:"L2", cat:"표현"},
+  {jp:"いらっしゃいませ", yomi:"", romaji:"irasshaimase", kr:"어서 오세요", lesson:"L2", cat:"표현"},
+  {jp:"かしこまりました", yomi:"", romaji:"kashikomarimashita", kr:"알겠습니다 (정중)", lesson:"L2", cat:"표현"}
 ];
-const LESSON_NAMES = { "L1": "Lesson 1 · 자기소개" };
+const LESSON_NAMES = { "L1": "Lesson 1 · 자기소개", "L2": "Lesson 2 · 주문" };
 /* ============================================================ */
 
 // 레슨 선택 옵션 채우기

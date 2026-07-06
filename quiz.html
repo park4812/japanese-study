@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>랜덤 퀴즈</title>
+<style>
+  :root{--bg:#f5f3fb;--card:#fff;--ink:#1e2433;--sub:#5b6478;--accent:#6b4bd6;--accent-soft:#eee9fb;--line:#e5e0f2;--kr:#7a3fa8;--ok:#1f9d55;--no:#d64545;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Apple SD Gothic Neo','Noto Sans KR','Hiragino Sans','Noto Sans JP',sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;padding-bottom:80px;}
+  header{background:linear-gradient(135deg,#5636c4,#8d6fe8);color:#fff;padding:40px 20px 32px;text-align:center;}
+  header h1{font-size:1.6rem;}
+  header p{opacity:.92;font-size:.92rem;}
+  nav.topnav{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.95);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);overflow-x:auto;white-space:nowrap;padding:8px 12px;text-align:center;}
+  nav.topnav a{display:inline-block;padding:6px 12px;margin:2px;border-radius:16px;font-size:.85rem;color:var(--sub);text-decoration:none;}
+  nav.topnav a:hover{background:var(--accent-soft);color:var(--accent);}
+  .wrap{max-width:760px;margin:0 auto;padding:0 14px;}
+  section{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px 20px;margin:20px 0;}
+  .controls{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:8px;}
+  .controls select{border:1.5px solid var(--accent);background:#fff;color:var(--accent);padding:6px 14px;border-radius:18px;font-size:.88rem;cursor:pointer;font-weight:600;}
+  .modes{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:8px 0 4px;}
+  .modes button{border:1.5px solid var(--accent);background:#fff;color:var(--accent);padding:8px 16px;border-radius:20px;font-size:.88rem;cursor:pointer;font-weight:700;}
+  .modes button.on{background:var(--accent);color:#fff;}
+  .qarea{text-align:center;padding:10px 0;}
+  .qtext{font-size:2rem;font-weight:700;margin:18px 0;line-height:1.5;min-height:60px;}
+  .qtext rt{font-size:.45em;color:#8a93a8;font-weight:400;}
+  .qtext.kr-q{color:var(--kr);font-size:1.6rem;}
+  .listenbtn{border:none;background:var(--accent);color:#fff;font-size:1.6rem;width:76px;height:76px;border-radius:50%;cursor:pointer;margin:10px 0;box-shadow:0 6px 16px rgba(107,75,214,.35);}
+  .choices{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:560px;margin:14px auto;}
+  .choices button{border:2px solid var(--line);background:#fff;padding:14px 10px;border-radius:12px;font-size:1.02rem;cursor:pointer;font-weight:600;transition:transform .08s;}
+  .choices button:hover{transform:translateY(-2px);border-color:var(--accent);}
+  .choices button.correct{background:#e5f6ec;border-color:var(--ok);color:var(--ok);}
+  .choices button.wrong{background:#fdeaea;border-color:var(--no);color:var(--no);}
+  .choices button:disabled{cursor:default;}
+  .feedback{min-height:34px;font-size:1.05rem;font-weight:700;margin-top:6px;}
+  .feedback.ok{color:var(--ok);} .feedback.no{color:var(--no);}
+  .score{font-size:.9rem;color:var(--sub);margin-top:6px;}
+  .streak{font-size:1.05rem;font-weight:800;color:#e0763b;}
+  .hint{font-size:.8rem;color:var(--sub);text-align:center;margin-top:8px;}
+  @media (max-width:480px){ .choices{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html">🏠 홈</a>
+  <a href="lesson1.html">Lesson 1</a>
+  <a href="lesson2.html">Lesson 2</a>
+  <a href="kana.html">가나 연습</a>
+  <a href="vocab.html">단어 복습</a>
+  <a href="quiz.html"><b>🎲 퀴즈</b></a>
+  <a href="records.html">🏆 기록</a>
+</nav>
+
+<header>
+  <h1>🎲 랜덤 퀴즈</h1>
+  <p>단어 · 듣기 · 문장 — 다양한 방식으로 실력을 확인하세요</p>
+</header>
+
+<div class="wrap">
+
+<section>
+  <div class="controls">
+    <select id="qLesson" onchange="nextQ()">
+      <option value="all">전체 레슨</option>
+      <option value="L1">Lesson 1 · 자기소개</option>
+      <option value="L2">Lesson 2 · 주문</option>
+    </select>
+  </div>
+  <div class="modes">
+    <button id="m-j2k" class="on" onclick="setMode('j2k',this)">📖 뜻 고르기</button>
+    <button id="m-k2j" onclick="setMode('k2j',this)">🈁 일본어 고르기</button>
+    <button id="m-listen" onclick="setMode('listen',this)">🎧 듣기 퀴즈</button>
+    <button id="m-sent" onclick="setMode('sent',this)">💬 문장 퀴즈</button>
+  </div>
+
+  <div class="qarea">
+    <div id="qPrompt" class="qtext"></div>
+    <button id="qListen" class="listenbtn" style="display:none;" onclick="playCurrent()">🔊</button>
+    <div class="choices" id="qChoices"></div>
+    <div class="feedback" id="qFb"></div>
+    <div class="score" id="qScore">정답 0 / 시도 0 · <span class="streak" id="qStreak"></span></div>
+  </div>
+  <p class="hint">📖 일본어를 보고 뜻 고르기 · 🈁 뜻을 보고 일본어 고르기 · 🎧 발음을 듣고 뜻 고르기 · 💬 문장의 뜻 고르기<br>결과는 🏆 기록 페이지에 자동 저장됩니다.</p>
+</section>
+
+</div>
+
+<script>
+// ===================== 데이터 (레슨별 누적) =====================
+const WORDS=[
+  // L1 자기소개
+  {jp:"名前",yomi:"なまえ",kr:"이름",lesson:"L1"},{jp:"国",yomi:"くに",kr:"나라",lesson:"L1"},
+  {jp:"韓国",yomi:"かんこく",kr:"한국",lesson:"L1"},{jp:"日本",yomi:"にほん",kr:"일본",lesson:"L1"},
+  {jp:"旅行",yomi:"りょこう",kr:"여행",lesson:"L1"},{jp:"趣味",yomi:"しゅみ",kr:"취미",lesson:"L1"},
+  {jp:"写真",yomi:"しゃしん",kr:"사진",lesson:"L1"},{jp:"映画",yomi:"えいが",kr:"영화",lesson:"L1"},
+  {jp:"料理",yomi:"りょうり",kr:"요리",lesson:"L1"},{jp:"音楽",yomi:"おんがく",kr:"음악",lesson:"L1"},
+  {jp:"東京",yomi:"とうきょう",kr:"도쿄",lesson:"L1"},{jp:"京都",yomi:"きょうと",kr:"교토",lesson:"L1"},
+  {jp:"大阪",yomi:"おおさか",kr:"오사카",lesson:"L1"},
+  {jp:"はじめまして",yomi:"",kr:"처음 뵙겠습니다",lesson:"L1"},
+  {jp:"よろしくお願いします",yomi:"よろしくおねがいします",kr:"잘 부탁드립니다",lesson:"L1"},
+  {jp:"おはようございます",yomi:"",kr:"안녕하세요 (아침)",lesson:"L1"},
+  {jp:"こんにちは",yomi:"",kr:"안녕하세요 (낮)",lesson:"L1"},
+  {jp:"こんばんは",yomi:"",kr:"안녕하세요 (저녁)",lesson:"L1"},
+  {jp:"いただきます",yomi:"",kr:"잘 먹겠습니다",lesson:"L1"},
+  {jp:"ごちそうさまでした",yomi:"",kr:"잘 먹었습니다",lesson:"L1"},
+  {jp:"お休みなさい",yomi:"おやすみなさい",kr:"잘 자요",lesson:"L1"},
+  // L2 주문
+  {jp:"メニュー",yomi:"",kr:"메뉴",lesson:"L2"},{jp:"水",yomi:"みず",kr:"물",lesson:"L2"},
+  {jp:"お茶",yomi:"おちゃ",kr:"차",lesson:"L2"},{jp:"ご飯",yomi:"ごはん",kr:"밥",lesson:"L2"},
+  {jp:"肉",yomi:"にく",kr:"고기",lesson:"L2"},{jp:"魚",yomi:"さかな",kr:"생선",lesson:"L2"},
+  {jp:"ラーメン",yomi:"",kr:"라멘",lesson:"L2"},{jp:"寿司",yomi:"すし",kr:"초밥",lesson:"L2"},
+  {jp:"天ぷら",yomi:"てんぷら",kr:"튀김",lesson:"L2"},{jp:"飲み物",yomi:"のみもの",kr:"음료",lesson:"L2"},
+  {jp:"食べ物",yomi:"たべもの",kr:"음식",lesson:"L2"},
+  {jp:"一つ",yomi:"ひとつ",kr:"하나 (1개)",lesson:"L2"},{jp:"二つ",yomi:"ふたつ",kr:"둘 (2개)",lesson:"L2"},
+  {jp:"三つ",yomi:"みっつ",kr:"셋 (3개)",lesson:"L2"},{jp:"四つ",yomi:"よっつ",kr:"넷 (4개)",lesson:"L2"},
+  {jp:"五つ",yomi:"いつつ",kr:"다섯 (5개)",lesson:"L2"},{jp:"六つ",yomi:"むっつ",kr:"여섯 (6개)",lesson:"L2"},
+  {jp:"七つ",yomi:"ななつ",kr:"일곱 (7개)",lesson:"L2"},{jp:"八つ",yomi:"やっつ",kr:"여덟 (8개)",lesson:"L2"},
+  {jp:"九つ",yomi:"ここのつ",kr:"아홉 (9개)",lesson:"L2"},{jp:"十",yomi:"とお",kr:"열 (10개)",lesson:"L2"},
+  {jp:"すみません",yomi:"",kr:"저기요 / 실례합니다",lesson:"L2"},
+  {jp:"いらっしゃいませ",yomi:"",kr:"어서 오세요",lesson:"L2"},
+  {jp:"かしこまりました",yomi:"",kr:"알겠습니다 (정중)",lesson:"L2"}
+];
+const SENTENCES=[
+  // L1
+  {jp:"私の名前はミナです",yomi:"わたしのなまえはみなです",kr:"제 이름은 미나입니다",lesson:"L1"},
+  {jp:"韓国から来ました",yomi:"かんこくからきました",kr:"한국에서 왔습니다",lesson:"L1"},
+  {jp:"趣味は旅行です",yomi:"しゅみはりょこうです",kr:"취미는 여행입니다",lesson:"L1"},
+  {jp:"私は韓国人です",yomi:"わたしはかんこくじんです",kr:"저는 한국인입니다",lesson:"L1"},
+  {jp:"私は日本人ではありません",yomi:"わたしはにほんじんではありません",kr:"저는 일본인이 아닙니다",lesson:"L1"},
+  {jp:"どこから来ましたか",yomi:"どこからきましたか",kr:"어디에서 오셨습니까?",lesson:"L1"},
+  {jp:"お名前は何ですか",yomi:"おなまえはなんですか",kr:"이름이 무엇입니까?",lesson:"L1"},
+  {jp:"趣味は何ですか",yomi:"しゅみはなんですか",kr:"취미가 무엇입니까?",lesson:"L1"},
+  {jp:"旅行で日本に来ました",yomi:"りょこうでにほんにきました",kr:"여행으로 일본에 왔습니다",lesson:"L1"},
+  {jp:"日本のどこへ行きますか",yomi:"にほんのどこへいきますか",kr:"일본의 어디에 가십니까?",lesson:"L1"},
+  // L2
+  {jp:"水をお願いします",yomi:"みずをおねがいします",kr:"물 주세요",lesson:"L2"},
+  {jp:"ラーメンをひとつお願いします",yomi:"らーめんをひとつおねがいします",kr:"라멘 하나 주세요",lesson:"L2"},
+  {jp:"寿司をふたつお願いします",yomi:"すしをふたつおねがいします",kr:"초밥 두 개 주세요",lesson:"L2"},
+  {jp:"メニューをください",yomi:"めにゅーをください",kr:"메뉴 주세요",lesson:"L2"},
+  {jp:"お茶をください",yomi:"おちゃをください",kr:"차 주세요",lesson:"L2"},
+  {jp:"水はいりません",yomi:"みずはいりません",kr:"물은 필요하지 않습니다",lesson:"L2"},
+  {jp:"何を食べますか",yomi:"なにをたべますか",kr:"무엇을 먹습니까?",lesson:"L2"},
+  {jp:"何を飲みますか",yomi:"なにをのみますか",kr:"무엇을 마십니까?",lesson:"L2"},
+  {jp:"ご注文はお決まりですか",yomi:"ごちゅうもんはおきまりですか",kr:"주문은 정하셨습니까?",lesson:"L2"},
+  {jp:"いくつお願いしますか",yomi:"いくつおねがいしますか",kr:"몇 개 주문하시겠습니까?",lesson:"L2"}
+];
+// ================================================================
+
+// 발음 재생 (Google 日本語 음성 우선)
+const TTS_URLS=[
+  t=>'https://translate.googleapis.com/translate_tts?client=gtx&ie=UTF-8&tl=ja&q='+encodeURIComponent(t),
+  t=>'https://translate.google.com/translate_tts?ie=UTF-8&tl=ja&client=tw-ob&q='+encodeURIComponent(t)
+];
+let _audio=null;
+const _acache={};
+function jaVoice(){
+  if(!('speechSynthesis' in window)) return null;
+  const vs=speechSynthesis.getVoices().filter(v=>v.lang && v.lang.startsWith('ja'));
+  return vs.find(v=>/Google/i.test(v.name))
+      || vs.find(v=>/Kyoko|Nanami|Haruka|Sayaka|Ichiro|O-?ren/i.test(v.name))
+      || vs.find(v=>!/Eddy|Flo|Grandma|Grandpa|Reed|Rocko|Sandy|Shelley|Albert|Bahh|Bells|Boing|Bubbles|Cellos|Jester|Organ|Superstar|Trinoids|Whisper|Wobble|Zarvox/i.test(v.name))
+      || vs[0] || null;
+}
+function speakJa(text){
+  if(!text) return;
+  if(_audio){try{_audio.pause();}catch(e){} _audio=null;}
+  if('speechSynthesis' in window){
+    if(speechSynthesis.speaking||speechSynthesis.pending) speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(text);
+    const v=jaVoice();
+    if(v) u.voice=v;
+    u.lang='ja-JP'; u.rate=0.85;
+    speechSynthesis.speak(u);
+    setTimeout(()=>{ try{speechSynthesis.resume();}catch(e){} },100);
+    return;
+  }
+  tryTts(text,0,TTS_URLS.length);
+}
+function tryTts(text,idx,left){
+  if(left<=0) return;
+  idx=idx%TTS_URLS.length;
+  const a=new Audio(TTS_URLS[idx](text));
+  _audio=a;
+  let done=false;
+  const fail=()=>{ if(done||_audio!==a) return; done=true; try{a.pause();}catch(e){} tryTts(text,idx+1,left-1); };
+  const timer=setTimeout(fail,2000);
+  a.onplaying=()=>{ if(_audio===a){ done=true; clearTimeout(timer); _acache[text]=a; } };
+  a.onerror=fail;
+  a.play().catch(fail);
+}
+if('speechSynthesis' in window){speechSynthesis.getVoices();}
+
+function sfx(ok){
+  try{
+    const ctx = window._actx || (window._actx = new (window.AudioContext||window.webkitAudioContext)());
+    if(ctx.state==='suspended') ctx.resume();
+    const t=ctx.currentTime;
+    const tone=(f,s,d,ty,g)=>{const o=ctx.createOscillator(),gn=ctx.createGain();o.type=ty||'sine';o.frequency.value=f;
+      gn.gain.setValueAtTime(g||0.15,t+s);gn.gain.exponentialRampToValueAtTime(0.001,t+s+d);
+      o.connect(gn);gn.connect(ctx.destination);o.start(t+s);o.stop(t+s+d);};
+    if(ok){tone(880,0,0.15);tone(1319,0.12,0.3);}
+    else{tone(233,0,0.25,'square',0.07);tone(196,0.12,0.35,'square',0.07);}
+  }catch(e){}
+}
+function saveRecord(type,ok){
+  try{
+    const d=new Date();
+    const date=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+    const all=JSON.parse(localStorage.getItem('jpRecords')||'{}');
+    if(!all[date]) all[date]={};
+    if(!all[date][type]) all[date][type]={c:0,t:0};
+    all[date][type].t++; if(ok) all[date][type].c++;
+    localStorage.setItem('jpRecords',JSON.stringify(all));
+  }catch(e){}
+}
+
+// ===================== 퀴즈 로직 =====================
+let mode='j2k', current=null, answered=false, tries=0, correct=0, streak=0;
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function pool(){
+  const l=document.getElementById('qLesson').value;
+  const src=(mode==='sent')?SENTENCES:WORDS;
+  return l==='all'?src.slice():src.filter(w=>w.lesson===l);
+}
+function setMode(m,btn){
+  mode=m;
+  document.querySelectorAll('.modes button').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  nextQ();
+}
+function ruby(w){
+  return (w.yomi && w.yomi!==w.jp) ? `<ruby>${w.jp}<rt>${w.yomi}</rt></ruby>` : w.jp;
+}
+function playCurrent(){ if(current) speakJa(current.yomi||current.jp); }
+function nextQ(){
+  const p=pool();
+  if(p.length<4){ document.getElementById('qPrompt').textContent='문제가 부족해요'; return; }
+  answered=false;
+  let item=p[Math.floor(Math.random()*p.length)];
+  if(current&&p.length>1){let g=0;while(item===current&&g++<10){item=p[Math.floor(Math.random()*p.length)];}}
+  current=item;
+  // 보기: 정답 + 오답 3개
+  const others=shuffle(p.filter(w=>w!==item)).slice(0,3);
+  const isK2J=(mode==='k2j');
+  const opts=shuffle([item,...others]);
+  const prompt=document.getElementById('qPrompt');
+  const listenBtn=document.getElementById('qListen');
+  prompt.className='qtext';
+  if(mode==='j2k'||mode==='sent'){
+    prompt.innerHTML=ruby(item);
+    prompt.style.cursor='pointer'; prompt.title='클릭하면 발음 재생 🔊';
+    prompt.onclick=playCurrent;
+    listenBtn.style.display='none';
+  }else if(mode==='k2j'){
+    prompt.textContent=item.kr;
+    prompt.className='qtext kr-q';
+    prompt.onclick=null; prompt.style.cursor='default';
+    listenBtn.style.display='none';
+  }else{ // listen
+    prompt.innerHTML='발음을 듣고 뜻을 고르세요';
+    prompt.className='qtext kr-q';
+    prompt.style.fontSize='1.1rem'; prompt.onclick=null;
+    listenBtn.style.display='inline-block';
+    setTimeout(playCurrent,300);
+  }
+  const box=document.getElementById('qChoices');
+  box.innerHTML='';
+  opts.forEach(o=>{
+    const b=document.createElement('button');
+    if(isK2J){ b.innerHTML=ruby(o); } else { b.textContent=o.kr; }
+    b.onclick=()=>answer(b,o===item,item,isK2J);
+    box.appendChild(b);
+  });
+  document.getElementById('qFb').textContent=''; document.getElementById('qFb').className='feedback';
+  updateScore();
+}
+function answer(btn,ok,item,isK2J){
+  if(answered) return;
+  answered=true; tries++;
+  sfx(ok); saveRecord('quiz',ok);
+  const box=document.getElementById('qChoices');
+  [...box.children].forEach(b=>{
+    b.disabled=true;
+    const isAnswerBtn = isK2J ? (b.textContent.replace(/\s/g,'')===(item.yomi?item.jp+item.yomi:item.jp).replace(/\s/g,'')||b.innerHTML.includes(item.jp)) : (b.textContent===item.kr);
+    if(isAnswerBtn) b.classList.add('correct');
+  });
+  const fb=document.getElementById('qFb');
+  if(ok){
+    correct++; streak++;
+    fb.textContent='⭕ 정답!'; fb.className='feedback ok';
+  }else{
+    streak=0;
+    btn.classList.add('wrong');
+    fb.innerHTML=`❌ 정답: ${item.jp}${item.yomi?' ('+item.yomi+')':''} = ${item.kr}`;
+    fb.className='feedback no';
+  }
+  if(mode!=='listen') speakJa(item.yomi||item.jp); // 정답 발음 들려주기
+  updateScore();
+  setTimeout(nextQ, ok?1100:2200);
+}
+function updateScore(){
+  document.getElementById('qScore').innerHTML=`정답 ${correct} / 시도 ${tries} · <span class="streak">${streak>=2?'🔥 '+streak+'연속!':''}</span>`;
+}
+nextQ();
+</script>
+</body>
+</html>

@@ -41,8 +41,10 @@
 <nav class="topnav">
   <a href="index.html">🏠 홈</a>
   <a href="lesson1.html">Lesson 1</a>
+  <a href="lesson2.html">Lesson 2</a>
   <a href="kana.html">가나 연습</a>
   <a href="vocab.html">단어 복습</a>
+  <a href="quiz.html">🎲 퀴즈</a>
   <a href="records.html"><b>기록</b></a>
 </nav>
 
@@ -82,7 +84,7 @@
 </div>
 
 <script>
-const TYPE_LABEL={kana:'가나 퀴즈',flash:'플래시카드',speak:'단어 말하기',sentence:'문장 말하기'};
+const TYPE_LABEL={kana:'가나 퀴즈',flash:'플래시카드',speak:'단어 말하기',sentence:'문장 말하기',quiz:'랜덤 퀴즈'};
 function load(){ try{return JSON.parse(localStorage.getItem('jpRecords')||'{}');}catch(e){return {};} }
 function dateStr(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
 

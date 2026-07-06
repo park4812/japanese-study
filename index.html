@@ -21,12 +21,26 @@
   .card p{font-size:.86rem;color:var(--sub);}
   .badge{display:inline-block;background:var(--accent-soft);color:var(--accent);font-size:.72rem;font-weight:700;border-radius:8px;padding:2px 8px;margin-top:8px;}
   .note{background:var(--accent-soft);border-radius:12px;padding:14px 18px;margin-top:28px;font-size:.9rem;color:var(--sub);}
+  nav.topnav{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.95);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);overflow-x:auto;white-space:nowrap;padding:8px 12px;text-align:center;}
+  nav.topnav a{display:inline-block;padding:6px 12px;margin:2px;border-radius:16px;font-size:.85rem;color:var(--sub);text-decoration:none;}
+  nav.topnav a:hover{background:var(--accent-soft);color:var(--accent);}
+  .streak-chip{display:inline-block;background:rgba(255,255,255,.22);padding:5px 16px;border-radius:18px;font-size:.92rem;margin-top:12px;font-weight:700;}
 </style>
 </head>
 <body>
+<nav class="topnav">
+  <a href="index.html"><b>🏠 홈</b></a>
+  <a href="lesson1.html">Lesson 1</a>
+  <a href="lesson2.html">Lesson 2</a>
+  <a href="kana.html">가나 연습</a>
+  <a href="vocab.html">단어 복습</a>
+  <a href="quiz.html">🎲 퀴즈</a>
+  <a href="records.html">🏆 기록</a>
+</nav>
 <header>
   <h1>🇯🇵 나의 일본어 교실</h1>
-  <p>여행 일본어 — 수업 정리 · 가나 연습 · 단어 복습</p>
+  <p>여행 일본어 — 수업 정리 · 가나 연습 · 단어 복습 · 퀴즈</p>
+  <div class="streak-chip" id="streakChip" style="display:none;"></div>
 </header>
 <div class="wrap">
 
@@ -73,8 +87,25 @@
   </div>
 
   <div class="note">
-    💡 새 수업 내용을 공유하면 레슨 페이지가 추가되고, 단어 복습에도 그 레슨의 단어가 누적됩니다.
+    💡 새 수업 내용을 공유하면 레슨 페이지가 추가되고, 단어 복습·퀴즈에도 그 레슨의 단어가 누적됩니다.
   </div>
 </div>
+
+<script>
+// 연속 학습일 표시 (기록 페이지와 동일한 데이터 사용)
+try{
+  const all=JSON.parse(localStorage.getItem('jpRecords')||'{}');
+  const dstr=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  let streak=0, cur=new Date();
+  if(!all[dstr(cur)]) cur.setDate(cur.getDate()-1);
+  while(all[dstr(cur)]){ streak++; cur.setDate(cur.getDate()-1); }
+  if(streak>0){
+    const chip=document.getElementById('streakChip');
+    const today=all[dstr(new Date())];
+    chip.textContent='🔥 연속 학습 '+streak+'일째'+(today?'':' — 오늘도 이어가세요!');
+    chip.style.display='inline-block';
+  }
+}catch(e){}
+</script>
 </body>
 </html>

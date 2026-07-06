@@ -50,6 +50,13 @@
   body.hide-kr td.kr span:hover,body.hide-kr td.kr span:active{filter:none;}
   .lesson-tag{display:inline-block;background:#eef1f8;color:var(--sub);border-radius:6px;font-size:.72rem;padding:1px 7px;}
   .hint{font-size:.8rem;color:var(--sub);text-align:center;margin-top:6px;}
+  .tablewrap{overflow-x:auto;}
+  @media (max-width:560px){
+    #vTable th:nth-child(4), #vTable td:nth-child(4),
+    #vTable th:nth-child(6), #vTable td:nth-child(6){display:none;} /* 좁은 화면: 로마자·레슨 열 숨김 */
+    th,td{padding:7px 8px;font-size:.88rem;}
+    .fbtns button{padding:10px 14px;font-size:.88rem;}
+  }
 </style>
 </head>
 <body>
@@ -127,7 +134,7 @@
     <button onclick="document.body.classList.toggle('hide-yomi');this.classList.toggle('on')">읽기 가리기</button>
     <button onclick="document.body.classList.toggle('hide-kr');this.classList.toggle('on')">뜻 가리기</button>
   </div>
-  <table id="vTable"></table>
+  <div class="tablewrap"><table id="vTable"></table></div>
   <p class="hint">가린 칸은 마우스를 올리면(터치하면) 보입니다.</p>
 </section>
 

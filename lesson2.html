@@ -62,6 +62,13 @@
   .sqbtn{border:none;color:#fff;padding:10px 20px;border-radius:22px;font-weight:700;cursor:pointer;margin:4px;font-size:.92rem;}
   #sqFb.ok{color:#1f9d55;} #sqFb.no{color:#d64545;}
   footer{text-align:center; color:var(--sub); font-size:.82rem; margin-top:30px;}
+  .tablewrap{overflow-x:auto;}
+  @media (max-width:560px){
+    th,td{padding:7px 8px;font-size:.88rem;}
+    section{padding:20px 14px;}
+    header h1{font-size:1.35rem;}
+    .jp{font-size:1.02rem;}
+  }
 </style>
 </head>
 <body>
@@ -185,14 +192,14 @@
 
 <section id="numbers">
   <h2>숫자 세는 법 <span class="jp">数（かず）の言（い）い方（かた）</span> 1〜10</h2>
-  <table>
+  <div class="tablewrap"><table>
     <tr><th>숫자</th><th>日本語</th><th>한국어</th><th>숫자</th><th>日本語</th><th>한국어</th></tr>
     <tr><td>1</td><td class="jp">ひとつ</td><td class="krcell">하나</td><td>6</td><td class="jp">むっつ</td><td class="krcell">여섯</td></tr>
     <tr><td>2</td><td class="jp">ふたつ</td><td class="krcell">둘</td><td>7</td><td class="jp">ななつ</td><td class="krcell">일곱</td></tr>
     <tr><td>3</td><td class="jp">みっつ</td><td class="krcell">셋</td><td>8</td><td class="jp">やっつ</td><td class="krcell">여덟</td></tr>
     <tr><td>4</td><td class="jp">よっつ</td><td class="krcell">넷</td><td>9</td><td class="jp">ここのつ</td><td class="krcell">아홉</td></tr>
     <tr><td>5</td><td class="jp">いつつ</td><td class="krcell">다섯</td><td>10</td><td class="jp">とお</td><td class="krcell">열</td></tr>
-  </table>
+  </table></div>
   <div class="box">
     <b>문형:</b> <span class="jp">食（た）べ物（もの）+ を + 数（かず）+ お願（ねが）いします</span> <span class="kr">음식 + 을/를 + 개수 + 주세요</span>
   </div>

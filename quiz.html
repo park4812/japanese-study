@@ -247,6 +247,7 @@ function nextQ(){
   const prompt=document.getElementById('qPrompt');
   const listenBtn=document.getElementById('qListen');
   prompt.className='qtext';
+  prompt.style.fontSize='';   // 듣기 모드에서 줄였던 글자 크기 원복
   if(mode==='j2k'||mode==='sent'){
     prompt.innerHTML=ruby(item);
     prompt.style.cursor='pointer'; prompt.title='클릭하면 발음 재생 🔊';
@@ -269,6 +270,7 @@ function nextQ(){
   opts.forEach(o=>{
     const b=document.createElement('button');
     if(isK2J){ b.innerHTML=ruby(o); } else { b.textContent=o.kr; }
+    b.dataset.correct=(o===item)?'1':'0';
     b.onclick=()=>answer(b,o===item,item,isK2J);
     box.appendChild(b);
   });
@@ -282,8 +284,7 @@ function answer(btn,ok,item,isK2J){
   const box=document.getElementById('qChoices');
   [...box.children].forEach(b=>{
     b.disabled=true;
-    const isAnswerBtn = isK2J ? (b.textContent.replace(/\s/g,'')===(item.yomi?item.jp+item.yomi:item.jp).replace(/\s/g,'')||b.innerHTML.includes(item.jp)) : (b.textContent===item.kr);
-    if(isAnswerBtn) b.classList.add('correct');
+    if(b.dataset.correct==='1') b.classList.add('correct');
   });
   const fb=document.getElementById('qFb');
   if(ok){

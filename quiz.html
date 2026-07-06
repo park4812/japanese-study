@@ -72,16 +72,27 @@
     <button id="m-k2j" onclick="setMode('k2j',this)">🈁 일본어 고르기</button>
     <button id="m-listen" onclick="setMode('listen',this)">🎧 듣기 퀴즈</button>
     <button id="m-sent" onclick="setMode('sent',this)">💬 문장 퀴즈</button>
+    <button id="m-type" onclick="setMode('type',this)">⌨️ 타이핑</button>
+    <button id="m-cloze" onclick="setMode('cloze',this)">✍️ 빈칸 조사</button>
   </div>
 
   <div class="qarea">
     <div id="qPrompt" class="qtext"></div>
     <button id="qListen" class="listenbtn" style="display:none;" onclick="playCurrent()">🔊</button>
+    <div id="typeArea" style="display:none;">
+      <input id="typeBox" placeholder="로마자로 입력 (예: mizu)" autocomplete="off"
+        style="font-size:1.1rem;padding:10px 14px;border:2px solid var(--line);border-radius:10px;width:min(320px,84%);text-align:center;">
+      <div style="margin-top:10px;">
+        <button style="border:none;background:var(--accent);color:#fff;padding:10px 24px;border-radius:22px;font-weight:700;cursor:pointer;font-size:.95rem;" onclick="checkType()">확인 (Enter)</button>
+        <button style="border:none;background:#aab2c4;color:#fff;padding:10px 18px;border-radius:22px;font-weight:700;cursor:pointer;font-size:.95rem;" onclick="giveUpType()">모르겠어요</button>
+      </div>
+      <div style="font-size:.78rem;color:var(--sub);margin-top:8px;">mizu → みず 로 자동 변환 · 히라가나 직접 입력도 OK</div>
+    </div>
     <div class="choices" id="qChoices"></div>
     <div class="feedback" id="qFb"></div>
     <div class="score" id="qScore">정답 0 / 시도 0 · <span class="streak" id="qStreak"></span></div>
   </div>
-  <p class="hint">📖 일본어를 보고 뜻 고르기 · 🈁 뜻을 보고 일본어 고르기 · 🎧 발음을 듣고 뜻 고르기 · 💬 문장의 뜻 고르기<br>결과는 🏆 기록 페이지에 자동 저장됩니다.</p>
+  <p class="hint">📖 뜻 고르기 · 🈁 일본어 고르기 · 🎧 듣기 · 💬 문장 뜻 · ⌨️ 뜻을 보고 일본어 직접 입력 · ✍️ 문장 빈칸에 알맞은 조사 고르기<br>결과는 🏆 기록 페이지에 자동 저장됩니다.</p>
 </section>
 
 </div>
@@ -215,12 +226,66 @@ function saveRecord(type,ok){
   }catch(e){}
 }
 
+// ===================== 로마자→히라가나 변환 =====================
+const ROMA={a:'あ',i:'い',u:'う',e:'え',o:'お',ka:'か',ki:'き',ku:'く',ke:'け',ko:'こ',ga:'が',gi:'ぎ',gu:'ぐ',ge:'げ',go:'ご',
+sa:'さ',shi:'し',si:'し',su:'す',se:'せ',so:'そ',za:'ざ',ji:'じ',zi:'じ',zu:'ず',ze:'ぜ',zo:'ぞ',
+ta:'た',chi:'ち',ti:'ち',tsu:'つ',tu:'つ',te:'て',to:'と',da:'だ',de:'で',do:'ど',
+na:'な',ni:'に',nu:'ぬ',ne:'ね',no:'の',ha:'は',hi:'ひ',fu:'ふ',hu:'ふ',he:'へ',ho:'ほ',
+ba:'ば',bi:'び',bu:'ぶ',be:'べ',bo:'ぼ',pa:'ぱ',pi:'ぴ',pu:'ぷ',pe:'ぺ',po:'ぽ',
+ma:'ま',mi:'み',mu:'む',me:'め',mo:'も',ya:'や',yu:'ゆ',yo:'よ',ra:'ら',ri:'り',ru:'る',re:'れ',ro:'ろ',
+wa:'わ',wo:'を',kya:'きゃ',kyu:'きゅ',kyo:'きょ',gya:'ぎゃ',gyu:'ぎゅ',gyo:'ぎょ',
+sha:'しゃ',sya:'しゃ',shu:'しゅ',syu:'しゅ',sho:'しょ',syo:'しょ',
+ja:'じゃ',jya:'じゃ',zya:'じゃ',ju:'じゅ',jyu:'じゅ',zyu:'じゅ',jo:'じょ',jyo:'じょ',zyo:'じょ',
+cha:'ちゃ',tya:'ちゃ',chu:'ちゅ',tyu:'ちゅ',cho:'ちょ',tyo:'ちょ',
+nya:'にゃ',nyu:'にゅ',nyo:'にょ',hya:'ひゃ',hyu:'ひゅ',hyo:'ひょ',bya:'びゃ',byu:'びゅ',byo:'びょ',
+pya:'ぴゃ',pyu:'ぴゅ',pyo:'ぴょ',mya:'みゃ',myu:'みゅ',myo:'みょ',rya:'りゃ',ryu:'りゅ',ryo:'りょ'};
+function roma2hira(s){
+  s=s.toLowerCase().replace(/\s/g,'');
+  let out='',i=0;
+  while(i<s.length){
+    if(s[i]==='-'){out+='ー';i++;continue;}
+    if(s[i]==='n'&&s[i+1]==='n'&&!'aiueoy'.includes(s[i+2]||'')){out+='ん';i+=2;continue;}
+    if(s[i]==='n'&&(i+1>=s.length||!'aiueoyn'.includes(s[i+1]))){out+='ん';i++;continue;}
+    if(i+1<s.length&&s[i]===s[i+1]&&'kstpgzdbcfhjr'.includes(s[i])){out+='っ';i++;continue;}
+    let hit=false;
+    for(const len of [3,2,1]){
+      const part=s.substr(i,len);
+      if(ROMA[part]){out+=ROMA[part];i+=len;hit=true;break;}
+    }
+    if(!hit){out+=s[i];i++;}
+  }
+  return out;
+}
+function kata2hira(s){return s.replace(/[ァ-ヶ]/g,c=>String.fromCharCode(c.charCodeAt(0)-0x60));}
+function normJa(s){return kata2hira((s||'')).replace(/[\s。、．，,.!?！？・〜~ー－]/g,'');}
+
+// ===================== 빈칸(조사) 찾기 =====================
+const PARTICLES=['は','を','が','に','で','から','も','へ','の','か'];
+function clozeSpots(jp){
+  const spots=[];
+  for(const p of PARTICLES){
+    let i=jp.indexOf(p);
+    while(i!==-1){
+      const okSpot = !(p==='は'&&i===0)            // 문장 첫 글자 は 제외 (はじめまして 등)
+        && !(p==='で'&&jp[i+1]==='す')             // です의 で 제외
+        && !(p==='か'&&i!==jp.length-1)            // か는 문장 끝(의문)만
+        && !(p==='の'&&i===0);
+      if(okSpot) spots.push({p,i});
+      i=jp.indexOf(p,i+1);
+    }
+  }
+  return spots;
+}
+
 // ===================== 퀴즈 로직 =====================
 let mode='j2k', current=null, answered=false, tries=0, correct=0, streak=0;
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 function pool(){
   const l=document.getElementById('qLesson').value;
-  const src=(mode==='sent')?SENTENCES:WORDS;
+  let src;
+  if(mode==='sent') src=SENTENCES;
+  else if(mode==='cloze') src=SENTENCES.filter(s=>clozeSpots(s.jp).length>0);
+  else src=WORDS;
   return l==='all'?src.slice():src.filter(w=>w.lesson===l);
 }
 function setMode(m,btn){
@@ -238,35 +303,70 @@ function nextQ(){
   if(p.length<4){ document.getElementById('qPrompt').textContent='문제가 부족해요'; return; }
   answered=false;
   let item=p[Math.floor(Math.random()*p.length)];
-  if(current&&p.length>1){let g=0;while(item===current&&g++<10){item=p[Math.floor(Math.random()*p.length)];}}
+  if(current&&p.length>1){let g=0;while(item===(current._base||current)&&g++<10){item=p[Math.floor(Math.random()*p.length)];}}
   current=item;
-  // 보기: 정답 + 오답 3개
+  const prompt=document.getElementById('qPrompt');
+  const listenBtn=document.getElementById('qListen');
+  const box=document.getElementById('qChoices');
+  const typeArea=document.getElementById('typeArea');
+  prompt.className='qtext'; prompt.style.fontSize='';
+  prompt.onclick=null; prompt.style.cursor='default';
+  listenBtn.style.display='none';
+  typeArea.style.display='none';
+  box.style.display='grid';
+  box.innerHTML='';
+  document.getElementById('qFb').textContent=''; document.getElementById('qFb').className='feedback';
+
+  // ---- ⌨️ 타이핑 모드 ----
+  if(mode==='type'){
+    prompt.textContent=item.kr;
+    prompt.className='qtext kr-q';
+    box.style.display='none';
+    typeArea.style.display='block';
+    const tb=document.getElementById('typeBox');
+    tb.value=''; tb.focus();
+    updateScore(); return;
+  }
+
+  // ---- ✍️ 빈칸(조사) 모드 ----
+  if(mode==='cloze'){
+    const spots=clozeSpots(item.jp);
+    const spot=spots[Math.floor(Math.random()*spots.length)];
+    current={_base:item, yomi:item.yomi, jp:item.jp, _spot:spot};
+    prompt.innerHTML=item.jp.slice(0,spot.i)
+      +'<span style="color:#e0763b;font-weight:800;">〔？〕</span>'
+      +item.jp.slice(spot.i+spot.p.length)
+      +'<div style="font-size:.95rem;color:var(--sub);margin-top:8px;font-weight:400;">'+item.kr+'</div>';
+    const others=shuffle(PARTICLES.filter(x=>x!==spot.p)).slice(0,3);
+    shuffle([spot.p,...others]).forEach(o=>{
+      const b=document.createElement('button');
+      b.textContent=o;
+      b.style.fontSize='1.35rem';
+      b.dataset.correct=(o===spot.p)?'1':'0';
+      b.onclick=()=>answerCloze(b,o===spot.p,item,spot);
+      box.appendChild(b);
+    });
+    updateScore(); return;
+  }
+
+  // ---- 객관식 모드 (뜻/일본어/듣기/문장) ----
   const others=shuffle(p.filter(w=>w!==item)).slice(0,3);
   const isK2J=(mode==='k2j');
   const opts=shuffle([item,...others]);
-  const prompt=document.getElementById('qPrompt');
-  const listenBtn=document.getElementById('qListen');
-  prompt.className='qtext';
-  prompt.style.fontSize='';   // 듣기 모드에서 줄였던 글자 크기 원복
   if(mode==='j2k'||mode==='sent'){
     prompt.innerHTML=ruby(item);
     prompt.style.cursor='pointer'; prompt.title='클릭하면 발음 재생 🔊';
     prompt.onclick=playCurrent;
-    listenBtn.style.display='none';
   }else if(mode==='k2j'){
     prompt.textContent=item.kr;
     prompt.className='qtext kr-q';
-    prompt.onclick=null; prompt.style.cursor='default';
-    listenBtn.style.display='none';
   }else{ // listen
     prompt.innerHTML='발음을 듣고 뜻을 고르세요';
     prompt.className='qtext kr-q';
-    prompt.style.fontSize='1.1rem'; prompt.onclick=null;
+    prompt.style.fontSize='1.1rem';
     listenBtn.style.display='inline-block';
     setTimeout(playCurrent,300);
   }
-  const box=document.getElementById('qChoices');
-  box.innerHTML='';
   opts.forEach(o=>{
     const b=document.createElement('button');
     if(isK2J){ b.innerHTML=ruby(o); } else { b.textContent=o.kr; }
@@ -274,8 +374,65 @@ function nextQ(){
     b.onclick=()=>answer(b,o===item,item,isK2J);
     box.appendChild(b);
   });
-  document.getElementById('qFb').textContent=''; document.getElementById('qFb').className='feedback';
   updateScore();
+}
+
+// 타이핑 채점
+function checkType(){
+  if(mode!=='type'||answered) return;
+  const raw=document.getElementById('typeBox').value.trim();
+  if(!raw) return;
+  const item=current;
+  const conv=/[^\x00-\x7F]/.test(raw) ? raw : roma2hira(raw);
+  const inp=normJa(conv);
+  const ok = !!inp && (inp===normJa(item.yomi||item.jp) || inp===normJa(item.jp));
+  answered=true; tries++;
+  sfx(ok); saveRecord('quiz',ok);
+  const fb=document.getElementById('qFb');
+  if(ok){
+    correct++; streak++;
+    fb.innerHTML='⭕ 정답! '+item.jp+(item.yomi?' ('+item.yomi+')':'');
+    fb.className='feedback ok';
+  }else{
+    streak=0;
+    fb.innerHTML='❌ 입력: '+conv+'<br>정답: '+item.jp+(item.yomi?' ('+item.yomi+')':'')+' = '+item.kr;
+    fb.className='feedback no';
+  }
+  speakJa(item.yomi||item.jp);
+  updateScore();
+  setTimeout(nextQ, ok?1300:2600);
+}
+function giveUpType(){
+  if(mode!=='type'||answered) return;
+  answered=true; tries++; streak=0;
+  sfx(false); saveRecord('quiz',false);
+  const item=current;
+  const fb=document.getElementById('qFb');
+  fb.innerHTML='💡 정답: '+item.jp+(item.yomi?' ('+item.yomi+')':'')+' = '+item.kr;
+  fb.className='feedback no';
+  speakJa(item.yomi||item.jp);
+  updateScore();
+  setTimeout(nextQ, 2400);
+}
+document.getElementById('typeBox').addEventListener('keydown',e=>{if(e.key==='Enter')checkType();});
+
+// 빈칸(조사) 채점
+function answerCloze(btn,ok,item,spot){
+  if(answered) return;
+  answered=true; tries++;
+  sfx(ok); saveRecord('quiz',ok);
+  const box=document.getElementById('qChoices');
+  [...box.children].forEach(b=>{ b.disabled=true; if(b.dataset.correct==='1') b.classList.add('correct'); });
+  const fb=document.getElementById('qFb');
+  if(ok){ correct++; streak++; fb.textContent='⭕ 정답!'; fb.className='feedback ok'; }
+  else{
+    streak=0; btn.classList.add('wrong');
+    fb.innerHTML='❌ 정답: 「'+spot.p+'」 — '+item.jp;
+    fb.className='feedback no';
+  }
+  speakJa(item.yomi||item.jp);
+  updateScore();
+  setTimeout(nextQ, ok?1300:2500);
 }
 function answer(btn,ok,item,isK2J){
   if(answered) return;

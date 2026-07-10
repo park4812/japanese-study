@@ -46,6 +46,7 @@
   <a href="index.html">🏠 홈</a>
   <a href="lesson1.html">Lesson 1</a>
   <a href="lesson2.html">Lesson 2</a>
+  <a href="lesson3.html">Lesson 3</a>
   <a href="kana.html">가나 연습</a>
   <a href="vocab.html">단어 복습</a>
   <a href="quiz.html"><b>🎲 퀴즈</b></a>
@@ -65,6 +66,7 @@
       <option value="all">전체 레슨</option>
       <option value="L1">Lesson 1 · 자기소개</option>
       <option value="L2">Lesson 2 · 주문</option>
+      <option value="L3">Lesson 3 · 여행 일정</option>
     </select>
   </div>
   <div class="modes">
@@ -130,7 +132,23 @@ const WORDS=[
   {jp:"九つ",yomi:"ここのつ",kr:"아홉 (9개)",lesson:"L2"},{jp:"十",yomi:"とお",kr:"열 (10개)",lesson:"L2"},
   {jp:"すみません",yomi:"",kr:"저기요 / 실례합니다",lesson:"L2"},
   {jp:"いらっしゃいませ",yomi:"",kr:"어서 오세요",lesson:"L2"},
-  {jp:"かしこまりました",yomi:"",kr:"알겠습니다 (정중)",lesson:"L2"}
+  {jp:"かしこまりました",yomi:"",kr:"알겠습니다 (정중)",lesson:"L2"},
+  // L3 여행 일정 (ます형)
+  {jp:"行きます",yomi:"いきます",kr:"갑니다",lesson:"L3"},
+  {jp:"食べます",yomi:"たべます",kr:"먹습니다",lesson:"L3"},
+  {jp:"飲みます",yomi:"のみます",kr:"마십니다",lesson:"L3"},
+  {jp:"見ます",yomi:"みます",kr:"봅니다",lesson:"L3"},
+  {jp:"買います",yomi:"かいます",kr:"삽니다",lesson:"L3"},
+  {jp:"撮ります",yomi:"とります",kr:"(사진을) 찍습니다",lesson:"L3"},
+  {jp:"泊まります",yomi:"とまります",kr:"숙박합니다",lesson:"L3"},
+  {jp:"出発します",yomi:"しゅっぱつします",kr:"출발합니다",lesson:"L3"},
+  {jp:"到着します",yomi:"とうちゃくします",kr:"도착합니다",lesson:"L3"},
+  {jp:"今日",yomi:"きょう",kr:"오늘",lesson:"L3"},
+  {jp:"明日",yomi:"あした",kr:"내일",lesson:"L3"},
+  {jp:"明後日",yomi:"あさって",kr:"모레",lesson:"L3"},
+  {jp:"朝",yomi:"あさ",kr:"아침",lesson:"L3"},
+  {jp:"昼",yomi:"ひる",kr:"낮 / 점심",lesson:"L3"},
+  {jp:"夜",yomi:"よる",kr:"밤",lesson:"L3"}
 ];
 const SENTENCES=[
   // L1
@@ -154,7 +172,19 @@ const SENTENCES=[
   {jp:"何を食べますか",yomi:"なにをたべますか",kr:"무엇을 먹습니까?",lesson:"L2"},
   {jp:"何を飲みますか",yomi:"なにをのみますか",kr:"무엇을 마십니까?",lesson:"L2"},
   {jp:"ご注文はお決まりですか",yomi:"ごちゅうもんはおきまりですか",kr:"주문은 정하셨습니까?",lesson:"L2"},
-  {jp:"いくつお願いしますか",yomi:"いくつおねがいしますか",kr:"몇 개 주문하시겠습니까?",lesson:"L2"}
+  {jp:"いくつお願いしますか",yomi:"いくつおねがいしますか",kr:"몇 개 주문하시겠습니까?",lesson:"L2"},
+  // L3
+  {jp:"明日東京へ行きます",yomi:"あしたとうきょうへいきます",kr:"내일 도쿄에 갑니다",lesson:"L3"},
+  {jp:"昼にラーメンを食べます",yomi:"ひるにらーめんをたべます",kr:"점심에 라멘을 먹습니다",lesson:"L3"},
+  {jp:"夜はホテルに泊まります",yomi:"よるはほてるにとまります",kr:"밤에는 호텔에 숙박합니다",lesson:"L3"},
+  {jp:"朝ホテルを出発します",yomi:"あさほてるをしゅっぱつします",kr:"아침에 호텔을 출발합니다",lesson:"L3"},
+  {jp:"今日は京都へ行きません",yomi:"きょうはきょうとへいきません",kr:"오늘은 교토에 가지 않습니다",lesson:"L3"},
+  {jp:"魚は食べません",yomi:"さかなはたべません",kr:"생선은 먹지 않습니다",lesson:"L3"},
+  {jp:"明日東京へ行きますか",yomi:"あしたとうきょうへいきますか",kr:"내일 도쿄에 갑니까?",lesson:"L3"},
+  {jp:"ホテルに泊まりますか",yomi:"ほてるにとまりますか",kr:"호텔에 숙박합니까?",lesson:"L3"},
+  {jp:"明日は何をしますか",yomi:"あしたはなにをしますか",kr:"내일은 무엇을 합니까?",lesson:"L3"},
+  {jp:"写真を撮りますか",yomi:"しゃしんをとりますか",kr:"사진을 찍습니까?",lesson:"L3"},
+  {jp:"買い物をします",yomi:"かいものをします",kr:"쇼핑을 합니다",lesson:"L3"}
 ];
 // ================================================================
 

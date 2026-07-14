@@ -66,6 +66,9 @@
   <a href="lesson1.html">Lesson 1</a>
   <a href="lesson2.html">Lesson 2</a>
   <a href="lesson3.html">Lesson 3</a>
+  <a href="lesson4.html">Lesson 4</a>
+  <a href="review.html">📚 종합</a>
+  <a href="numbers.html">🔢 숫자</a>
   <a href="kana.html">가나 연습</a>
   <a href="vocab.html"><b>단어 복습</b></a>
   <a href="quiz.html">🎲 퀴즈</a>
@@ -296,9 +299,25 @@ const WORDS = [
   {jp:"明後日", yomi:"あさって", romaji:"asatte", kr:"모레", lesson:"L3", cat:"시간"},
   {jp:"朝", yomi:"あさ", romaji:"asa", kr:"아침", lesson:"L3", cat:"시간"},
   {jp:"昼", yomi:"ひる", romaji:"hiru", kr:"낮 / 점심", lesson:"L3", cat:"시간"},
-  {jp:"夜", yomi:"よる", romaji:"yoru", kr:"밤", lesson:"L3", cat:"시간"}
+  {jp:"夜", yomi:"よる", romaji:"yoru", kr:"밤", lesson:"L3", cat:"시간"},
+  // ---- Lesson 4: 여행 추억 (과거형) ----
+  {jp:"昨日", yomi:"きのう", romaji:"kinou", kr:"어제", lesson:"L4", cat:"시간"},
+  {jp:"一昨日", yomi:"おととい", romaji:"ototoi", kr:"그저께", lesson:"L4", cat:"시간"},
+  {jp:"行きました", yomi:"いきました", romaji:"ikimashita", kr:"갔습니다", lesson:"L4", cat:"동사"},
+  {jp:"食べました", yomi:"たべました", romaji:"tabemashita", kr:"먹었습니다", lesson:"L4", cat:"동사"},
+  {jp:"飲みました", yomi:"のみました", romaji:"nomimashita", kr:"마셨습니다", lesson:"L4", cat:"동사"},
+  {jp:"見ました", yomi:"みました", romaji:"mimashita", kr:"봤습니다", lesson:"L4", cat:"동사"},
+  {jp:"買いました", yomi:"かいました", romaji:"kaimashita", kr:"샀습니다", lesson:"L4", cat:"동사"},
+  {jp:"撮りました", yomi:"とりました", romaji:"torimashita", kr:"찍었습니다", lesson:"L4", cat:"동사"},
+  {jp:"泊まりました", yomi:"とまりました", romaji:"tomarimashita", kr:"숙박했습니다", lesson:"L4", cat:"동사"},
+  {jp:"帰りました", yomi:"かえりました", romaji:"kaerimashita", kr:"돌아왔습니다", lesson:"L4", cat:"동사"},
+  {jp:"楽しかったです", yomi:"たのしかったです", romaji:"tanoshikatta desu", kr:"즐거웠습니다", lesson:"L4", cat:"표현"},
+  {jp:"おいしかったです", yomi:"", romaji:"oishikatta desu", kr:"맛있었습니다", lesson:"L4", cat:"표현"},
+  {jp:"面白かったです", yomi:"おもしろかったです", romaji:"omoshirokatta desu", kr:"재미있었습니다", lesson:"L4", cat:"표현"},
+  {jp:"疲れました", yomi:"つかれました", romaji:"tsukaremashita", kr:"피곤했습니다", lesson:"L4", cat:"표현"},
+  {jp:"思い出", yomi:"おもいで", romaji:"omoide", kr:"추억", lesson:"L4", cat:"단어"}
 ];
-const LESSON_NAMES = { "L1": "Lesson 1 · 자기소개", "L2": "Lesson 2 · 주문", "L3": "Lesson 3 · 여행 일정" };
+const LESSON_NAMES = { "L1": "Lesson 1 · 자기소개", "L2": "Lesson 2 · 주문", "L3": "Lesson 3 · 여행 일정", "L4": "Lesson 4 · 여행 추억" };
 /* ============================================================ */
 
 // 레슨 선택 옵션 채우기

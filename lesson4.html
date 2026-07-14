@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>일본어 Lesson 4 — 여행 추억 말하기 (～ました)</title>
+<style>
+  :root{
+    --bg:#fbf5f9; --card:#ffffff; --ink:#1e2433; --sub:#5b6478;
+    --accent:#b23a78; --accent-soft:#f9e8f1; --line:#f0dbe8;
+    --jp:#6d1f47; --kr:#5f3fa8; --warn-bg:#fff6e5; --warn-bd:#f0c36d;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:'Apple SD Gothic Neo','Noto Sans KR','Hiragino Sans','Noto Sans JP',sans-serif;
+       background:var(--bg); color:var(--ink); line-height:1.75; padding-bottom:80px;}
+  header{background:linear-gradient(135deg,#9c2d66,#d66ba0); color:#fff; padding:44px 20px 36px; text-align:center;}
+  header h1{font-size:1.7rem; margin-bottom:6px;}
+  header p{opacity:.9; font-size:.95rem;}
+  .wrap{max-width:860px; margin:0 auto; padding:0 16px;}
+  nav{position:sticky; top:0; z-index:10; background:rgba(255,255,255,.95); backdrop-filter:blur(6px);
+      border-bottom:1px solid var(--line); overflow-x:auto; white-space:nowrap; padding:8px 12px;}
+  nav a{display:inline-block; padding:6px 12px; margin:2px; border-radius:16px; font-size:.85rem;
+        color:var(--sub); text-decoration:none;}
+  nav a:hover{background:var(--accent-soft); color:var(--accent);}
+  .toolbar{display:flex; gap:10px; justify-content:center; margin:20px auto 4px; flex-wrap:wrap;}
+  .toolbar button{border:1.5px solid var(--accent); background:#fff; color:var(--accent);
+        padding:8px 18px; border-radius:22px; font-size:.9rem; cursor:pointer; font-weight:600;}
+  .toolbar button.on{background:var(--accent); color:#fff;}
+  section{background:var(--card); border:1px solid var(--line); border-radius:14px;
+          padding:26px 24px; margin:22px 0; scroll-margin-top:70px;}
+  h2{font-size:1.25rem; color:var(--accent); border-left:5px solid var(--accent);
+     padding-left:12px; margin-bottom:16px;}
+  h3{font-size:1.02rem; margin:20px 0 8px; color:var(--jp);}
+  .jp{font-size:1.08rem; color:var(--jp); font-weight:600;}
+  rt{font-size:.62em; color:#c08aa5; font-weight:400;}
+  .kr{color:var(--kr); font-size:.93rem;}
+  .kr::before{content:"→ ";}
+  body.hide-kr .kr{filter:blur(6px); cursor:pointer; transition:filter .15s;}
+  body.hide-kr .kr:hover, body.hide-kr .kr:active{filter:none;}
+  body.hide-furi rt{visibility:hidden;}
+  table{width:100%; border-collapse:collapse; margin:10px 0;}
+  th,td{border:1px solid var(--line); padding:9px 12px; text-align:left; font-size:.98rem;}
+  th{background:var(--accent-soft); color:var(--jp); font-size:.88rem;}
+  td.krcell{color:var(--kr); font-size:.93rem;}
+  body.hide-kr td.krcell{filter:blur(6px); cursor:pointer;}
+  body.hide-kr td.krcell:hover, body.hide-kr td.krcell:active{filter:none;}
+  ul{list-style:none;}
+  li.pair{padding:9px 0; border-bottom:1px dashed var(--line);}
+  li.pair:last-child{border-bottom:none;}
+  .box{background:var(--accent-soft); border-radius:10px; padding:14px 16px; margin:10px 0;}
+  .warn{background:var(--warn-bg); border:1px solid var(--warn-bd); border-radius:10px;
+        padding:14px 16px; margin:10px 0;}
+  .warn strong{color:#9a6b00;}
+  .tag{display:inline-block; background:var(--accent); color:#fff; border-radius:6px;
+       font-size:.75rem; padding:2px 8px; margin-right:8px; vertical-align:middle;}
+  .dialog .speaker{font-weight:700; color:#fff; background:var(--accent); border-radius:14px;
+       padding:2px 10px; font-size:.82rem; margin-right:8px;}
+  .dialog .turn{margin:14px 0; padding:12px 14px; background:var(--accent-soft); border-radius:10px;}
+  .dialog .turn.b{background:#ede8fa;}
+  .dialog .turn.b .speaker{background:var(--kr);}
+  .hint{font-size:.82rem; color:var(--sub); text-align:center; margin-top:4px;}
+  .sqbtn{border:none;color:#fff;padding:10px 20px;border-radius:22px;font-weight:700;cursor:pointer;margin:4px;font-size:.92rem;}
+  #sqFb.ok{color:#1f9d55;} #sqFb.no{color:#d64545;}
+  footer{text-align:center; color:var(--sub); font-size:.82rem; margin-top:30px;}
+  .tablewrap{overflow-x:auto;}
+  @media (max-width:560px){
+    th,td{padding:7px 8px;font-size:.88rem;}
+    section{padding:20px 14px;}
+    header h1{font-size:1.35rem;}
+    .jp{font-size:1.02rem;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="wrap">
+  <a href="index.html" style="font-weight:700;">🏠 홈</a>
+  <a href="lesson3.html" style="font-weight:700;">Lesson 3</a>
+  <a href="review.html" style="font-weight:700;">📚 종합</a>
+  <a href="numbers.html" style="font-weight:700;">🔢 숫자</a>
+  <a href="vocab.html" style="font-weight:700;">단어 복습</a>
+  <a href="quiz.html" style="font-weight:700;">🎲 퀴즈</a>
+  <a href="records.html" style="font-weight:700;">🏆 기록</a>
+  <span style="color:#ecd3e1;">|</span>
+  <a href="#goal">목표</a>
+  <a href="#review">복습</a>
+  <a href="#vocab">단어</a>
+  <a href="#g1">문법① ました</a>
+  <a href="#g2">문법② ませんでした</a>
+  <a href="#g3">문법③ ましたか</a>
+  <a href="#time">시간 표현</a>
+  <a href="#dialog">모델 회화</a>
+  <a href="#practice">회화 연습</a>
+  <a href="#speakquiz">🎤 말하기 퀴즈</a>
+  <a href="#summary">정리·숙제</a>
+</nav>
+
+<header>
+  <h1>Lesson 4 · <ruby>旅行<rt>りょこう</rt></ruby>の<ruby>思<rt>おも</rt></ruby>い<ruby>出<rt>で</rt></ruby>を<ruby>話<rt>はな</rt></ruby>そう</h1>
+  <p>여행 추억 말하기 — ～ました 과거형 · ～ませんでした · ～ましたか</p>
+</header>
+
+<div class="wrap">
+
+<div class="toolbar">
+  <button id="btnKr" onclick="toggle('hide-kr',this)">한국어 뜻 가리기</button>
+  <button id="btnFuri" onclick="toggle('hide-furi',this)">후리가나 가리기</button>
+</div>
+<p class="hint">뜻을 가린 상태에서 마우스를 올리면(모바일은 터치) 잠깐 보여요.<br>🔊 <b>일본어 문장을 클릭하면 발음이 재생됩니다.</b></p>
+
+<section id="goal">
+  <h2>오늘의 목표 <span class="jp">今日（きょう）の目標（もくひょう）</span></h2>
+  <ul>
+    <li class="pair"><span class="jp">✅ <ruby>昨日<rt>きのう</rt></ruby>したことを<ruby>日本語<rt>にほんご</rt></ruby>で<ruby>話<rt>はな</rt></ruby>せる。</span><br><span class="kr">어제 한 일을 일본어로 말할 수 있다.</span></li>
+    <li class="pair"><span class="jp">✅ 「～ました」を<ruby>使<rt>つか</rt></ruby>って<ruby>旅行<rt>りょこう</rt></ruby>の<ruby>思<rt>おも</rt></ruby>い<ruby>出<rt>で</rt></ruby>を<ruby>話<rt>はな</rt></ruby>せる。</span><br><span class="kr">「~ました」를 사용하여 여행의 추억을 말할 수 있다.</span></li>
+    <li class="pair"><span class="jp">✅ <ruby>相手<rt>あいて</rt></ruby>に<ruby>昨日<rt>きのう</rt></ruby>したことを<ruby>質問<rt>しつもん</rt></ruby>できる。</span><br><span class="kr">상대방에게 어제 한 일을 질문할 수 있다.</span></li>
+  </ul>
+</section>
+
+<section id="review">
+  <h2>복습 — Lesson 3 여행 일정 <span class="jp">前回（ぜんかい）の復習（ふくしゅう）</span></h2>
+  <ul>
+    <li class="pair"><span class="jp"><ruby>明日<rt>あした</rt></ruby>は<ruby>京都<rt>きょうと</rt></ruby>へ<ruby>行<rt>い</rt></ruby>きます。</span><br><span class="kr">내일은 교토에 갑니다.</span></li>
+    <li class="pair"><span class="jp"><ruby>昼<rt>ひる</rt></ruby>はラーメンを<ruby>食<rt>た</rt></ruby>べます。</span><br><span class="kr">점심에는 라멘을 먹습니다.</span></li>
+    <li class="pair"><span class="jp"><ruby>夜<rt>よる</rt></ruby>はホテルに<ruby>泊<rt>と</rt></ruby>まります。</span><br><span class="kr">밤에는 호텔에 숙박합니다.</span></li>
+    <li class="pair"><span class="jp"><ruby>何<rt>なに</rt></ruby>をしますか。</span><br><span class="kr">무엇을 합니까?</span></li>
+  </ul>
+</section>
+
+<section id="vocab">
+  <h2>오늘의 단어 <span class="jp">今日（きょう）の単語（たんご）</span> — 15개</h2>
+  <table>
+    <tr><th>日本語</th><th>읽기</th><th>한국어</th></tr>
+    <tr><td class="jp">昨日</td><td>きのう</td><td class="krcell">어제</td></tr>
+    <tr><td class="jp">一昨日</td><td>おととい</td><td class="krcell">그저께</td></tr>
+    <tr><td class="jp">行きました</td><td>いきました</td><td class="krcell">갔습니다</td></tr>
+    <tr><td class="jp">食べました</td><td>たべました</td><td class="krcell">먹었습니다</td></tr>
+    <tr><td class="jp">飲みました</td><td>のみました</td><td class="krcell">마셨습니다</td></tr>
+    <tr><td class="jp">見ました</td><td>みました</td><td class="krcell">봤습니다</td></tr>
+    <tr><td class="jp">買いました</td><td>かいました</td><td class="krcell">샀습니다</td></tr>
+    <tr><td class="jp">撮りました</td><td>とりました</td><td class="krcell">찍었습니다</td></tr>
+    <tr><td class="jp">泊まりました</td><td>とまりました</td><td class="krcell">숙박했습니다</td></tr>
+    <tr><td class="jp">帰りました</td><td>かえりました</td><td class="krcell">돌아왔습니다</td></tr>
+    <tr><td class="jp">楽しかったです</td><td>たのしかったです</td><td class="krcell">즐거웠습니다</td></tr>
+    <tr><td class="jp">おいしかったです</td><td>—</td><td class="krcell">맛있었습니다</td></tr>
+    <tr><td class="jp">面白かったです</td><td>おもしろかったです</td><td class="krcell">재미있었습니다</td></tr>
+    <tr><td class="jp">疲れました</td><td>つかれました</td><td class="krcell">피곤했습니다</td></tr>
+    <tr><td class="jp">思い出</td><td>おもいで</td><td class="krcell">추억</td></tr>
+  </table>
+</section>
+
+<section id="g1">
+  <h2>문법 ① 과거형 <span class="jp">～ました</span></h2>
+  <div class="box">
+    「～ました」는 「～ます」의 <b>과거형</b> — 이미 끝난 일을 말할 때 사용<br>
+    <b>어순:</b> <span class="jp">主語 + 時間 + 場所 + 動詞ました</span> <span class="kr">주어 + 시간 + 장소 + 동사(과거형) — 한국어와 어순이 거의 같아요</span>
+  </div>
+  <ul>
+    <li class="pair"><span class="jp"><ruby>私<rt>わたし</rt></ruby>は<ruby>昨日<rt>きのう</rt></ruby><ruby>京都<rt>きょうと</rt></ruby>へ<ruby>行<rt>い</rt></ruby>きました。</span><br><span class="kr">저는 어제 교토에 갔습니다.</span></li>
+    <li class="pair"><span class="jp"><ruby>私<rt>わたし</rt></ruby>は<ruby>昨日<rt>きのう</rt></ruby><ruby>寿司<rt>すし</rt></ruby>を<ruby>食<rt>た</rt></ruby>べました。</span><br><span class="kr">저는 어제 초밥을 먹었습니다.</span></li>
+    <li class="pair"><span class="jp"><ruby>私<rt>わたし</rt></ruby>は<ruby>昨日<rt>きのう</rt></ruby>ホテルに<ruby>泊<rt>と</rt></ruby>まりました。</span><br><span class="kr">저는 어제 호텔에 숙박했습니다.</span></li>
+  </ul>
+  <h3>만들기 — 「ます」→「ました」로 바꾸기만!</h3>
+  <div class="tablewrap"><table>
+    <tr><th>현재형 (～ます)</th><th>과거형 (～ました)</th></tr>
+    <tr><td class="jp">行きます</td><td class="jp">行きました</td></tr>
+    <tr><td class="jp">食べます</td><td class="jp">食べました</td></tr>
+    <tr><td class="jp">飲みます</td><td class="jp">飲みました</td></tr>
+    <tr><td class="jp">買います</td><td class="jp">買いました</td></tr>
+    <tr><td class="jp">撮ります</td><td class="jp">撮りました</td></tr>
+    <tr><td class="jp">します</td><td class="jp">しました</td></tr>
+    <tr><td class="jp">来（き）ます</td><td class="jp">来（き）ました</td></tr>
+  </table></div>
+  <div class="warn"><strong>💡 포인트</strong> — 현재의 일은 「ます」, 어제·과거의 일은 「ました」!</div>
+</section>
+
+<section id="g2">
+  <h2>문법 ② 과거 부정 <span class="jp">～ませんでした</span></h2>
+  <div class="box">
+    과거에 <b>하지 않은 일</b>을 말할 때 = 「~지 않았습니다」<br>
+    만들기: 「ません」→「ませんでした」로 바꾸기만!
+  </div>
+  <ul>
+    <li class="pair"><span class="jp"><ruby>私<rt>わたし</rt></ruby>は<ruby>昨日<rt>きのう</rt></ruby><ruby>京都<rt>きょうと</rt></ruby>へ<ruby>行<rt>い</rt></ruby>きませんでした。</span><br><span class="kr">저는 어제 교토에 가지 않았습니다.</span></li>
+    <li class="pair"><span class="jp"><ruby>私<rt>わたし</rt></ruby>は<ruby>昨日<rt>きのう</rt></ruby><ruby>寿司<rt>すし</rt></ruby>を<ruby>食<rt>た</rt></ruby>べませんでした。</span><br><span class="kr">저는 어제 초밥을 먹지 않았습니다.</span></li>
+  </ul>
+  <div class="tablewrap"><table>
+    <tr><th>현재 부정 (～ません)</th><th>과거 부정 (～ませんでした)</th></tr>
+    <tr><td class="jp">行きません</td><td class="jp">行きませんでした</td></tr>
+    <tr><td class="jp">食べません</td><td class="jp">食べませんでした</td></tr>
+    <tr><td class="jp">しません</td><td class="jp">しませんでした</td></tr>
+  </table></div>
+</section>
+
+<section id="g3">
+  <h2>문법 ③ 과거 의문 <span class="jp">～ましたか</span></h2>
+  <div class="box">
+    상대방에게 과거에 한 일을 질문할 때 = 「~았습니까? / ~었습니까?」<br>
+    「ました」+「か」= 질문!
+  </div>
+  <ul>
+    <li class="pair"><span class="jp"><ruby>昨日<rt>きのう</rt></ruby><ruby>京都<rt>きょうと</rt></ruby>へ<ruby>行<rt>い</rt></ruby>きましたか。</span><br><span class="kr">어제 교토에 갔습니까?</span></li>
+    <li class="pair"><span class="jp"><ruby>寿司<rt>すし</rt></ruby>を<ruby>食<rt>た</rt></ruby>べましたか。</span><br><span class="kr">초밥을 먹었습니까?</span></li>
+  </ul>
+  <h3><span class="tag">대답</span>答（こた）え方（かた）</h3>
+  <ul>
+    <li class="pair"><span class="jp">はい、<ruby>行<rt>い</rt></ruby>きました。／ いいえ、<ruby>行<rt>い</rt></ruby>きませんでした。</span><br><span class="kr">네, 갔습니다. / 아니요, 가지 않았습니다.</span></li>
+    <li class="pair"><span class="jp">はい、<ruby>食<rt>た</rt></ruby>べました。／ いいえ、<ruby>食<rt>た</rt></ruby>べませんでした。</span><br><span class="kr">네, 먹었습니다. / 아니요, 먹지 않았습니다.</span></li>
+  </ul>
+</section>
+
+<section id="time">
+  <h2>시간 표현 <span class="jp">時間（じかん）の表現（ひょうげん）</span></h2>
+  <div class="tablewrap"><table>
+    <tr><th>日本語</th><th>한국어</th><th>日本語</th><th>한국어</th></tr>
+    <tr><td class="jp">今日（きょう）</td><td class="krcell">오늘</td><td class="jp">先週（せんしゅう）</td><td class="krcell">지난주</td></tr>
+    <tr><td class="jp">昨日（きのう）</td><td class="krcell">어제</td><td class="jp">朝（あさ）/ 昼（ひる）/ 夜（よる）</td><td class="krcell">아침 / 점심 / 밤</td></tr>
+    <tr><td class="jp">一昨日（おととい）</td><td class="krcell">그저께</td><td></td><td></td></tr>
+  </table></div>
+  <ul>
+    <li class="pair"><span class="jp"><ruby>朝<rt>あさ</rt></ruby>ホテルを<ruby>出発<rt>しゅっぱつ</rt></ruby>しました。</span><br><span class="kr">아침에 호텔을 출발했습니다.</span></li>
+    <li class="pair"><span class="jp"><ruby>昼<rt>ひる</rt></ruby>にラーメンを<ruby>食<rt>た</rt></ruby>べました。</span><br><span class="kr">점심에 라멘을 먹었습니다.</span></li>
+    <li class="pair"><span class="jp"><ruby>夜<rt>よる</rt></ruby>ホテルに<ruby>泊<rt>と</rt></ruby>まりました。</span><br><span class="kr">밤에 호텔에 숙박했습니다.</span></li>
+  </ul>
+</section>
+
+<section id="dialog" class="dialog">
+  <h2>모델 회화 <span class="jp">モデル会話（かいわ）</span></h2>
+  <div class="turn">
+    <span class="speaker">A</span>
+    <span class="jp"><ruby>昨日<rt>きのう</rt></ruby>は<ruby>何<rt>なに</rt></ruby>をしましたか。</span><br>
+    <span class="kr">어제는 무엇을 했습니까?</span>
+  </div>
+  <div class="turn b">
+    <span class="speaker">B</span>
+    <span class="jp"><ruby>京都<rt>きょうと</rt></ruby>へ<ruby>行<rt>い</rt></ruby>きました。</span><br>
+    <span class="kr">교토에 갔습니다.</span>
+  </div>
+  <div class="turn">
+    <span class="speaker">A</span>
+    <span class="jp"><ruby>何<rt>なに</rt></ruby>を<ruby>食<rt>た</rt></ruby>べましたか。</span><br>
+    <span class="kr">무엇을 먹었습니까?</span>
+  </div>
+  <div class="turn b">
+    <span class="speaker">B</span>
+    <span class="jp"><ruby>寿司<rt>すし</rt></ruby>を<ruby>食<rt>た</rt></ruby>べました。</span><br>
+    <span class="kr">초밥을 먹었습니다.</span>
+  </div>
+  <div class="turn">
+    <span class="speaker">A</span>
+    <span class="jp"><ruby>旅行<rt>りょこう</rt></ruby>は<ruby>楽<rt>たの</rt></ruby>しかったですか。</span><br>
+    <span class="kr">여행은 즐거웠습니까?</span>
+  </div>
+  <div class="turn b">
+    <span class="speaker">B</span>
+    <span class="jp">はい、とても<ruby>楽<rt>たの</rt></ruby>しかったです。</span><br>
+    <span class="kr">네, 아주 즐거웠습니다.</span>
+  </div>
+</section>
+
+<section id="practice">
+  <h2>회화 연습 <span class="jp">会話練習（かいわれんしゅう）</span></h2>
+  <h3>① 질문에 답해 봅시다</h3>
+  <ul>
+    <li class="pair"><span class="jp"><ruby>昨日<rt>きのう</rt></ruby>はどこへ<ruby>行<rt>い</rt></ruby>きましたか。</span><br><span class="kr">어제 어디에 갔습니까?</span></li>
+    <li class="pair"><span class="jp"><ruby>何<rt>なに</rt></ruby>を<ruby>食<rt>た</rt></ruby>べましたか。</span><br><span class="kr">무엇을 먹었습니까?</span></li>
+    <li class="pair"><span class="jp"><ruby>何<rt>なに</rt></ruby>を<ruby>買<rt>か</rt></ruby>いましたか。</span><br><span class="kr">무엇을 샀습니까?</span></li>
+    <li class="pair"><span class="jp"><ruby>旅行<rt>りょこう</rt></ruby>は<ruby>楽<rt>たの</rt></ruby>しかったですか。</span><br><span class="kr">여행은 즐거웠습니까?</span></li>
+  </ul>
+  <h3>② 어제의 여행을 말해 봅시다</h3>
+  <ul>
+    <li class="pair"><span class="jp"><ruby>昨日<rt>きのう</rt></ruby>は<ruby>大阪<rt>おおさか</rt></ruby>へ<ruby>行<rt>い</rt></ruby>きました。</span><br><span class="kr">어제는 오사카에 갔습니다.</span></li>
+    <li class="pair"><span class="jp"><ruby>昼<rt>ひる</rt></ruby>はラーメンを<ruby>食<rt>た</rt></ruby>べました。</span><br><span class="kr">점심에는 라멘을 먹었습니다.</span></li>
+    <li class="pair"><span class="jp"><ruby>写真<rt>しゃしん</rt></ruby>をたくさん<ruby>撮<rt>と</rt></ruby>りました。</span><br><span class="kr">사진을 많이 찍었습니다.</span></li>
+    <li class="pair"><span class="jp">とても<ruby>楽<rt>たの</rt></ruby>しかったです。</span><br><span class="kr">매우 즐거웠습니다.</span></li>
+  </ul>
+  <div class="box">
+    🗣 <b>롤플레이</b> — 일본인 친구에게 여행 추억 말하기:<br>
+    <span class="jp" style="font-size:.98rem;">A: <ruby>旅行<rt>りょこう</rt></ruby>はどうでしたか。 B: とても<ruby>楽<rt>たの</rt></ruby>しかったです。<ruby>神社<rt>じんじゃ</rt></ruby>を<ruby>見<rt>み</rt></ruby>ました。<ruby>写真<rt>しゃしん</rt></ruby>を<ruby>撮<rt>と</rt></ruby>りました。また<ruby>行<rt>い</rt></ruby>きたいです。</span><br>
+    <span class="kr">A: 여행은 어땠습니까? B: 매우 즐거웠습니다. 신사를 봤습니다. 사진을 찍었습니다. 또 가고 싶습니다.</span>
+  </div>
+</section>
+
+<section id="speakquiz">
+  <h2>🎤 문장 말하기 퀴즈</h2>
+  <p style="font-size:.88rem;color:var(--sub);">한국어 문장을 보고 일본어로 말해 보세요. 발음을 인식해서 정답을 판정합니다. (크롬 권장)</p>
+  <div style="text-align:center;">
+    <div id="sqPrompt" style="font-size:1.35rem;font-weight:700;color:var(--kr);margin:18px 8px;"></div>
+    <div id="sqHint" style="min-height:30px;color:var(--sub);font-size:1.05rem;"></div>
+    <div>
+      <button id="sqMicBtn" class="sqbtn" style="background:#d64545;font-size:1.02rem;padding:12px 26px;" onclick="sqToggle()">🎤 연습 시작</button>
+      <button class="sqbtn" style="background:#5b6478;" onclick="sqHintShow()">💡 힌트</button>
+      <button class="sqbtn" style="background:#3b6fe0;" onclick="sqModel()">🔊 정답 발음</button>
+      <button class="sqbtn" style="background:#aab2c4;" onclick="sqNext()">건너뛰기 →</button>
+    </div>
+    <div id="sqFb" style="min-height:54px;font-weight:600;margin-top:10px;"></div>
+    <div id="sqProg" style="font-size:.85rem;color:var(--sub);"></div>
+  </div>
+  <p class="hint">연습 시작을 누르면 마이크가 계속 켜진 채 진행되고, 정답이면 자동으로 다음 문장으로 넘어갑니다.</p>
+</section>
+
+<section id="summary">
+  <h2>오늘의 정리 & 숙제 <span class="jp">まとめ・宿題（しゅくだい）</span></h2>
+  <div class="box">
+    ✔️ <b>～ました</b> — ~았/었습니다<br>
+    ✔️ <b>～ませんでした</b> — ~지 않았습니다<br>
+    ✔️ <b>～ましたか</b> — ~았/었습니까?<br>
+    ✔️ <b>～かったです</b> — 楽しかった・おいしかった・面白かった<br>
+    → 여행의 추억을 일본어로 말하기 완성!
+  </div>
+  <div class="warn">
+    <strong>📝 숙제:</strong> 「어제의 여행 일기」를 일본어로 5~8문장 써 오기<br><br>
+    <span class="jp"><ruby>昨日<rt>きのう</rt></ruby>は<ruby>京都<rt>きょうと</rt></ruby>へ<ruby>行<rt>い</rt></ruby>きました。<ruby>神社<rt>じんじゃ</rt></ruby>を<ruby>見<rt>み</rt></ruby>ました。<ruby>抹茶<rt>まっちゃ</rt></ruby>を<ruby>飲<rt>の</rt></ruby>みました。お<ruby>土産<rt>みやげ</rt></ruby>を<ruby>買<rt>か</rt></ruby>いました。とても<ruby>楽<rt>たの</rt></ruby>しかったです。</span>
+  </div>
+</section>
+
+<footer>Lesson 4 · 旅行の思い出を話そう — 학습용 정리 페이지</footer>
+</div>
+
+<script>
+function toggle(cls, btn){
+  document.body.classList.toggle(cls);
+  btn.classList.toggle('on');
+}
+const TTS_URLS=[
+  t=>'https://translate.googleapis.com/translate_tts?client=gtx&ie=UTF-8&tl=ja&q='+encodeURIComponent(t),
+  t=>'https://translate.google.com/translate_tts?ie=UTF-8&tl=ja&client=tw-ob&q='+encodeURIComponent(t)
+];
+let _audio=null;
+const _acache={};
+function jaVoice(){
+  if(!('speechSynthesis' in window)) return null;
+  const vs=speechSynthesis.getVoices().filter(v=>v.lang && v.lang.startsWith('ja'));
+  return vs.find(v=>/Google/i.test(v.name))
+      || vs.find(v=>/Kyoko|Nanami|Haruka|Sayaka|Ichiro|O-?ren/i.test(v.name))
+      || vs.find(v=>!/Eddy|Flo|Grandma|Grandpa|Reed|Rocko|Sandy|Shelley|Albert|Bahh|Bells|Boing|Bubbles|Cellos|Jester|Organ|Superstar|Trinoids|Whisper|Wobble|Zarvox/i.test(v.name))
+      || vs[0] || null;
+}
+function speakJa(text){
+  if(!text) return;
+  if(_audio){try{_audio.pause();}catch(e){} _audio=null;}
+  if('speechSynthesis' in window){
+    if(speechSynthesis.speaking||speechSynthesis.pending) speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(text);
+    const v=jaVoice();
+    if(v) u.voice=v;
+    u.lang='ja-JP'; u.rate=0.85;
+    speechSynthesis.speak(u);
+    setTimeout(()=>{ try{speechSynthesis.resume();}catch(e){} },100);
+    return;
+  }
+  const c=_acache[text];
+  if(c){ _audio=c; c.currentTime=0; c.play().catch(()=>{ delete _acache[text]; tryTts(text,0,TTS_URLS.length); }); return; }
+  tryTts(text,0,TTS_URLS.length);
+}
+function tryTts(text,idx,left){
+  if(left<=0) return;
+  idx=idx%TTS_URLS.length;
+  const a=new Audio(TTS_URLS[idx](text));
+  _audio=a;
+  let done=false;
+  const fail=()=>{ if(done||_audio!==a) return; done=true; try{a.pause();}catch(e){} tryTts(text,idx+1,left-1); };
+  const timer=setTimeout(fail,2000);
+  a.onplaying=()=>{ if(_audio===a){ done=true; clearTimeout(timer); _acache[text]=a; } };
+  a.onerror=fail;
+  a.play().catch(fail);
+}
+if('speechSynthesis' in window){speechSynthesis.getVoices();}
+function sfx(ok){
+  try{
+    const ctx = window._actx || (window._actx = new (window.AudioContext||window.webkitAudioContext)());
+    if(ctx.state==='suspended') ctx.resume();
+    const t=ctx.currentTime;
+    const tone=(f,s,d,ty,g)=>{const o=ctx.createOscillator(),gn=ctx.createGain();o.type=ty||'sine';o.frequency.value=f;
+      gn.gain.setValueAtTime(g||0.15,t+s);gn.gain.exponentialRampToValueAtTime(0.001,t+s+d);
+      o.connect(gn);gn.connect(ctx.destination);o.start(t+s);o.stop(t+s+d);};
+    if(ok){tone(880,0,0.15);tone(1319,0.12,0.3);}
+    else{tone(233,0,0.25,'square',0.07);tone(196,0.12,0.35,'square',0.07);}
+  }catch(e){}
+}
+function saveRecord(type,ok){
+  try{
+    const d=new Date();
+    const date=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+    const all=JSON.parse(localStorage.getItem('jpRecords')||'{}');
+    if(!all[date]) all[date]={};
+    if(!all[date][type]) all[date][type]={c:0,t:0};
+    all[date][type].t++; if(ok) all[date][type].c++;
+    localStorage.setItem('jpRecords',JSON.stringify(all));
+  }catch(e){}
+}
+function jpText(el){
+  const c=el.cloneNode(true);
+  c.querySelectorAll('rt').forEach(r=>r.remove());
+  return c.textContent.replace(/（[^）]*）/g,'').replace(/[✅⚠️📝💡→🗣]/g,'').trim();
+}
+document.querySelectorAll('.jp').forEach(el=>{
+  el.style.cursor='pointer';
+  el.title='클릭하면 발음 재생 🔊';
+  el.addEventListener('click',()=>speakJa(jpText(el)));
+});
+
+// ---------- 문장 말하기 퀴즈 (Lesson 4) ----------
+const SQ_SENTENCES=[
+  {jp:"昨日京都へ行きました", yomi:"きのうきょうとへいきました", kr:"어제 교토에 갔습니다"},
+  {jp:"寿司を食べました", yomi:"すしをたべました", kr:"초밥을 먹었습니다"},
+  {jp:"お茶を飲みました", yomi:"おちゃをのみました", kr:"차를 마셨습니다"},
+  {jp:"写真をたくさん撮りました", yomi:"しゃしんをたくさんとりました", kr:"사진을 많이 찍었습니다"},
+  {jp:"お土産を買いました", yomi:"おみやげをかいました", kr:"기념품을 샀습니다"},
+  {jp:"ホテルに泊まりました", yomi:"ほてるにとまりました", kr:"호텔에 숙박했습니다"},
+  {jp:"京都へ行きませんでした", yomi:"きょうとへいきませんでした", kr:"교토에 가지 않았습니다"},
+  {jp:"寿司を食べませんでした", yomi:"すしをたべませんでした", kr:"초밥을 먹지 않았습니다"},
+  {jp:"昨日は何をしましたか", yomi:"きのうはなにをしましたか", kr:"어제는 무엇을 했습니까?"},
+  {jp:"何を食べましたか", yomi:"なにをたべましたか", kr:"무엇을 먹었습니까?"},
+  {jp:"ホテルに泊まりましたか", yomi:"ほてるにとまりましたか", kr:"호텔에 숙박했습니까?"},
+  {jp:"とても楽しかったです", yomi:"とてもたのしかったです", kr:"매우 즐거웠습니다"},
+  {jp:"旅行はどうでしたか", yomi:"りょこうはどうでしたか", kr:"여행은 어땠습니까?"},
+  {jp:"また行きたいです", yomi:"またいきたいです", kr:"또 가고 싶습니다"}
+];
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+let sqDeck=[], sqIdx=0, sqCorrect=0, sqSession=false, sqRec=null, _micStream=null;
+function kata2hira(s){return s.replace(/[ァ-ヶ]/g,c=>String.fromCharCode(c.charCodeAt(0)-0x60));}
+function sqNorm(s){return kata2hira((s||'')).replace(/[\s。、．，,.!?！？・〜~ー－「」]/g,'');}
+function lev(a,b){
+  const m=a.length,n=b.length;
+  if(!m)return n; if(!n)return m;
+  let prev=Array.from({length:n+1},(_,i)=>i);
+  for(let i=1;i<=m;i++){
+    const cur=[i];
+    for(let j=1;j<=n;j++){
+      cur[j]=Math.min(prev[j]+1,cur[j-1]+1,prev[j-1]+(a[i-1]===b[j-1]?0:1));
+    }
+    prev=cur;
+  }
+  return prev[n];
+}
+function sqMatch(heard,s){
+  const h=sqNorm(heard);
+  if(!h) return false;
+  const t1=sqNorm(s.jp), t2=sqNorm(s.yomi);
+  if(h.includes(t1)||h.includes(t2)) return true;
+  const sim=(a,b)=>1-lev(a,b)/Math.max(a.length,b.length);
+  return sim(h,t1)>=0.75 || sim(h,t2)>=0.75;
+}
+function sqShuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function sqStart(){ sqDeck=sqShuffle(SQ_SENTENCES.slice()); sqIdx=0; sqCorrect=0; sqShow(); }
+function sqShow(){
+  document.getElementById('sqHint').textContent='';
+  const fb=document.getElementById('sqFb'); fb.textContent=''; fb.className='';
+  if(sqIdx>=sqDeck.length){
+    document.getElementById('sqPrompt').textContent='🎉 완료!';
+    document.getElementById('sqProg').textContent=`${sqDeck.length}문장 중 ${sqCorrect}개 성공`;
+    return;
+  }
+  document.getElementById('sqPrompt').textContent=sqDeck[sqIdx].kr;
+  document.getElementById('sqProg').textContent=`${sqIdx+1} / ${sqDeck.length} · 성공 ${sqCorrect}`;
+}
+function sqHintShow(){ if(sqIdx<sqDeck.length){ const s=sqDeck[sqIdx]; document.getElementById('sqHint').textContent=s.jp+' ('+s.yomi+')'; } }
+function sqModel(){ if(sqIdx<sqDeck.length) speakJa(sqDeck[sqIdx].yomi); }
+function sqNext(){ if(sqIdx<sqDeck.length) sqIdx++; sqShow(); }
+function sqSetBtn(on){
+  const b=document.getElementById('sqMicBtn');
+  b.textContent=on?'⏹ 연습 중지 (👂 듣는 중…)':'🎤 연습 시작';
+  b.style.background=on?'#1f9d55':'#d64545';
+}
+async function ensureMic(){
+  if(_micStream && _micStream.active) return true;
+  try{ _micStream=await navigator.mediaDevices.getUserMedia({audio:true}); return true; }
+  catch(e){
+    const fb=document.getElementById('sqFb'); fb.className='no';
+    fb.textContent='마이크 권한이 필요해요. 주소창 옆 🔒에서 허용해 주세요.';
+    return false;
+  }
+}
+async function sqToggle(){
+  const fb=document.getElementById('sqFb');
+  if(sqSession){ sqSession=false; if(sqRec){try{sqRec.stop();}catch(e){}} sqSetBtn(false); return; }
+  if(!SR){ fb.textContent='이 브라우저는 음성 인식을 지원하지 않아요. 크롬(Chrome)에서 열어 주세요.'; fb.className='no'; return; }
+  if(sqIdx>=sqDeck.length) sqStart();
+  if(!(await ensureMic())) return;
+  sqSession=true; sqSetBtn(true);
+  fb.textContent='일본어로 말해 보세요!'; fb.className='';
+  sqStartRec();
+}
+function sqStartRec(){
+  sqRec=new SR();
+  sqRec.lang='ja-JP'; sqRec.continuous=true; sqRec.interimResults=false; sqRec.maxAlternatives=3;
+  sqRec.onresult=(e)=>{
+    const res=e.results[e.results.length-1];
+    sqHandle([...res].map(r=>r.transcript));
+  };
+  sqRec.onerror=(e)=>{
+    if(e.error==='not-allowed'){
+      sqSession=false; sqSetBtn(false);
+      const fb=document.getElementById('sqFb'); fb.className='no';
+      fb.textContent='마이크 권한이 필요해요. 주소창 옆 🔒에서 "허용"으로 바꿔 주세요.';
+    }
+  };
+  sqRec.onend=()=>{
+    if(sqSession){ try{sqRec.start();}catch(e){ setTimeout(()=>{if(sqSession)sqStartRec();},300); } }
+    else sqSetBtn(false);
+  };
+  sqRec.start();
+}
+function sqHandle(alts){
+  if(!sqSession || sqIdx>=sqDeck.length) return;
+  const fb=document.getElementById('sqFb');
+  const s=sqDeck[sqIdx];
+  const hit=alts.some(a=>sqMatch(a,s));
+  sfx(hit); saveRecord('sentence',hit);
+  if(hit){
+    sqCorrect++;
+    fb.innerHTML=`⭕ 정답! 「${alts[0]}」<br><span style="font-weight:400;">${s.jp} = ${s.kr}</span>`;
+    fb.className='ok';
+    sqIdx++;
+    setTimeout(()=>{
+      sqShow();
+      if(sqIdx>=sqDeck.length){ sqSession=false; if(sqRec){try{sqRec.stop();}catch(e){}} sqSetBtn(false); }
+      else if(sqSession){ document.getElementById('sqFb').textContent='일본어로 말해 보세요!'; }
+    },1600);
+  }else{
+    fb.innerHTML=`❌ 들린 말: 「${alts[0]||'(인식 실패)'}」<br><span style="font-weight:400;">다시 말하거나 💡 힌트 / 🔊 정답 발음을 들어 보세요</span>`;
+    fb.className='no';
+  }
+  document.getElementById('sqProg').textContent=`${Math.min(sqIdx+1,sqDeck.length)} / ${sqDeck.length} · 성공 ${sqCorrect}`;
+}
+sqStart();
+</script>
+</body>
+</html>

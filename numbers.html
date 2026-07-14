@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>숫자 · 날짜 · 요일 총정리</title>
+<style>
+  :root{--bg:#fffaf2;--card:#fff;--ink:#1e2433;--sub:#5b6478;--accent:#c78a1d;--accent-soft:#fcf1da;--line:#f0e3c8;--jp:#6b4a08;--kr:#7a3fa8;--ok:#1f9d55;--no:#d64545;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Apple SD Gothic Neo','Noto Sans KR','Hiragino Sans','Noto Sans JP',sans-serif;background:var(--bg);color:var(--ink);line-height:1.75;padding-bottom:80px;}
+  header{background:linear-gradient(135deg,#b0761a,#e0ab45);color:#fff;padding:40px 20px 32px;text-align:center;}
+  header h1{font-size:1.6rem;}
+  header p{opacity:.92;font-size:.92rem;}
+  nav.topnav{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.95);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);overflow-x:auto;white-space:nowrap;padding:8px 12px;text-align:center;}
+  nav.topnav a{display:inline-block;padding:6px 12px;margin:2px;border-radius:16px;font-size:.85rem;color:var(--sub);text-decoration:none;}
+  nav.topnav a:hover{background:var(--accent-soft);color:var(--accent);}
+  .wrap{max-width:860px;margin:0 auto;padding:0 14px;}
+  section{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px 20px;margin:20px 0;scroll-margin-top:60px;}
+  h2{font-size:1.2rem;color:var(--accent);border-left:5px solid var(--accent);padding-left:12px;margin-bottom:14px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;}
+  .cell{border:1px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer;transition:transform .08s;background:#fff;}
+  .cell:hover{transform:translateY(-2px);border-color:var(--accent);}
+  .cell .big{font-size:1.15rem;font-weight:700;color:var(--jp);}
+  .cell .yomi{font-size:.92rem;color:var(--accent);font-weight:600;}
+  .cell .kr{font-size:.8rem;color:var(--sub);}
+  .cell.warn{background:#fff3dd;border-color:#e8b455;}
+  .box{background:var(--accent-soft);border-radius:10px;padding:14px 16px;margin:12px 0;font-size:.95rem;}
+  .exjp{color:var(--jp);font-weight:600;cursor:pointer;font-size:1.02rem;}
+  .exjp:hover{color:var(--accent);}
+  .exkr{color:var(--kr);font-size:.9rem;}
+  .exkr::before{content:"→ ";}
+  ul{list-style:none;} li{padding:7px 0;border-bottom:1px dashed var(--line);} li:last-child{border-bottom:none;}
+  /* quiz */
+  .qarea{text-align:center;padding:8px 0;}
+  .qtext{font-size:2.4rem;font-weight:800;color:var(--jp);margin:14px 0;min-height:56px;}
+  .choices{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:520px;margin:12px auto;}
+  .choices button{border:2px solid var(--line);background:#fff;padding:13px 10px;border-radius:12px;font-size:1.05rem;cursor:pointer;font-weight:600;}
+  .choices button:hover{border-color:var(--accent);}
+  .choices button.correct{background:#e5f6ec;border-color:var(--ok);color:var(--ok);}
+  .choices button.wrong{background:#fdeaea;border-color:var(--no);color:var(--no);}
+  .choices button:disabled{cursor:default;}
+  .feedback{min-height:32px;font-weight:700;}
+  .feedback.ok{color:var(--ok);} .feedback.no{color:var(--no);}
+  .controls{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:10px;}
+  .controls select{border:1.5px solid var(--accent);background:#fff;color:var(--accent);padding:6px 14px;border-radius:18px;font-size:.88rem;cursor:pointer;font-weight:600;}
+  .hint{font-size:.8rem;color:var(--sub);text-align:center;margin-top:8px;}
+  .score{font-size:.9rem;color:var(--sub);margin-top:6px;}
+  @media (max-width:560px){ .grid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr));} .choices{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html">🏠 홈</a>
+  <a href="lesson1.html">L1</a>
+  <a href="lesson2.html">L2</a>
+  <a href="lesson3.html">L3</a>
+  <a href="lesson4.html">L4</a>
+  <a href="review.html">📚 종합</a>
+  <a href="numbers.html"><b>🔢 숫자</b></a>
+  <a href="kana.html">가나</a>
+  <a href="vocab.html">단어</a>
+  <a href="quiz.html">🎲 퀴즈</a>
+  <a href="records.html">🏆 기록</a>
+</nav>
+
+<header>
+  <h1>🔢 숫자 · 날짜 · 요일 총정리</h1>
+  <p>기본 숫자 · 개수 세기 · 몇 월 며칠 · 요일 · から〜まで — 카드를 클릭하면 발음이 나와요</p>
+</header>
+
+<div class="wrap">
+
+<section id="num">
+  <h2>① 기본 숫자 <span style="font-size:.85rem;font-weight:400;color:var(--sub);">いち・に・さん…</span></h2>
+  <div class="grid" id="gNum"></div>
+  <div class="box">
+    💡 <b>규칙:</b> 11부터는 조합! 11=じゅういち(10+1), 25=にじゅうご(2×10+5), 99=きゅうじゅうきゅう<br>
+    ⚠️ 4는 よん, 7은 なな, 9는 きゅう를 주로 사용 (し・しち・く는 날짜 등 특정 표현에서)
+  </div>
+</section>
+
+<section id="counter">
+  <h2>② 개수 세기 <span style="font-size:.85rem;font-weight:400;color:var(--sub);">ひとつ・ふたつ… (물건 셀 때)</span></h2>
+  <div class="grid" id="gCounter"></div>
+  <ul style="margin-top:12px;">
+    <li><span class="exjp">ラーメンをひとつお願いします。</span><br><span class="exkr">라멘 하나 주세요.</span></li>
+    <li><span class="exjp">りんごをみっつ買いました。</span><br><span class="exkr">사과를 세 개 샀습니다.</span></li>
+  </ul>
+</section>
+
+<section id="month">
+  <h2>③ 월 <span style="font-size:.85rem;font-weight:400;color:var(--sub);">〜月（がつ） · 何月ですか？</span></h2>
+  <div class="grid" id="gMonth"></div>
+  <div class="box">⚠️ <b>주의 3형제:</b> 4월=<b>し</b>がつ · 7월=<b>しち</b>がつ · 9월=<b>く</b>がつ (よん・なな・きゅう가 아니에요!)</div>
+</section>
+
+<section id="day">
+  <h2>④ 일 (날짜) <span style="font-size:.85rem;font-weight:400;color:var(--sub);">〜日（にち） · 何日ですか？</span></h2>
+  <div class="grid" id="gDay"></div>
+  <div class="box">
+    💡 <b>규칙:</b> 11일부터는 숫자+にち (11日=じゅういちにち, 15日=じゅうごにち…)<br>
+    ⚠️ <b>예외:</b> 1~10일은 특수 읽기(위 카드), 14日=じゅう<b>よっか</b>, 20日=<b>はつか</b>, 24日=にじゅう<b>よっか</b>
+  </div>
+  <ul>
+    <li><span class="exjp">誕生日はいつですか。</span><br><span class="exkr">생일은 언제입니까?</span></li>
+    <li><span class="exjp">7月14日です。</span> <span style="font-size:.85rem;color:var(--sub);">(しちがつ じゅうよっか)</span><br><span class="exkr">7월 14일입니다.</span></li>
+  </ul>
+</section>
+
+<section id="week">
+  <h2>⑤ 요일 <span style="font-size:.85rem;font-weight:400;color:var(--sub);">〜曜日（ようび） · 何曜日ですか？</span></h2>
+  <div class="grid" id="gWeek"></div>
+  <div class="box">
+    💡 <b>から〜まで</b> = ~부터 ~까지
+  </div>
+  <ul>
+    <li><span class="exjp">今日は何曜日ですか。</span><br><span class="exkr">오늘은 무슨 요일입니까?</span></li>
+    <li><span class="exjp">月曜日から金曜日まで働きます。</span><br><span class="exkr">월요일부터 금요일까지 일합니다.</span></li>
+    <li><span class="exjp">月曜日から日曜日まで日本にいます。</span><br><span class="exkr">월요일부터 일요일까지 일본에 있습니다.</span></li>
+  </ul>
+</section>
+
+<section id="quiz">
+  <h2>🎯 읽기 퀴즈 <span style="font-size:.85rem;font-weight:400;color:var(--sub);">— 올바른 읽는 법을 고르세요</span></h2>
+  <div class="controls">
+    <select id="qCat" onchange="nextQ()">
+      <option value="all">전체 랜덤</option>
+      <option value="num">기본 숫자</option>
+      <option value="counter">개수 (ひとつ…)</option>
+      <option value="month">월</option>
+      <option value="day">일 (날짜)</option>
+      <option value="week">요일</option>
+    </select>
+  </div>
+  <div class="qarea">
+    <div class="qtext" id="qText"></div>
+    <div class="choices" id="qChoices"></div>
+    <div class="feedback" id="qFb"></div>
+    <div class="score" id="qScore">정답 0 / 시도 0</div>
+  </div>
+  <p class="hint">자주 틀리는 항목일수록 더 자주 출제됩니다 · 결과는 🏆 기록에 저장</p>
+</section>
+
+</div>
+
+<script>
+// ===================== 데이터 =====================
+// [표기, 읽기(대표), 한국어, 주의여부]
+const NUM_BASIC=[
+["0","ゼロ","영"],["1","いち","일"],["2","に","이"],["3","さん","삼"],["4","よん","사",1],["5","ご","오"],
+["6","ろく","육"],["7","なな","칠",1],["8","はち","팔"],["9","きゅう","구",1],["10","じゅう","십"],
+["11","じゅういち","십일"],["20","にじゅう","이십"],["25","にじゅうご","이십오"],["100","ひゃく","백"],["1000","せん","천"],["10000","いちまん","만"]
+];
+const COUNTERS=[
+["一つ","ひとつ","하나"],["二つ","ふたつ","둘"],["三つ","みっつ","셋"],["四つ","よっつ","넷"],["五つ","いつつ","다섯"],
+["六つ","むっつ","여섯"],["七つ","ななつ","일곱"],["八つ","やっつ","여덟"],["九つ","ここのつ","아홉"],["十","とお","열"]
+];
+const MONTHS=[
+["1月","いちがつ","1월"],["2月","にがつ","2월"],["3月","さんがつ","3월"],["4月","しがつ","4월",1],
+["5月","ごがつ","5월"],["6月","ろくがつ","6월"],["7月","しちがつ","7월",1],["8月","はちがつ","8월"],
+["9月","くがつ","9월",1],["10月","じゅうがつ","10월"],["11月","じゅういちがつ","11월"],["12月","じゅうにがつ","12월"]
+];
+const DAYS=[
+["1日","ついたち","1일",1],["2日","ふつか","2일",1],["3日","みっか","3일",1],["4日","よっか","4일",1],["5日","いつか","5일",1],
+["6日","むいか","6일",1],["7日","なのか","7일",1],["8日","ようか","8일",1],["9日","ここのか","9일",1],["10日","とおか","10일",1],
+["11日","じゅういちにち","11일"],["14日","じゅうよっか","14일",1],["15日","じゅうごにち","15일"],["20日","はつか","20일",1],["24日","にじゅうよっか","24일",1],["30日","さんじゅうにち","30일"]
+];
+const WEEKDAYS=[
+["月曜日","げつようび","월요일"],["火曜日","かようび","화요일"],["水曜日","すいようび","수요일"],
+["木曜日","もくようび","목요일"],["金曜日","きんようび","금요일"],["土曜日","どようび","토요일"],["日曜日","にちようび","일요일"]
+];
+const CATS={num:NUM_BASIC,counter:COUNTERS,month:MONTHS,day:DAYS,week:WEEKDAYS};
+// ==================================================
+
+const TTS_URLS=[
+  t=>'https://translate.googleapis.com/translate_tts?client=gtx&ie=UTF-8&tl=ja&q='+encodeURIComponent(t),
+  t=>'https://translate.google.com/translate_tts?ie=UTF-8&tl=ja&client=tw-ob&q='+encodeURIComponent(t)
+];
+let _audio=null;
+const _acache={};
+function jaVoice(){
+  if(!('speechSynthesis' in window)) return null;
+  const vs=speechSynthesis.getVoices().filter(v=>v.lang && v.lang.startsWith('ja'));
+  return vs.find(v=>/Google/i.test(v.name))
+      || vs.find(v=>/Kyoko|Nanami|Haruka|Sayaka|Ichiro|O-?ren/i.test(v.name))
+      || vs.find(v=>!/Eddy|Flo|Grandma|Grandpa|Reed|Rocko|Sandy|Shelley|Albert|Bahh|Bells|Boing|Bubbles|Cellos|Jester|Organ|Superstar|Trinoids|Whisper|Wobble|Zarvox/i.test(v.name))
+      || vs[0] || null;
+}
+function speakJa(text){
+  if(!text) return;
+  if(_audio){try{_audio.pause();}catch(e){} _audio=null;}
+  if('speechSynthesis' in window){
+    if(speechSynthesis.speaking||speechSynthesis.pending) speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(text);
+    const v=jaVoice();
+    if(v) u.voice=v;
+    u.lang='ja-JP'; u.rate=0.85;
+    speechSynthesis.speak(u);
+    setTimeout(()=>{ try{speechSynthesis.resume();}catch(e){} },100);
+    return;
+  }
+  tryTts(text,0,TTS_URLS.length);
+}
+function tryTts(text,idx,left){
+  if(left<=0) return;
+  idx=idx%TTS_URLS.length;
+  const a=new Audio(TTS_URLS[idx](text));
+  _audio=a;
+  let done=false;
+  const fail=()=>{ if(done||_audio!==a) return; done=true; try{a.pause();}catch(e){} tryTts(text,idx+1,left-1); };
+  const timer=setTimeout(fail,2000);
+  a.onplaying=()=>{ if(_audio===a){ done=true; clearTimeout(timer); _acache[text]=a; } };
+  a.onerror=fail;
+  a.play().catch(fail);
+}
+if('speechSynthesis' in window){speechSynthesis.getVoices();}
+function sfx(ok){
+  try{
+    const ctx = window._actx || (window._actx = new (window.AudioContext||window.webkitAudioContext)());
+    if(ctx.state==='suspended') ctx.resume();
+    const t=ctx.currentTime;
+    const tone=(f,s,d,ty,g)=>{const o=ctx.createOscillator(),gn=ctx.createGain();o.type=ty||'sine';o.frequency.value=f;
+      gn.gain.setValueAtTime(g||0.15,t+s);gn.gain.exponentialRampToValueAtTime(0.001,t+s+d);
+      o.connect(gn);gn.connect(ctx.destination);o.start(t+s);o.stop(t+s+d);};
+    if(ok){tone(880,0,0.15);tone(1319,0.12,0.3);}
+    else{tone(233,0,0.25,'square',0.07);tone(196,0.12,0.35,'square',0.07);}
+  }catch(e){}
+}
+function saveRecord(type,ok){
+  try{
+    const d=new Date();
+    const date=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+    const all=JSON.parse(localStorage.getItem('jpRecords')||'{}');
+    if(!all[date]) all[date]={};
+    if(!all[date][type]) all[date][type]={c:0,t:0};
+    all[date][type].t++; if(ok) all[date][type].c++;
+    localStorage.setItem('jpRecords',JSON.stringify(all));
+  }catch(e){}
+}
+
+// ---------- 카드 렌더링 ----------
+function renderGrid(id,data){
+  document.getElementById(id).innerHTML=data.map(d=>
+    `<div class="cell${d[3]?' warn':''}" onclick="speakJa('${d[1]}')" title="클릭하면 발음 재생 🔊">
+      <span class="big">${d[0]}</span> ${d[3]?'⚠️':''}<br>
+      <span class="yomi">${d[1]}</span><br>
+      <span class="kr">${d[2]}</span>
+    </div>`).join('');
+}
+renderGrid('gNum',NUM_BASIC);
+renderGrid('gCounter',COUNTERS);
+renderGrid('gMonth',MONTHS);
+renderGrid('gDay',DAYS);
+renderGrid('gWeek',WEEKDAYS);
+
+// 예문 클릭 발음
+document.querySelectorAll('.exjp').forEach(el=>{
+  el.addEventListener('click',()=>speakJa(el.textContent.trim()));
+  el.title='클릭하면 발음 재생 🔊';
+});
+
+// ---------- 읽기 퀴즈 (오답 가중치) ----------
+let current=null, answered=false, tries=0, correct=0;
+function statAll(){try{return JSON.parse(localStorage.getItem('numStats')||'{}');}catch(e){return {};}}
+function statSave(key,ok){
+  try{
+    const s=statAll();
+    if(!s[key]) s[key]={c:0,t:0};
+    s[key].t++; if(ok) s[key].c++;
+    localStorage.setItem('numStats',JSON.stringify(s));
+  }catch(e){}
+}
+function weightFor(item,stats){
+  const s=stats[item[0]];
+  if(!s) return 3;
+  const wrong=s.t-s.c;
+  return 1+Math.min(wrong,6)*2;
+}
+function pool(){
+  const c=document.getElementById('qCat').value;
+  if(c==='all') return [].concat(NUM_BASIC,COUNTERS,MONTHS,DAYS,WEEKDAYS);
+  return CATS[c].slice();
+}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function pickWeighted(p){
+  const stats=statAll();
+  const ws=p.map(it=>weightFor(it,stats));
+  let total=ws.reduce((a,b)=>a+b,0), r=Math.random()*total;
+  for(let i=0;i<p.length;i++){ r-=ws[i]; if(r<=0) return p[i]; }
+  return p[p.length-1];
+}
+function nextQ(){
+  const p=pool();
+  answered=false;
+  let item=pickWeighted(p);
+  if(current&&p.length>1){let g=0;while(item===current&&g++<10){item=pickWeighted(p);}}
+  current=item;
+  document.getElementById('qText').textContent=item[0];
+  // 같은 카테고리에서 오답 3개 (읽기 겹치지 않게)
+  const others=shuffle(p.filter(x=>x!==item&&x[1]!==item[1])).slice(0,3);
+  const opts=shuffle([item,...others]);
+  const box=document.getElementById('qChoices');
+  box.innerHTML='';
+  opts.forEach(o=>{
+    const b=document.createElement('button');
+    b.textContent=o[1];
+    b.dataset.correct=(o===item)?'1':'0';
+    b.onclick=()=>answer(b,o===item,item);
+    box.appendChild(b);
+  });
+  document.getElementById('qFb').textContent=''; document.getElementById('qFb').className='feedback';
+}
+function answer(btn,ok,item){
+  if(answered) return;
+  answered=true; tries++;
+  sfx(ok); saveRecord('quiz',ok); statSave(item[0],ok);
+  [...document.getElementById('qChoices').children].forEach(b=>{
+    b.disabled=true;
+    if(b.dataset.correct==='1') b.classList.add('correct');
+  });
+  const fb=document.getElementById('qFb');
+  if(ok){ correct++; fb.textContent='⭕ 정답!'; fb.className='feedback ok'; }
+  else{ btn.classList.add('wrong'); fb.textContent='❌ 정답: '+item[1]; fb.className='feedback no'; }
+  speakJa(item[1]);
+  document.getElementById('qScore').textContent=`정답 ${correct} / 시도 ${tries}`;
+  setTimeout(nextQ, ok?1100:2200);
+}
+nextQ();
+</script>
+</body>
+</html>

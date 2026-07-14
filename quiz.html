@@ -47,6 +47,9 @@
   <a href="lesson1.html">Lesson 1</a>
   <a href="lesson2.html">Lesson 2</a>
   <a href="lesson3.html">Lesson 3</a>
+  <a href="lesson4.html">Lesson 4</a>
+  <a href="review.html">📚 종합</a>
+  <a href="numbers.html">🔢 숫자</a>
   <a href="kana.html">가나 연습</a>
   <a href="vocab.html">단어 복습</a>
   <a href="quiz.html"><b>🎲 퀴즈</b></a>
@@ -67,6 +70,7 @@
       <option value="L1">Lesson 1 · 자기소개</option>
       <option value="L2">Lesson 2 · 주문</option>
       <option value="L3">Lesson 3 · 여행 일정</option>
+      <option value="L4">Lesson 4 · 여행 추억</option>
     </select>
   </div>
   <div class="modes">
@@ -148,7 +152,23 @@ const WORDS=[
   {jp:"明後日",yomi:"あさって",kr:"모레",lesson:"L3"},
   {jp:"朝",yomi:"あさ",kr:"아침",lesson:"L3"},
   {jp:"昼",yomi:"ひる",kr:"낮 / 점심",lesson:"L3"},
-  {jp:"夜",yomi:"よる",kr:"밤",lesson:"L3"}
+  {jp:"夜",yomi:"よる",kr:"밤",lesson:"L3"},
+  // L4 여행 추억 (과거형)
+  {jp:"昨日",yomi:"きのう",kr:"어제",lesson:"L4"},
+  {jp:"一昨日",yomi:"おととい",kr:"그저께",lesson:"L4"},
+  {jp:"行きました",yomi:"いきました",kr:"갔습니다",lesson:"L4"},
+  {jp:"食べました",yomi:"たべました",kr:"먹었습니다",lesson:"L4"},
+  {jp:"飲みました",yomi:"のみました",kr:"마셨습니다",lesson:"L4"},
+  {jp:"見ました",yomi:"みました",kr:"봤습니다",lesson:"L4"},
+  {jp:"買いました",yomi:"かいました",kr:"샀습니다",lesson:"L4"},
+  {jp:"撮りました",yomi:"とりました",kr:"찍었습니다",lesson:"L4"},
+  {jp:"泊まりました",yomi:"とまりました",kr:"숙박했습니다",lesson:"L4"},
+  {jp:"帰りました",yomi:"かえりました",kr:"돌아왔습니다",lesson:"L4"},
+  {jp:"楽しかったです",yomi:"たのしかったです",kr:"즐거웠습니다",lesson:"L4"},
+  {jp:"おいしかったです",yomi:"",kr:"맛있었습니다",lesson:"L4"},
+  {jp:"面白かったです",yomi:"おもしろかったです",kr:"재미있었습니다",lesson:"L4"},
+  {jp:"疲れました",yomi:"つかれました",kr:"피곤했습니다",lesson:"L4"},
+  {jp:"思い出",yomi:"おもいで",kr:"추억",lesson:"L4"}
 ];
 const SENTENCES=[
   // L1
@@ -184,7 +204,18 @@ const SENTENCES=[
   {jp:"ホテルに泊まりますか",yomi:"ほてるにとまりますか",kr:"호텔에 숙박합니까?",lesson:"L3"},
   {jp:"明日は何をしますか",yomi:"あしたはなにをしますか",kr:"내일은 무엇을 합니까?",lesson:"L3"},
   {jp:"写真を撮りますか",yomi:"しゃしんをとりますか",kr:"사진을 찍습니까?",lesson:"L3"},
-  {jp:"買い物をします",yomi:"かいものをします",kr:"쇼핑을 합니다",lesson:"L3"}
+  {jp:"買い物をします",yomi:"かいものをします",kr:"쇼핑을 합니다",lesson:"L3"},
+  // L4
+  {jp:"昨日京都へ行きました",yomi:"きのうきょうとへいきました",kr:"어제 교토에 갔습니다",lesson:"L4"},
+  {jp:"寿司を食べました",yomi:"すしをたべました",kr:"초밥을 먹었습니다",lesson:"L4"},
+  {jp:"写真をたくさん撮りました",yomi:"しゃしんをたくさんとりました",kr:"사진을 많이 찍었습니다",lesson:"L4"},
+  {jp:"お土産を買いました",yomi:"おみやげをかいました",kr:"기념품을 샀습니다",lesson:"L4"},
+  {jp:"ホテルに泊まりました",yomi:"ほてるにとまりました",kr:"호텔에 숙박했습니다",lesson:"L4"},
+  {jp:"京都へ行きませんでした",yomi:"きょうとへいきませんでした",kr:"교토에 가지 않았습니다",lesson:"L4"},
+  {jp:"昨日は何をしましたか",yomi:"きのうはなにをしましたか",kr:"어제는 무엇을 했습니까?",lesson:"L4"},
+  {jp:"何を食べましたか",yomi:"なにをたべましたか",kr:"무엇을 먹었습니까?",lesson:"L4"},
+  {jp:"とても楽しかったです",yomi:"とてもたのしかったです",kr:"매우 즐거웠습니다",lesson:"L4"},
+  {jp:"旅行はどうでしたか",yomi:"りょこうはどうでしたか",kr:"여행은 어땠습니까?",lesson:"L4"}
 ];
 // ================================================================
 

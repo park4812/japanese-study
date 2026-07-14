@@ -422,7 +422,8 @@ function nextQ(){
     prompt.innerHTML=item.jp.slice(0,spot.i)
       +'<span style="color:#e0763b;font-weight:800;">〔？〕</span>'
       +item.jp.slice(spot.i+spot.p.length)
-      +'<div style="font-size:.95rem;color:var(--sub);margin-top:8px;font-weight:400;">'+item.kr+'</div>';
+      +'<div style="font-size:.95rem;color:#8a93a8;font-weight:400;margin-top:2px;">'+item.yomi.split(spot.p).join('〔？〕')+'</div>'
+      +'<div style="font-size:.95rem;color:var(--sub);margin-top:6px;font-weight:400;">'+item.kr+'</div>';
     const others=shuffle(PARTICLES.filter(x=>x!==spot.p)).slice(0,3);
     shuffle([spot.p,...others]).forEach(o=>{
       const b=document.createElement('button');
@@ -510,10 +511,14 @@ function answerCloze(btn,ok,item,spot){
   const box=document.getElementById('qChoices');
   [...box.children].forEach(b=>{ b.disabled=true; if(b.dataset.correct==='1') b.classList.add('correct'); });
   const fb=document.getElementById('qFb');
-  if(ok){ correct++; streak++; fb.textContent='⭕ 정답!'; fb.className='feedback ok'; }
+  if(ok){
+    correct++; streak++;
+    fb.innerHTML='⭕ 정답! '+item.jp+'<br><span style="font-weight:400;font-size:.9rem;">('+item.yomi+')</span>';
+    fb.className='feedback ok';
+  }
   else{
     streak=0; btn.classList.add('wrong');
-    fb.innerHTML='❌ 정답: 「'+spot.p+'」 — '+item.jp;
+    fb.innerHTML='❌ 정답: 「'+spot.p+'」 — '+item.jp+'<br><span style="font-weight:400;font-size:.9rem;">('+item.yomi+')</span>';
     fb.className='feedback no';
   }
   speakJa(item.yomi||item.jp);

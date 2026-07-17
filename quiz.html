@@ -69,6 +69,7 @@
   <a href="lesson2.html">🍜 Lesson 2 · 레스토랑 주문</a>
   <a href="lesson3.html">🗓️ Lesson 3 · 여행 일정</a>
   <a href="lesson4.html">📸 Lesson 4 · 여행 추억</a>
+  <a href="lesson5.html">✈️ Lesson 5 · 공항</a>
   <div class="dsec">복습 · 연습</div>
   <a href="review.html">📚 종합 복습</a>
   <a href="numbers.html">🔢 숫자 · 날짜 · 요일</a>
@@ -96,6 +97,7 @@
       <option value="L2">Lesson 2 · 주문</option>
       <option value="L3">Lesson 3 · 여행 일정</option>
       <option value="L4">Lesson 4 · 여행 추억</option>
+      <option value="L5">Lesson 5 · 공항</option>
     </select>
   </div>
   <div class="modes">
@@ -193,7 +195,23 @@ const WORDS=[
   {jp:"おいしかったです",yomi:"",kr:"맛있었습니다",lesson:"L4"},
   {jp:"面白かったです",yomi:"おもしろかったです",kr:"재미있었습니다",lesson:"L4"},
   {jp:"疲れました",yomi:"つかれました",kr:"피곤했습니다",lesson:"L4"},
-  {jp:"思い出",yomi:"おもいで",kr:"추억",lesson:"L4"}
+  {jp:"思い出",yomi:"おもいで",kr:"추억",lesson:"L4"},
+  // L5 공항
+  {jp:"空港",yomi:"くうこう",kr:"공항",lesson:"L5"},
+  {jp:"飛行機",yomi:"ひこうき",kr:"비행기",lesson:"L5"},
+  {jp:"航空券",yomi:"こうくうけん",kr:"항공권",lesson:"L5"},
+  {jp:"パスポート",yomi:"",kr:"여권",lesson:"L5"},
+  {jp:"チェックイン",yomi:"",kr:"체크인",lesson:"L5"},
+  {jp:"カウンター",yomi:"",kr:"카운터",lesson:"L5"},
+  {jp:"荷物",yomi:"にもつ",kr:"짐",lesson:"L5"},
+  {jp:"手荷物",yomi:"てにもつ",kr:"휴대 수하물",lesson:"L5"},
+  {jp:"搭乗券",yomi:"とうじょうけん",kr:"탑승권",lesson:"L5"},
+  {jp:"搭乗口",yomi:"とうじょうぐち",kr:"탑승구",lesson:"L5"},
+  {jp:"窓側",yomi:"まどがわ",kr:"창가 쪽",lesson:"L5"},
+  {jp:"通路側",yomi:"つうろがわ",kr:"통로 쪽",lesson:"L5"},
+  {jp:"席",yomi:"せき",kr:"자리, 좌석",lesson:"L5"},
+  {jp:"預けます",yomi:"あずけます",kr:"맡깁니다",lesson:"L5"},
+  {jp:"座ります",yomi:"すわります",kr:"앉습니다",lesson:"L5"}
 ];
 const SENTENCES=[
   // L1
@@ -240,7 +258,18 @@ const SENTENCES=[
   {jp:"昨日は何をしましたか",yomi:"きのうはなにをしましたか",kr:"어제는 무엇을 했습니까?",lesson:"L4"},
   {jp:"何を食べましたか",yomi:"なにをたべましたか",kr:"무엇을 먹었습니까?",lesson:"L4"},
   {jp:"とても楽しかったです",yomi:"とてもたのしかったです",kr:"매우 즐거웠습니다",lesson:"L4"},
-  {jp:"旅行はどうでしたか",yomi:"りょこうはどうでしたか",kr:"여행은 어땠습니까?",lesson:"L4"}
+  {jp:"旅行はどうでしたか",yomi:"りょこうはどうでしたか",kr:"여행은 어땠습니까?",lesson:"L4"},
+  // L5
+  {jp:"チェックインしたいです",yomi:"ちぇっくいんしたいです",kr:"체크인하고 싶습니다",lesson:"L5"},
+  {jp:"荷物を預けたいです",yomi:"にもつをあずけたいです",kr:"짐을 맡기고 싶습니다",lesson:"L5"},
+  {jp:"窓側の席に座りたいです",yomi:"まどがわのせきにすわりたいです",kr:"창가 자리에 앉고 싶습니다",lesson:"L5"},
+  {jp:"日本でラーメンを食べたいです",yomi:"にほんでらーめんをたべたいです",kr:"일본에서 라멘을 먹고 싶습니다",lesson:"L5"},
+  {jp:"長い時間待ちたくないです",yomi:"ながいじかんまちたくないです",kr:"오랫동안 기다리고 싶지 않습니다",lesson:"L5"},
+  {jp:"何を食べたいですか",yomi:"なにをたべたいですか",kr:"무엇을 먹고 싶습니까?",lesson:"L5"},
+  {jp:"どこへ行きたいですか",yomi:"どこへいきたいですか",kr:"어디에 가고 싶습니까?",lesson:"L5"},
+  {jp:"荷物はいくつですか",yomi:"にもつはいくつですか",kr:"짐은 몇 개입니까?",lesson:"L5"},
+  {jp:"搭乗口はどこですか",yomi:"とうじょうぐちはどこですか",kr:"탑승구는 어디입니까?",lesson:"L5"},
+  {jp:"パスポートをお願いします",yomi:"ぱすぽーとをおねがいします",kr:"여권을 부탁드립니다",lesson:"L5"}
 ];
 // ================================================================
 

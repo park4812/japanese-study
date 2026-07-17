@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>일본어 Lesson 5 — 공항에서 (～たいです)</title>
+<style>
+  :root{
+    --bg:#f2f8fc; --card:#ffffff; --ink:#1e2433; --sub:#5b6478;
+    --accent:#1f7ac2; --accent-soft:#e3f0fa; --line:#d5e6f2;
+    --jp:#0d3d63; --kr:#7a3fa8; --warn-bg:#fff6e5; --warn-bd:#f0c36d;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:'Apple SD Gothic Neo','Noto Sans KR','Hiragino Sans','Noto Sans JP',sans-serif;
+       background:var(--bg); color:var(--ink); line-height:1.75; padding-bottom:80px;}
+  header{background:linear-gradient(135deg,#155e97,#4d9fd6); color:#fff; padding:44px 20px 36px; text-align:center;}
+  header h1{font-size:1.7rem; margin-bottom:6px;}
+  header p{opacity:.9; font-size:.95rem;}
+  .wrap{max-width:860px; margin:0 auto; padding:0 16px;}
+  nav.wrap{position:sticky; top:50px; z-index:10; background:rgba(255,255,255,.95); backdrop-filter:blur(6px);
+      border-bottom:1px solid var(--line); overflow-x:auto; white-space:nowrap; padding:8px 12px;}
+  nav.wrap a{display:inline-block; padding:6px 12px; margin:2px; border-radius:16px; font-size:.85rem;
+        color:var(--sub); text-decoration:none;}
+  nav.wrap a:hover{background:var(--accent-soft); color:var(--accent);}
+  .toolbar{display:flex; gap:10px; justify-content:center; margin:20px auto 4px; flex-wrap:wrap;}
+  .toolbar button{border:1.5px solid var(--accent); background:#fff; color:var(--accent);
+        padding:8px 18px; border-radius:22px; font-size:.9rem; cursor:pointer; font-weight:600;}
+  .toolbar button.on{background:var(--accent); color:#fff;}
+  section{background:var(--card); border:1px solid var(--line); border-radius:14px;
+          padding:26px 24px; margin:22px 0; scroll-margin-top:110px;}
+  h2{font-size:1.25rem; color:var(--accent); border-left:5px solid var(--accent);
+     padding-left:12px; margin-bottom:16px;}
+  h3{font-size:1.02rem; margin:20px 0 8px; color:var(--jp);}
+  .jp{font-size:1.08rem; color:var(--jp); font-weight:600;}
+  rt{font-size:.62em; color:#7ba3c2; font-weight:400;}
+  .kr{color:var(--kr); font-size:.93rem;}
+  .kr::before{content:"→ ";}
+  body.hide-kr .kr{filter:blur(6px); cursor:pointer; transition:filter .15s;}
+  body.hide-kr .kr:hover, body.hide-kr .kr:active{filter:none;}
+  body.hide-furi rt{visibility:hidden;}
+  table{width:100%; border-collapse:collapse; margin:10px 0;}
+  th,td{border:1px solid var(--line); padding:9px 12px; text-align:left; font-size:.98rem;}
+  th{background:var(--accent-soft); color:var(--jp); font-size:.88rem;}
+  td.krcell{color:var(--kr); font-size:.93rem;}
+  body.hide-kr td.krcell{filter:blur(6px); cursor:pointer;}
+  body.hide-kr td.krcell:hover, body.hide-kr td.krcell:active{filter:none;}
+  ul{list-style:none;}
+  li.pair{padding:9px 0; border-bottom:1px dashed var(--line);}
+  li.pair:last-child{border-bottom:none;}
+  .box{background:var(--accent-soft); border-radius:10px; padding:14px 16px; margin:10px 0;}
+  .warn{background:var(--warn-bg); border:1px solid var(--warn-bd); border-radius:10px;
+        padding:14px 16px; margin:10px 0;}
+  .warn strong{color:#9a6b00;}
+  .tag{display:inline-block; background:var(--accent); color:#fff; border-radius:6px;
+       font-size:.75rem; padding:2px 8px; margin-right:8px; vertical-align:middle;}
+  .dialog .speaker{font-weight:700; color:#fff; background:var(--accent); border-radius:14px;
+       padding:2px 10px; font-size:.82rem; margin-right:8px;}
+  .dialog .turn{margin:14px 0; padding:12px 14px; background:var(--accent-soft); border-radius:10px;}
+  .dialog .turn.b{background:#f0eafa;}
+  .dialog .turn.b .speaker{background:var(--kr);}
+  .hint{font-size:.82rem; color:var(--sub); text-align:center; margin-top:4px;}
+  .sqbtn{border:none;color:#fff;padding:10px 20px;border-radius:22px;font-weight:700;cursor:pointer;margin:4px;font-size:.92rem;}
+  #sqFb.ok{color:#1f9d55;} #sqFb.no{color:#d64545;}
+  footer{text-align:center; color:var(--sub); font-size:.82rem; margin-top:30px;}
+  .tablewrap{overflow-x:auto;}
+  @media (max-width:560px){
+    th,td{padding:7px 8px;font-size:.88rem;}
+    section{padding:20px 14px;}
+    header h1{font-size:1.35rem;}
+    .jp{font-size:1.02rem;}
+  }
+  /* ---- 햄버거 메뉴 ---- */
+  .topbar{position:sticky;top:0;z-index:40;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.97);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);border-bottom:1px solid rgba(0,0,0,.08);padding:0 14px;height:50px;}
+  .topbar .brand{font-weight:800;text-decoration:none;color:#1e2433;font-size:.98rem;}
+  .topbar .menu-btn{border:none;background:none;font-size:1.55rem;cursor:pointer;color:#1e2433;padding:2px 6px;line-height:1;}
+  .drawer{position:fixed;top:0;right:-290px;width:270px;height:100vh;background:#fff;z-index:60;box-shadow:-4px 0 24px rgba(0,0,0,.18);transition:right .25s;padding:16px 12px 40px;overflow-y:auto;}
+  .drawer.open{right:0;}
+  .drawer a{display:block;padding:11px 14px;border-radius:10px;color:#1e2433;text-decoration:none;font-size:.97rem;margin:2px 0;}
+  .drawer a:hover{background:#eef2fb;}
+  .drawer a.cur{background:#3b6fe0;color:#fff;font-weight:700;}
+  .drawer .dsec{font-size:.72rem;color:#8a93a8;margin:14px 8px 4px;font-weight:700;letter-spacing:.05em;}
+  .drawer .dclose{text-align:right;font-size:1.3rem;cursor:pointer;color:#8a93a8;padding:0 6px 6px;}
+  .overlay{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:50;display:none;}
+  .overlay.show{display:block;}
+</style>
+</head>
+<body>
+
+<nav class="topbar">
+  <a class="brand" href="index.html">🇯🇵 나의 일본어 교실</a>
+  <button class="menu-btn" onclick="toggleMenu()" aria-label="메뉴">☰</button>
+</nav>
+<div id="menuDrawer" class="drawer">
+  <div class="dclose" onclick="toggleMenu()">✕</div>
+  <a href="index.html">🏠 홈</a>
+  <div class="dsec">레슨</div>
+  <a href="lesson1.html">🙋 Lesson 1 · 자기소개</a>
+  <a href="lesson2.html">🍜 Lesson 2 · 레스토랑 주문</a>
+  <a href="lesson3.html">🗓️ Lesson 3 · 여행 일정</a>
+  <a href="lesson4.html">📸 Lesson 4 · 여행 추억</a>
+  <a href="lesson5.html">✈️ Lesson 5 · 공항</a>
+  <div class="dsec">복습 · 연습</div>
+  <a href="review.html">📚 종합 복습</a>
+  <a href="numbers.html">🔢 숫자 · 날짜 · 요일</a>
+  <a href="kana.html">🔤 가나 연습</a>
+  <a href="vocab.html">🃏 단어 복습</a>
+  <a href="quiz.html">🎲 랜덤 퀴즈</a>
+  <div class="dsec">기록</div>
+  <a href="records.html">🏆 학습 기록</a>
+</div>
+<div id="menuOverlay" class="overlay" onclick="toggleMenu()"></div>
+
+<nav class="wrap">
+  <a href="#goal">목표</a>
+  <a href="#review">복습</a>
+  <a href="#vocab">단어</a>
+  <a href="#g1">문법① たいです</a>
+  <a href="#g2">문법② たくないです</a>
+  <a href="#g3">문법③ たいですか</a>
+  <a href="#phrases">공항 표현</a>
+  <a href="#dialog">모델 회화</a>
+  <a href="#practice">회화 연습</a>
+  <a href="#speakquiz">🎤 말하기 퀴즈</a>
+  <a href="#summary">정리·숙제</a>
+</nav>
+
+<header>
+  <h1>Lesson 5 · <ruby>空港<rt>くうこう</rt></ruby>で<ruby>日本語<rt>にほんご</rt></ruby>を<ruby>使<rt>つか</rt></ruby>おう</h1>
+  <p>공항에서 일본어 쓰기 — ～たいです 희망 표현 · 체크인 회화</p>
+</header>
+
+<div class="wrap">
+
+<div class="toolbar">
+  <button id="btnKr" onclick="toggle('hide-kr',this)">한국어 뜻 가리기</button>
+  <button id="btnFuri" onclick="toggle('hide-furi',this)">후리가나 가리기</button>
+</div>
+<p class="hint">뜻을 가린 상태에서 마우스를 올리면(모바일은 터치) 잠깐 보여요.<br>🔊 <b>일본어 문장을 클릭하면 발음이 재생됩니다.</b></p>
+
+<section id="goal">
+  <h2>오늘의 목표 <span class="jp">今日（きょう）の目標（もくひょう）</span></h2>
+  <ul>
+    <li class="pair"><span class="jp">✅ <ruby>空港<rt>くうこう</rt></ruby>で<ruby>必要<rt>ひつよう</rt></ruby>な<ruby>単語<rt>たんご</rt></ruby>を<ruby>覚<rt>おぼ</rt></ruby>える。</span><br><span class="kr">공항에서 필요한 단어를 익힐 수 있다.</span></li>
+    <li class="pair"><span class="jp">✅ 「～たいです」を<ruby>使<rt>つか</rt></ruby>って<ruby>希望<rt>きぼう</rt></ruby>を<ruby>伝<rt>つた</rt></ruby>える。</span><br><span class="kr">「~たいです」를 사용하여 희망을 전달할 수 있다.</span></li>
+    <li class="pair"><span class="jp">✅ チェックインの<ruby>場面<rt>ばめん</rt></ruby>で<ruby>質問<rt>しつもん</rt></ruby>に<ruby>答<rt>こた</rt></ruby>える。</span><br><span class="kr">체크인 상황에서 질문에 대답할 수 있다.</span></li>
+  </ul>
+</section>
+
+<section id="review">
+  <h2>복습 — Lesson 4 과거형 <span class="jp">前回（ぜんかい）の復習（ふくしゅう）</span></h2>
+  <ul>
+    <li class="pair"><span class="jp"><ruby>昨日<rt>きのう</rt></ruby>、<ruby>京都<rt>きょうと</rt></ruby>へ<ruby>行<rt>い</rt></ruby>きました。</span><br><span class="kr">어제 교토에 갔습니다.</span></li>
+    <li class="pair"><span class="jp"><ruby>買<rt>か</rt></ruby>い<ruby>物<rt>もの</rt></ruby>をしませんでした。</span><br><span class="kr">쇼핑을 하지 않았습니다.</span></li>
+    <li class="pair"><span class="jp"><ruby>昨日<rt>きのう</rt></ruby>、<ruby>何<rt>なに</rt></ruby>をしましたか。</span><br><span class="kr">어제 무엇을 했습니까?</span></li>
+  </ul>
+</section>
+
+<section id="vocab">
+  <h2>공항 단어 <span class="jp">空港（くうこう）の単語（たんご）</span> — 15개</h2>
+  <table>
+    <tr><th>日本語</th><th>읽기</th><th>한국어</th></tr>
+    <tr><td class="jp">空港</td><td>くうこう</td><td class="krcell">공항</td></tr>
+    <tr><td class="jp">飛行機</td><td>ひこうき</td><td class="krcell">비행기</td></tr>
+    <tr><td class="jp">航空券</td><td>こうくうけん</td><td class="krcell">항공권</td></tr>
+    <tr><td class="jp">パスポート</td><td>—</td><td class="krcell">여권</td></tr>
+    <tr><td class="jp">チェックイン</td><td>—</td><td class="krcell">체크인</td></tr>
+    <tr><td class="jp">カウンター</td><td>—</td><td class="krcell">카운터</td></tr>
+    <tr><td class="jp">荷物</td><td>にもつ</td><td class="krcell">짐</td></tr>
+    <tr><td class="jp">手荷物</td><td>てにもつ</td><td class="krcell">휴대 수하물</td></tr>
+    <tr><td class="jp">搭乗券</td><td>とうじょうけん</td><td class="krcell">탑승권</td></tr>
+    <tr><td class="jp">搭乗口</td><td>とうじょうぐち</td><td class="krcell">탑승구</td></tr>
+    <tr><td class="jp">窓側</td><td>まどがわ</td><td class="krcell">창가 쪽</td></tr>
+    <tr><td class="jp">通路側</td><td>つうろがわ</td><td class="krcell">통로 쪽</td></tr>
+    <tr><td class="jp">席</td><td>せき</td><td class="krcell">자리, 좌석</td></tr>
+    <tr><td class="jp">預けます</td><td>あずけます</td><td class="krcell">맡깁니다</td></tr>
+    <tr><td class="jp">座ります</td><td>すわります</td><td class="krcell">앉습니다</td></tr>
+  </table>
+  <h3>단어를 사용한 예문</h3>
+  <ul>
+    <li class="pair"><span class="jp">パスポートを<ruby>見<rt>み</rt></ruby>せます。</span><br><span class="kr">여권을 보여 줍니다.</span></li>
+    <li class="pair"><span class="jp"><ruby>荷物<rt>にもつ</rt></ruby>を<ruby>預<rt>あず</rt></ruby>けます。</span><br><span class="kr">짐을 맡깁니다.</span></li>
+    <li class="pair"><span class="jp"><ruby>窓側<rt>まどがわ</rt></ruby>の<ruby>席<rt>せき</rt></ruby>に<ruby>座<rt>すわ</rt></ruby>ります。</span><br><span class="kr">창가 자리에 앉습니다.</span></li>
+  </ul>
+</section>
+
+<section id="g1">
+  <h2>문법 ① <span class="jp">～たいです</span></h2>
+  <div class="box">
+    자신의 <b>희망</b>을 말할 때 = 한국어의 <b>「~하고 싶습니다」</b><br>
+    <b>만들기:</b> ます형에서 「ます」를 빼고 + <b>たいです</b>
+  </div>
+  <div class="tablewrap"><table>
+    <tr><th>ます형</th><th>～たいです</th></tr>
+    <tr><td class="jp"><ruby>行<rt>い</rt></ruby>きます</td><td class="jp"><ruby>行<rt>い</rt></ruby>きたいです</td></tr>
+    <tr><td class="jp"><ruby>食<rt>た</rt></ruby>べます</td><td class="jp"><ruby>食<rt>た</rt></ruby>べたいです</td></tr>
+    <tr><td class="jp"><ruby>飲<rt>の</rt></ruby>みます</td><td class="jp"><ruby>飲<rt>の</rt></ruby>みたいです</td></tr>
+    <tr><td class="jp"><ruby>座<rt>すわ</rt></ruby>ります</td><td class="jp"><ruby>座<rt>すわ</rt></ruby>りたいです</td></tr>
+    <tr><td class="jp"><ruby>預<rt>あず</rt></ruby>けます</td><td class="jp"><ruby>預<rt>あず</rt></ruby>けたいです</td></tr>
+    <tr><td class="jp">します</td><td class="jp">したいです</td></tr>
+  </table></div>
+  <h3>공항에서 쓰는 예문</h3>
+  <ul>
+    <li class="pair"><span class="jp">チェックインしたいです。</span><br><span class="kr">체크인하고 싶습니다.</span></li>
+    <li class="pair"><span class="jp"><ruby>荷物<rt>にもつ</rt></ruby>を<ruby>預<rt>あず</rt></ruby>けたいです。</span><br><span class="kr">짐을 맡기고 싶습니다.</span></li>
+    <li class="pair"><span class="jp"><ruby>窓側<rt>まどがわ</rt></ruby>の<ruby>席<rt>せき</rt></ruby>に<ruby>座<rt>すわ</rt></ruby>りたいです。</span><br><span class="kr">창가 자리에 앉고 싶습니다.</span></li>
+    <li class="pair"><span class="jp"><ruby>日本<rt>にほん</rt></ruby>でラーメンを<ruby>食<rt>た</rt></ruby>べたいです。</span><br><span class="kr">일본에서 라멘을 먹고 싶습니다.</span></li>
+  </ul>
+</section>
+
+<section id="g2">
+  <h2>문법 ② <span class="jp">～たくないです</span></h2>
+  <div class="box">
+    하고 싶지 <b>않다</b>는 마음 = 「~하고 싶지 않습니다」<br>
+    <b>만들기:</b> 「たいです」의 「い」를 빼고 → <b>たくないです</b>
+  </div>
+  <div class="tablewrap"><table>
+    <tr><th>긍정 (～たいです)</th><th>부정 (～たくないです)</th></tr>
+    <tr><td class="jp"><ruby>行<rt>い</rt></ruby>きたいです</td><td class="jp"><ruby>行<rt>い</rt></ruby>きたくないです</td></tr>
+    <tr><td class="jp"><ruby>食<rt>た</rt></ruby>べたいです</td><td class="jp"><ruby>食<rt>た</rt></ruby>べたくないです</td></tr>
+    <tr><td class="jp"><ruby>座<rt>すわ</rt></ruby>りたいです</td><td class="jp"><ruby>座<rt>すわ</rt></ruby>りたくないです</td></tr>
+    <tr><td class="jp">したいです</td><td class="jp">したくないです</td></tr>
+  </table></div>
+  <ul>
+    <li class="pair"><span class="jp"><ruby>通路側<rt>つうろがわ</rt></ruby>の<ruby>席<rt>せき</rt></ruby>に<ruby>座<rt>すわ</rt></ruby>りたくないです。</span><br><span class="kr">통로 쪽 자리에 앉고 싶지 않습니다.</span></li>
+    <li class="pair"><span class="jp"><ruby>長<rt>なが</rt></ruby>い<ruby>時間<rt>じかん</rt></ruby>、<ruby>待<rt>ま</rt></ruby>ちたくないです。</span><br><span class="kr">오랫동안 기다리고 싶지 않습니다.</span></li>
+  </ul>
+</section>
+
+<section id="g3">
+  <h2>문법 ③ <span class="jp">～たいですか</span></h2>
+  <div class="box">
+    상대방의 희망을 질문 = 「~하고 싶습니까?」 — 「たいです」+「か」
+  </div>
+  <ul>
+    <li class="pair"><span class="jp"><ruby>荷物<rt>にもつ</rt></ruby>を<ruby>預<rt>あず</rt></ruby>けたいですか。</span><br><span class="kr">짐을 맡기고 싶습니까?</span></li>
+    <li class="pair"><span class="jp"><ruby>何<rt>なに</rt></ruby>を<ruby>食<rt>た</rt></ruby>べたいですか。</span><br><span class="kr">무엇을 먹고 싶습니까?</span></li>
+    <li class="pair"><span class="jp">どこへ<ruby>行<rt>い</rt></ruby>きたいですか。</span><br><span class="kr">어디에 가고 싶습니까?</span></li>
+  </ul>
+  <h3><span class="tag">대답</span>答（こた）え方（かた）</h3>
+  <ul>
+    <li class="pair"><span class="jp">はい、<ruby>預<rt>あず</rt></ruby>けたいです。／ いいえ、<ruby>預<rt>あず</rt></ruby>けたくないです。</span><br><span class="kr">네, 맡기고 싶습니다. / 아니요, 맡기고 싶지 않습니다.</span></li>
+  </ul>
+  <div class="warn">
+    <strong>💡 포인트</strong> — 공항 직원은 더 공손하게 이렇게 묻기도 해요:<br>
+    <span class="jp"><ruby>窓側<rt>まどがわ</rt></ruby>と<ruby>通路側<rt>つうろがわ</rt></ruby>、どちらがいいですか。</span> <span class="kr">창가와 통로 중 어느 쪽이 좋습니까?</span>
+  </div>
+</section>
+
+<section id="phrases">
+  <h2>공항에서 자주 듣는 표현 <span class="jp">よく聞（き）く表現（ひょうげん）</span></h2>
+  <ul>
+    <li class="pair"><span class="jp">パスポートをお<ruby>願<rt>ねが</rt></ruby>いします。</span><br><span class="kr">여권을 부탁드립니다.</span></li>
+    <li class="pair"><span class="jp"><ruby>航空券<rt>こうくうけん</rt></ruby>を<ruby>見<rt>み</rt></ruby>せてください。</span><br><span class="kr">항공권을 보여 주세요.</span></li>
+    <li class="pair"><span class="jp"><ruby>荷物<rt>にもつ</rt></ruby>はいくつですか。</span><br><span class="kr">짐은 몇 개입니까?</span></li>
+    <li class="pair"><span class="jp"><ruby>荷物<rt>にもつ</rt></ruby>を<ruby>預<rt>あず</rt></ruby>けますか。</span><br><span class="kr">짐을 맡기시겠습니까?</span></li>
+    <li class="pair"><span class="jp">こちらが<ruby>搭乗券<rt>とうじょうけん</rt></ruby>です。</span><br><span class="kr">이것이 탑승권입니다.</span></li>
+    <li class="pair"><span class="jp"><ruby>搭乗口<rt>とうじょうぐち</rt></ruby>は<ruby>十番<rt>じゅうばん</rt></ruby>です。</span><br><span class="kr">탑승구는 10번입니다.</span></li>
+    <li class="pair"><span class="jp"><ruby>出発時間<rt>しゅっぱつじかん</rt></ruby>は<ruby>九時<rt>くじ</rt></ruby>です。</span><br><span class="kr">출발 시간은 9시입니다.</span></li>
+  </ul>
+</section>
+
+<section id="dialog" class="dialog">
+  <h2>모델 회화 — 체크인 카운터 <span class="jp">チェックインカウンター</span></h2>
+  <div class="turn">
+    <span class="speaker">직원</span>
+    <span class="jp">こんにちは。パスポートと<ruby>航空券<rt>こうくうけん</rt></ruby>をお<ruby>願<rt>ねが</rt></ruby>いします。</span><br>
+    <span class="kr">안녕하세요. 여권과 항공권을 부탁드립니다.</span>
+  </div>
+  <div class="turn b">
+    <span class="speaker">여행자</span>
+    <span class="jp">はい、どうぞ。</span><br>
+    <span class="kr">네, 여기 있습니다.</span>
+  </div>
+  <div class="turn">
+    <span class="speaker">직원</span>
+    <span class="jp"><ruby>荷物<rt>にもつ</rt></ruby>はいくつですか。</span><br>
+    <span class="kr">짐은 몇 개입니까?</span>
+  </div>
+  <div class="turn b">
+    <span class="speaker">여행자</span>
+    <span class="jp"><ruby>二<rt>ふた</rt></ruby>つです。<ruby>一<rt>ひと</rt></ruby>つ<ruby>預<rt>あず</rt></ruby>けたいです。</span><br>
+    <span class="kr">두 개입니다. 한 개 맡기고 싶습니다.</span>
+  </div>
+  <div class="turn">
+    <span class="speaker">직원</span>
+    <span class="jp"><ruby>窓側<rt>まどがわ</rt></ruby>と<ruby>通路側<rt>つうろがわ</rt></ruby>、どちらがいいですか。</span><br>
+    <span class="kr">창가 쪽과 통로 쪽 중 어느 쪽이 좋습니까?</span>
+  </div>
+  <div class="turn b">
+    <span class="speaker">여행자</span>
+    <span class="jp"><ruby>窓側<rt>まどがわ</rt></ruby>の<ruby>席<rt>せき</rt></ruby>に<ruby>座<rt>すわ</rt></ruby>りたいです。</span><br>
+    <span class="kr">창가 자리에 앉고 싶습니다.</span>
+  </div>
+  <div class="turn">
+    <span class="speaker">직원</span>
+    <span class="jp">わかりました。こちらが<ruby>搭乗券<rt>とうじょうけん</rt></ruby>です。<ruby>搭乗口<rt>とうじょうぐち</rt></ruby>は<ruby>十二番<rt>じゅうにばん</rt></ruby>です。</span><br>
+    <span class="kr">알겠습니다. 이것이 탑승권입니다. 탑승구는 12번입니다.</span>
+  </div>
+  <div class="turn b">
+    <span class="speaker">여행자</span>
+    <span class="jp">ありがとうございます。</span><br>
+    <span class="kr">감사합니다.</span>
+  </div>
+</section>
+
+<section id="practice">
+  <h2>회화 연습 <span class="jp">会話練習（かいわれんしゅう）</span></h2>
+  <h3>① 질문에 답해 봅시다</h3>
+  <ul>
+    <li class="pair"><span class="jp">どこへ<ruby>行<rt>い</rt></ruby>きたいですか。</span><br><span class="kr">어디에 가고 싶습니까? — 예: 東京へ行きたいです。</span></li>
+    <li class="pair"><span class="jp"><ruby>荷物<rt>にもつ</rt></ruby>を<ruby>預<rt>あず</rt></ruby>けたいですか。</span><br><span class="kr">짐을 맡기고 싶습니까? — 예: はい、預けたいです。</span></li>
+    <li class="pair"><span class="jp"><ruby>飛行機<rt>ひこうき</rt></ruby>の<ruby>中<rt>なか</rt></ruby>で<ruby>何<rt>なに</rt></ruby>を<ruby>飲<rt>の</rt></ruby>みたいですか。</span><br><span class="kr">비행기 안에서 무엇을 마시고 싶습니까? — 예: 水を飲みたいです。</span></li>
+    <li class="pair"><span class="jp"><ruby>日本<rt>にほん</rt></ruby>で<ruby>何<rt>なに</rt></ruby>をしたいですか。</span><br><span class="kr">일본에서 무엇을 하고 싶습니까? — 예: 買い物をしたいです。</span></li>
+  </ul>
+  <div class="box">
+    🗣 <b>롤플레이 (A=직원, B=여행자)</b> — 짐 개수(ひとつ・ふたつ・みっつ), 좌석(窓側・通路側), 탑승구 번호(八番・十二番・二十番)를 바꿔가며 체크인 대화를 연습해 봅시다.<br>
+    <span class="jp"><ruby>搭乗口<rt>とうじょうぐち</rt></ruby>はどこですか。</span> <span class="kr">탑승구는 어디입니까?</span>
+  </div>
+</section>
+
+<section id="speakquiz">
+  <h2>🎤 문장 말하기 퀴즈</h2>
+  <p style="font-size:.88rem;color:var(--sub);">한국어 문장을 보고 일본어로 말해 보세요. 발음을 인식해서 정답을 판정합니다. (크롬 권장)</p>
+  <div style="text-align:center;">
+    <div id="sqPrompt" style="font-size:1.35rem;font-weight:700;color:var(--kr);margin:18px 8px;"></div>
+    <div id="sqHint" style="min-height:30px;color:var(--sub);font-size:1.05rem;"></div>
+    <div>
+      <button id="sqMicBtn" class="sqbtn" style="background:#d64545;font-size:1.02rem;padding:12px 26px;" onclick="sqToggle()">🎤 연습 시작</button>
+      <button class="sqbtn" style="background:#5b6478;" onclick="sqHintShow()">💡 힌트</button>
+      <button class="sqbtn" style="background:#3b6fe0;" onclick="sqModel()">🔊 정답 발음</button>
+      <button class="sqbtn" style="background:#aab2c4;" onclick="sqNext()">건너뛰기 →</button>
+    </div>
+    <div id="sqFb" style="min-height:54px;font-weight:600;margin-top:10px;"></div>
+    <div id="sqProg" style="font-size:.85rem;color:var(--sub);"></div>
+  </div>
+  <p class="hint">연습 시작을 누르면 마이크가 계속 켜진 채 진행되고, 정답이면 자동으로 다음 문장으로 넘어갑니다.</p>
+</section>
+
+<section id="summary">
+  <h2>오늘의 정리 & 숙제 <span class="jp">まとめ・宿題（しゅくだい）</span></h2>
+  <div class="box">
+    ✔️ <b>～たいです</b> — ~하고 싶습니다<br>
+    ✔️ <b>～たくないです</b> — ~하고 싶지 않습니다<br>
+    ✔️ <b>～たいですか</b> — ~하고 싶습니까?<br>
+    ✔️ <b>공항 단어 & 체크인 회화</b><br>
+    → 공항에서 내 희망을 일본어로 전달하기 완성!
+  </div>
+  <div class="warn">
+    <strong>📝 숙제:</strong> 「공항에서 전달하고 싶은 것」을 일본어로 5문장 써 오기<br><br>
+    <span class="jp"><ruby>日本<rt>にほん</rt></ruby>へ<ruby>行<rt>い</rt></ruby>きたいです。<ruby>荷物<rt>にもつ</rt></ruby>を<ruby>一<rt>ひと</rt></ruby>つ<ruby>預<rt>あず</rt></ruby>けたいです。<ruby>窓側<rt>まどがわ</rt></ruby>の<ruby>席<rt>せき</rt></ruby>に<ruby>座<rt>すわ</rt></ruby>りたいです。</span>
+  </div>
+</section>
+
+<footer>Lesson 5 · 空港で日本語を使おう — 학습용 정리 페이지</footer>
+</div>
+
+<script>
+function toggleMenu(){
+  document.getElementById('menuDrawer').classList.toggle('open');
+  document.getElementById('menuOverlay').classList.toggle('show');
+}
+(function(){
+  let here=decodeURIComponent(location.pathname.split('/').pop());
+  if(!here) here='index.html';
+  document.querySelectorAll('#menuDrawer a').forEach(a=>{
+    if(decodeURIComponent(a.getAttribute('href'))===here) a.classList.add('cur');
+  });
+})();
+function toggle(cls, btn){
+  document.body.classList.toggle(cls);
+  btn.classList.toggle('on');
+}
+const TTS_URLS=[
+  t=>'https://translate.googleapis.com/translate_tts?client=gtx&ie=UTF-8&tl=ja&q='+encodeURIComponent(t),
+  t=>'https://translate.google.com/translate_tts?ie=UTF-8&tl=ja&client=tw-ob&q='+encodeURIComponent(t)
+];
+let _audio=null;
+const _acache={};
+function jaVoice(){
+  if(!('speechSynthesis' in window)) return null;
+  const vs=speechSynthesis.getVoices().filter(v=>v.lang && v.lang.startsWith('ja'));
+  return vs.find(v=>/Google/i.test(v.name))
+      || vs.find(v=>/Kyoko|Nanami|Haruka|Sayaka|Ichiro|O-?ren/i.test(v.name))
+      || vs.find(v=>!/Eddy|Flo|Grandma|Grandpa|Reed|Rocko|Sandy|Shelley|Albert|Bahh|Bells|Boing|Bubbles|Cellos|Jester|Organ|Superstar|Trinoids|Whisper|Wobble|Zarvox/i.test(v.name))
+      || vs[0] || null;
+}
+function speakJa(text){
+  if(!text) return;
+  if(_audio){try{_audio.pause();}catch(e){} _audio=null;}
+  if('speechSynthesis' in window){
+    if(speechSynthesis.speaking||speechSynthesis.pending) speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(text);
+    const v=jaVoice();
+    if(v) u.voice=v;
+    u.lang='ja-JP'; u.rate=0.85;
+    speechSynthesis.speak(u);
+    setTimeout(()=>{ try{speechSynthesis.resume();}catch(e){} },100);
+    return;
+  }
+  const c=_acache[text];
+  if(c){ _audio=c; c.currentTime=0; c.play().catch(()=>{ delete _acache[text]; tryTts(text,0,TTS_URLS.length); }); return; }
+  tryTts(text,0,TTS_URLS.length);
+}
+function tryTts(text,idx,left){
+  if(left<=0) return;
+  idx=idx%TTS_URLS.length;
+  const a=new Audio(TTS_URLS[idx](text));
+  _audio=a;
+  let done=false;
+  const fail=()=>{ if(done||_audio!==a) return; done=true; try{a.pause();}catch(e){} tryTts(text,idx+1,left-1); };
+  const timer=setTimeout(fail,2000);
+  a.onplaying=()=>{ if(_audio===a){ done=true; clearTimeout(timer); _acache[text]=a; } };
+  a.onerror=fail;
+  a.play().catch(fail);
+}
+if('speechSynthesis' in window){speechSynthesis.getVoices();}
+function sfx(ok){
+  try{
+    const ctx = window._actx || (window._actx = new (window.AudioContext||window.webkitAudioContext)());
+    if(ctx.state==='suspended') ctx.resume();
+    const t=ctx.currentTime;
+    const tone=(f,s,d,ty,g)=>{const o=ctx.createOscillator(),gn=ctx.createGain();o.type=ty||'sine';o.frequency.value=f;
+      gn.gain.setValueAtTime(g||0.15,t+s);gn.gain.exponentialRampToValueAtTime(0.001,t+s+d);
+      o.connect(gn);gn.connect(ctx.destination);o.start(t+s);o.stop(t+s+d);};
+    if(ok){tone(880,0,0.15);tone(1319,0.12,0.3);}
+    else{tone(233,0,0.25,'square',0.07);tone(196,0.12,0.35,'square',0.07);}
+  }catch(e){}
+}
+function saveRecord(type,ok){
+  try{
+    const d=new Date();
+    const date=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+    const all=JSON.parse(localStorage.getItem('jpRecords')||'{}');
+    if(!all[date]) all[date]={};
+    if(!all[date][type]) all[date][type]={c:0,t:0};
+    all[date][type].t++; if(ok) all[date][type].c++;
+    localStorage.setItem('jpRecords',JSON.stringify(all));
+  }catch(e){}
+}
+function jpText(el){
+  const c=el.cloneNode(true);
+  c.querySelectorAll('rt').forEach(r=>r.remove());
+  return c.textContent.replace(/（[^）]*）/g,'').replace(/[✅⚠️📝💡→🗣]/g,'').trim();
+}
+document.querySelectorAll('.jp').forEach(el=>{
+  el.style.cursor='pointer';
+  el.title='클릭하면 발음 재생 🔊';
+  el.addEventListener('click',()=>speakJa(jpText(el)));
+});
+
+// ---------- 문장 말하기 퀴즈 (Lesson 5) ----------
+const SQ_SENTENCES=[
+  {jp:"チェックインしたいです", yomi:"ちぇっくいんしたいです", kr:"체크인하고 싶습니다"},
+  {jp:"荷物を預けたいです", yomi:"にもつをあずけたいです", kr:"짐을 맡기고 싶습니다"},
+  {jp:"窓側の席に座りたいです", yomi:"まどがわのせきにすわりたいです", kr:"창가 자리에 앉고 싶습니다"},
+  {jp:"日本でラーメンを食べたいです", yomi:"にほんでらーめんをたべたいです", kr:"일본에서 라멘을 먹고 싶습니다"},
+  {jp:"水を飲みたいです", yomi:"みずをのみたいです", kr:"물을 마시고 싶습니다"},
+  {jp:"買い物をしたいです", yomi:"かいものをしたいです", kr:"쇼핑을 하고 싶습니다"},
+  {jp:"通路側の席に座りたくないです", yomi:"つうろがわのせきにすわりたくないです", kr:"통로 쪽 자리에 앉고 싶지 않습니다"},
+  {jp:"長い時間待ちたくないです", yomi:"ながいじかんまちたくないです", kr:"오랫동안 기다리고 싶지 않습니다"},
+  {jp:"何を食べたいですか", yomi:"なにをたべたいですか", kr:"무엇을 먹고 싶습니까?"},
+  {jp:"どこへ行きたいですか", yomi:"どこへいきたいですか", kr:"어디에 가고 싶습니까?"},
+  {jp:"はい、どうぞ", yomi:"はいどうぞ", kr:"네, 여기 있습니다"},
+  {jp:"二つです", yomi:"ふたつです", kr:"두 개입니다"},
+  {jp:"搭乗口はどこですか", yomi:"とうじょうぐちはどこですか", kr:"탑승구는 어디입니까?"},
+  {jp:"荷物はいくつですか", yomi:"にもつはいくつですか", kr:"짐은 몇 개입니까?"}
+];
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+let sqDeck=[], sqIdx=0, sqCorrect=0, sqSession=false, sqRec=null, _micStream=null;
+function kata2hira(s){return s.replace(/[ァ-ヶ]/g,c=>String.fromCharCode(c.charCodeAt(0)-0x60));}
+function sqNorm(s){return kata2hira((s||'')).replace(/[\s。、．，,.!?！？・〜~ー－「」]/g,'');}
+function lev(a,b){
+  const m=a.length,n=b.length;
+  if(!m)return n; if(!n)return m;
+  let prev=Array.from({length:n+1},(_,i)=>i);
+  for(let i=1;i<=m;i++){
+    const cur=[i];
+    for(let j=1;j<=n;j++){
+      cur[j]=Math.min(prev[j]+1,cur[j-1]+1,prev[j-1]+(a[i-1]===b[j-1]?0:1));
+    }
+    prev=cur;
+  }
+  return prev[n];
+}
+function sqMatch(heard,s){
+  const h=sqNorm(heard);
+  if(!h) return false;
+  const t1=sqNorm(s.jp), t2=sqNorm(s.yomi);
+  if(h.includes(t1)||h.includes(t2)) return true;
+  const sim=(a,b)=>1-lev(a,b)/Math.max(a.length,b.length);
+  return sim(h,t1)>=0.75 || sim(h,t2)>=0.75;
+}
+function sqShuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function sqStart(){ sqDeck=sqShuffle(SQ_SENTENCES.slice()); sqIdx=0; sqCorrect=0; sqShow(); }
+function sqShow(){
+  document.getElementById('sqHint').textContent='';
+  const fb=document.getElementById('sqFb'); fb.textContent=''; fb.className='';
+  if(sqIdx>=sqDeck.length){
+    document.getElementById('sqPrompt').textContent='🎉 완료!';
+    document.getElementById('sqProg').textContent=`${sqDeck.length}문장 중 ${sqCorrect}개 성공`;
+    return;
+  }
+  document.getElementById('sqPrompt').textContent=sqDeck[sqIdx].kr;
+  document.getElementById('sqProg').textContent=`${sqIdx+1} / ${sqDeck.length} · 성공 ${sqCorrect}`;
+}
+function sqHintShow(){ if(sqIdx<sqDeck.length){ const s=sqDeck[sqIdx]; document.getElementById('sqHint').textContent=s.jp+' ('+s.yomi+')'; } }
+function sqModel(){ if(sqIdx<sqDeck.length) speakJa(sqDeck[sqIdx].yomi); }
+function sqNext(){ if(sqIdx<sqDeck.length) sqIdx++; sqShow(); }
+function sqSetBtn(on){
+  const b=document.getElementById('sqMicBtn');
+  b.textContent=on?'⏹ 연습 중지 (👂 듣는 중…)':'🎤 연습 시작';
+  b.style.background=on?'#1f9d55':'#d64545';
+}
+async function ensureMic(){
+  if(_micStream && _micStream.active) return true;
+  try{ _micStream=await navigator.mediaDevices.getUserMedia({audio:true}); return true; }
+  catch(e){
+    const fb=document.getElementById('sqFb'); fb.className='no';
+    fb.textContent='마이크 권한이 필요해요. 주소창 옆 🔒에서 허용해 주세요.';
+    return false;
+  }
+}
+async function sqToggle(){
+  const fb=document.getElementById('sqFb');
+  if(sqSession){ sqSession=false; if(sqRec){try{sqRec.stop();}catch(e){}} sqSetBtn(false); return; }
+  if(!SR){ fb.textContent='이 브라우저는 음성 인식을 지원하지 않아요. 크롬(Chrome)에서 열어 주세요.'; fb.className='no'; return; }
+  if(sqIdx>=sqDeck.length) sqStart();
+  if(!(await ensureMic())) return;
+  sqSession=true; sqSetBtn(true);
+  fb.textContent='일본어로 말해 보세요!'; fb.className='';
+  sqStartRec();
+}
+function sqStartRec(){
+  sqRec=new SR();
+  sqRec.lang='ja-JP'; sqRec.continuous=true; sqRec.interimResults=false; sqRec.maxAlternatives=3;
+  sqRec.onresult=(e)=>{
+    const res=e.results[e.results.length-1];
+    sqHandle([...res].map(r=>r.transcript));
+  };
+  sqRec.onerror=(e)=>{
+    if(e.error==='not-allowed'){
+      sqSession=false; sqSetBtn(false);
+      const fb=document.getElementById('sqFb'); fb.className='no';
+      fb.textContent='마이크 권한이 필요해요. 주소창 옆 🔒에서 "허용"으로 바꿔 주세요.';
+    }
+  };
+  sqRec.onend=()=>{
+    if(sqSession){ try{sqRec.start();}catch(e){ setTimeout(()=>{if(sqSession)sqStartRec();},300); } }
+    else sqSetBtn(false);
+  };
+  sqRec.start();
+}
+function sqHandle(alts){
+  if(!sqSession || sqIdx>=sqDeck.length) return;
+  const fb=document.getElementById('sqFb');
+  const s=sqDeck[sqIdx];
+  const hit=alts.some(a=>sqMatch(a,s));
+  sfx(hit); saveRecord('sentence',hit);
+  if(hit){
+    sqCorrect++;
+    fb.innerHTML=`⭕ 정답! 「${alts[0]}」<br><span style="font-weight:400;">${s.jp} = ${s.kr}</span>`;
+    fb.className='ok';
+    sqIdx++;
+    setTimeout(()=>{
+      sqShow();
+      if(sqIdx>=sqDeck.length){ sqSession=false; if(sqRec){try{sqRec.stop();}catch(e){}} sqSetBtn(false); }
+      else if(sqSession){ document.getElementById('sqFb').textContent='일본어로 말해 보세요!'; }
+    },1600);
+  }else{
+    fb.innerHTML=`❌ 들린 말: 「${alts[0]||'(인식 실패)'}」<br><span style="font-weight:400;">다시 말하거나 💡 힌트 / 🔊 정답 발음을 들어 보세요</span>`;
+    fb.className='no';
+  }
+  document.getElementById('sqProg').textContent=`${Math.min(sqIdx+1,sqDeck.length)} / ${sqDeck.length} · 성공 ${sqCorrect}`;
+}
+sqStart();
+</script>
+</body>
+</html>

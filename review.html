@@ -22,7 +22,7 @@
   .controls button.on{background:var(--accent);color:#fff;}
   .gcard{border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:12px 0;}
   .gcard .lbadge{display:inline-block;color:#fff;border-radius:8px;font-size:.75rem;font-weight:700;padding:2px 10px;margin-bottom:8px;}
-  .L1{background:#3b6fe0;} .L2{background:#d96a2f;} .L3{background:#18927c;} .L4{background:#b23a78;} .L5{background:#1f7ac2;}
+  .L1{background:#3b6fe0;} .L2{background:#d96a2f;} .L3{background:#18927c;} .L4{background:#b23a78;} .L5{background:#1f7ac2;} .L6{background:#a0623d;}
   .pat{font-size:1.05rem;font-weight:700;color:var(--jp);cursor:pointer;}
   .pat:hover{text-decoration:underline dotted;}
   rt{font-size:.58em;color:#8a93a8;font-weight:400;}
@@ -76,6 +76,7 @@
   <a href="lesson3.html">🗓️ Lesson 3 · 여행 일정</a>
   <a href="lesson4.html">📸 Lesson 4 · 여행 추억</a>
   <a href="lesson5.html">✈️ Lesson 5 · 공항</a>
+  <a href="lesson6.html">🏨 Lesson 6 · 호텔</a>
   <div class="dsec">복습 · 연습</div>
   <a href="review.html">📚 종합 복습</a>
   <a href="numbers.html">🔢 숫자 · 날짜 · 요일</a>
@@ -90,7 +91,7 @@
 
 <header>
   <h1>📚 종합 복습</h1>
-  <p>Lesson 1~5 문법 총정리 · 핵심 문장 · 종합 말하기</p>
+  <p>Lesson 1~6 문법 총정리 · 핵심 문장 · 종합 말하기</p>
 </header>
 
 <div class="wrap">
@@ -158,6 +159,18 @@
     <div class="pex"><ruby>行<rt>い</rt></ruby>きます→<ruby>行<rt>い</rt></ruby>きたいです、<ruby>座<rt>すわ</rt></ruby>ります→<ruby>座<rt>すわ</rt></ruby>りたいです</div>
   </div>
 
+  <div class="gcard">
+    <span class="lbadge L6">Lesson 6 · 호텔</span>
+    <div><span class="pat">～つもりです</span><span class="pmean">~할 생각입니다 (의지)</span></div>
+    <div class="pex"><ruby>今日<rt>きょう</rt></ruby>はホテルで<ruby>休<rt>やす</rt></ruby>むつもりです。 → 오늘은 호텔에서 쉴 생각입니다.</div>
+    <div><span class="pat">～つもりはありません</span><span class="pmean">~할 생각이 없습니다</span></div>
+    <div class="pex"><ruby>外<rt>そと</rt></ruby>へ<ruby>出<rt>で</rt></ruby>るつもりはありません。 → 밖에 나갈 생각이 없습니다.</div>
+    <div><span class="pat">～<ruby>予定<rt>よてい</rt></ruby>です</span><span class="pmean">~할 예정입니다 (확정 일정)</span></div>
+    <div class="pex"><ruby>明日<rt>あした</rt></ruby><ruby>京都<rt>きょうと</rt></ruby>へ<ruby>行<rt>い</rt></ruby>く<ruby>予定<rt>よてい</rt></ruby>です。 → 내일 교토에 갈 예정입니다.</div>
+    <div><span class="pat">사전형 + つもり/予定</span><span class="pmean">行きます→行く, します→する (사전형으로!)</span></div>
+    <div class="pex"><ruby>行<rt>い</rt></ruby>きます→<ruby>行<rt>い</rt></ruby>く、<ruby>泊<rt>と</rt></ruby>まります→<ruby>泊<rt>と</rt></ruby>まる、します→する</div>
+  </div>
+
   <div class="gcard" style="background:var(--accent-soft);border-color:var(--accent);">
     <b>⏱ 시제 한눈에 보기</b><br>
     <span style="font-size:.95rem;">
@@ -178,6 +191,7 @@
       <option value="L3">Lesson 3 · 여행 일정</option>
       <option value="L4">Lesson 4 · 여행 추억</option>
       <option value="L5">Lesson 5 · 공항</option>
+      <option value="L6">Lesson 6 · 호텔</option>
     </select>
     <button onclick="document.body.classList.toggle('hide-kr');this.classList.toggle('on')">뜻 가리기</button>
     <button onclick="shufflePlay()" id="playAllBtn">▶️ 전체 듣기</button>
@@ -196,6 +210,7 @@
       <option value="L3">Lesson 3</option>
       <option value="L4">Lesson 4</option>
       <option value="L5">Lesson 5</option>
+      <option value="L6">Lesson 6</option>
     </select>
     <button onclick="sqStart()">🔀 다시 시작</button>
   </div>
@@ -275,7 +290,18 @@ const ALL_SENTENCES=[
   {jp:"どこへ行きたいですか", yomi:"どこへいきたいですか", kr:"어디에 가고 싶습니까?", lesson:"L5"},
   {jp:"荷物はいくつですか", yomi:"にもつはいくつですか", kr:"짐은 몇 개입니까?", lesson:"L5"},
   {jp:"搭乗口はどこですか", yomi:"とうじょうぐちはどこですか", kr:"탑승구는 어디입니까?", lesson:"L5"},
-  {jp:"パスポートをお願いします", yomi:"ぱすぽーとをおねがいします", kr:"여권을 부탁드립니다", lesson:"L5"}
+  {jp:"パスポートをお願いします", yomi:"ぱすぽーとをおねがいします", kr:"여권을 부탁드립니다", lesson:"L5"},
+  // L6 호텔
+  {jp:"今日はホテルで休むつもりです", yomi:"きょうはほてるでやすむつもりです", kr:"오늘은 호텔에서 쉴 생각입니다", lesson:"L6"},
+  {jp:"明日は温泉へ行くつもりです", yomi:"あしたはおんせんへいくつもりです", kr:"내일은 온천에 갈 생각입니다", lesson:"L6"},
+  {jp:"京都を観光するつもりです", yomi:"きょうとをかんこうするつもりです", kr:"교토를 관광할 생각입니다", lesson:"L6"},
+  {jp:"外へ出るつもりはありません", yomi:"そとへでるつもりはありません", kr:"밖에 나갈 생각이 없습니다", lesson:"L6"},
+  {jp:"明日京都へ行く予定です", yomi:"あしたきょうとへいくよていです", kr:"내일 교토에 갈 예정입니다", lesson:"L6"},
+  {jp:"三泊する予定です", yomi:"さんぱくするよていです", kr:"3박 할 예정입니다", lesson:"L6"},
+  {jp:"明日チェックアウトする予定です", yomi:"あしたちぇっくあうとするよていです", kr:"내일 체크아웃할 예정입니다", lesson:"L6"},
+  {jp:"ホテルで朝食を食べる予定です", yomi:"ほてるでちょうしょくをたべるよていです", kr:"호텔에서 아침을 먹을 예정입니다", lesson:"L6"},
+  {jp:"いつ出発する予定ですか", yomi:"いつしゅっぱつするよていですか", kr:"언제 출발할 예정입니까?", lesson:"L6"},
+  {jp:"何泊する予定ですか", yomi:"なんぱくするよていですか", kr:"몇 박 할 예정입니까?", lesson:"L6"}
 ];
 // ================================================================
 

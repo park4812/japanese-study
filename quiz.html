@@ -71,6 +71,7 @@
   <a href="lesson4.html">📸 Lesson 4 · 여행 추억</a>
   <a href="lesson5.html">✈️ Lesson 5 · 공항</a>
   <a href="lesson6.html">🏨 Lesson 6 · 호텔</a>
+  <a href="lesson7.html">🔗 Lesson 7 · 조사</a>
   <div class="dsec">복습 · 연습</div>
   <a href="review.html">📚 종합 복습</a>
   <a href="numbers.html">🔢 숫자 · 날짜 · 요일</a>
@@ -100,6 +101,7 @@
       <option value="L4">Lesson 4 · 여행 추억</option>
       <option value="L5">Lesson 5 · 공항</option>
       <option value="L6">Lesson 6 · 호텔</option>
+      <option value="L7">Lesson 7 · 조사</option>
     </select>
   </div>
   <div class="modes">
@@ -229,7 +231,20 @@ const WORDS=[
   {jp:"観光",yomi:"かんこう",kr:"관광",lesson:"L6"},
   {jp:"温泉",yomi:"おんせん",kr:"온천",lesson:"L6"},
   {jp:"予定",yomi:"よてい",kr:"예정",lesson:"L6"},
-  {jp:"つもり",yomi:"",kr:"생각, 작정",lesson:"L6"}
+  {jp:"つもり",yomi:"",kr:"생각, 작정",lesson:"L6"},
+  // L7 조사
+  {jp:"学校",yomi:"がっこう",kr:"학교",lesson:"L7"},
+  {jp:"会社",yomi:"かいしゃ",kr:"회사",lesson:"L7"},
+  {jp:"家",yomi:"いえ",kr:"집",lesson:"L7"},
+  {jp:"友達",yomi:"ともだち",kr:"친구",lesson:"L7"},
+  {jp:"電車",yomi:"でんしゃ",kr:"전철",lesson:"L7"},
+  {jp:"ご飯",yomi:"ごはん",kr:"밥, 식사",lesson:"L7"},
+  {jp:"日本語",yomi:"にほんご",kr:"일본어",lesson:"L7"},
+  {jp:"箸",yomi:"はし",kr:"젓가락",lesson:"L7"},
+  {jp:"勉強します",yomi:"べんきょうします",kr:"공부합니다",lesson:"L7"},
+  {jp:"起きます",yomi:"おきます",kr:"일어납니다",lesson:"L7"},
+  {jp:"会います",yomi:"あいます",kr:"만납니다",lesson:"L7"},
+  {jp:"働きます",yomi:"はたらきます",kr:"일합니다",lesson:"L7"}
 ];
 const SENTENCES=[
   // L1
@@ -298,7 +313,18 @@ const SENTENCES=[
   {jp:"明日チェックアウトする予定です",yomi:"あしたちぇっくあうとするよていです",kr:"내일 체크아웃할 예정입니다",lesson:"L6"},
   {jp:"ホテルで朝食を食べる予定です",yomi:"ほてるでちょうしょくをたべるよていです",kr:"호텔에서 아침을 먹을 예정입니다",lesson:"L6"},
   {jp:"いつ出発する予定ですか",yomi:"いつしゅっぱつするよていですか",kr:"언제 출발할 예정입니까?",lesson:"L6"},
-  {jp:"何泊する予定ですか",yomi:"なんぱくするよていですか",kr:"몇 박 할 예정입니까?",lesson:"L6"}
+  {jp:"何泊する予定ですか",yomi:"なんぱくするよていですか",kr:"몇 박 할 예정입니까?",lesson:"L6"},
+  // L7
+  {jp:"私は日本語を勉強します",yomi:"わたしはにほんごをべんきょうします",kr:"저는 일본어를 공부합니다",lesson:"L7"},
+  {jp:"ご飯を食べます",yomi:"ごはんをたべます",kr:"밥을 먹습니다",lesson:"L7"},
+  {jp:"学校に行きます",yomi:"がっこうにいきます",kr:"학교에 갑니다",lesson:"L7"},
+  {jp:"7時に起きます",yomi:"しちじにおきます",kr:"7시에 일어납니다",lesson:"L7"},
+  {jp:"友達に会います",yomi:"ともだちにあいます",kr:"친구를 만납니다",lesson:"L7"},
+  {jp:"学校で勉強します",yomi:"がっこうでべんきょうします",kr:"학교에서 공부합니다",lesson:"L7"},
+  {jp:"電車で行きます",yomi:"でんしゃでいきます",kr:"전철로 갑니다",lesson:"L7"},
+  {jp:"箸で食べます",yomi:"はしでたべます",kr:"젓가락으로 먹습니다",lesson:"L7"},
+  {jp:"私は日本で日本語を勉強します",yomi:"わたしはにほんでにほんごをべんきょうします",kr:"저는 일본에서 일본어를 공부합니다",lesson:"L7"},
+  {jp:"週末はどこに行きますか",yomi:"しゅうまつはどこにいきますか",kr:"주말에는 어디에 갑니까?",lesson:"L7"}
 ];
 // ================================================================
 

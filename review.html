@@ -22,7 +22,7 @@
   .controls button.on{background:var(--accent);color:#fff;}
   .gcard{border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:12px 0;}
   .gcard .lbadge{display:inline-block;color:#fff;border-radius:8px;font-size:.75rem;font-weight:700;padding:2px 10px;margin-bottom:8px;}
-  .L1{background:#3b6fe0;} .L2{background:#d96a2f;} .L3{background:#18927c;} .L4{background:#b23a78;} .L5{background:#1f7ac2;} .L6{background:#a0623d;}
+  .L1{background:#3b6fe0;} .L2{background:#d96a2f;} .L3{background:#18927c;} .L4{background:#b23a78;} .L5{background:#1f7ac2;} .L6{background:#a0623d;} .L7{background:#4a5ac9;}
   .pat{font-size:1.05rem;font-weight:700;color:var(--jp);cursor:pointer;}
   .pat:hover{text-decoration:underline dotted;}
   rt{font-size:.58em;color:#8a93a8;font-weight:400;}
@@ -77,6 +77,7 @@
   <a href="lesson4.html">📸 Lesson 4 · 여행 추억</a>
   <a href="lesson5.html">✈️ Lesson 5 · 공항</a>
   <a href="lesson6.html">🏨 Lesson 6 · 호텔</a>
+  <a href="lesson7.html">🔗 Lesson 7 · 조사</a>
   <div class="dsec">복습 · 연습</div>
   <a href="review.html">📚 종합 복습</a>
   <a href="numbers.html">🔢 숫자 · 날짜 · 요일</a>
@@ -91,7 +92,7 @@
 
 <header>
   <h1>📚 종합 복습</h1>
-  <p>Lesson 1~6 문법 총정리 · 핵심 문장 · 종합 말하기</p>
+  <p>Lesson 1~7 문법 총정리 · 핵심 문장 · 종합 말하기</p>
 </header>
 
 <div class="wrap">
@@ -171,6 +172,18 @@
     <div class="pex"><ruby>行<rt>い</rt></ruby>きます→<ruby>行<rt>い</rt></ruby>く、<ruby>泊<rt>と</rt></ruby>まります→<ruby>泊<rt>と</rt></ruby>まる、します→する</div>
   </div>
 
+  <div class="gcard">
+    <span class="lbadge L7">Lesson 7 · 조사</span>
+    <div><span class="pat">は</span><span class="pmean">이야기의 주제 (은/는) — 발음은 わ!</span></div>
+    <div class="pex"><ruby>私<rt>わたし</rt></ruby>は<ruby>韓国人<rt>かんこくじん</rt></ruby>です。 → 저는 한국인입니다.</div>
+    <div><span class="pat">を</span><span class="pmean">동작의 대상 (을/를)</span></div>
+    <div class="pex"><ruby>日本語<rt>にほんご</rt></ruby>を<ruby>勉強<rt>べんきょう</rt></ruby>します。 → 일본어를 공부합니다.</div>
+    <div><span class="pat">に</span><span class="pmean">장소·시간·상대 (에)</span></div>
+    <div class="pex"><ruby>7時<rt>しちじ</rt></ruby>に<ruby>起<rt>お</rt></ruby>きます。／<ruby>友達<rt>ともだち</rt></ruby>に<ruby>会<rt>あ</rt></ruby>います。 → 7시에 일어납니다 / 친구를 만납니다.</div>
+    <div><span class="pat">で</span><span class="pmean">장소·방법 (에서/으로)</span></div>
+    <div class="pex"><ruby>学校<rt>がっこう</rt></ruby>で<ruby>勉強<rt>べんきょう</rt></ruby>します。／<ruby>電車<rt>でんしゃ</rt></ruby>で<ruby>行<rt>い</rt></ruby>きます。 → 학교에서 공부합니다 / 전철로 갑니다.</div>
+  </div>
+
   <div class="gcard" style="background:var(--accent-soft);border-color:var(--accent);">
     <b>⏱ 시제 한눈에 보기</b><br>
     <span style="font-size:.95rem;">
@@ -192,6 +205,7 @@
       <option value="L4">Lesson 4 · 여행 추억</option>
       <option value="L5">Lesson 5 · 공항</option>
       <option value="L6">Lesson 6 · 호텔</option>
+      <option value="L7">Lesson 7 · 조사</option>
     </select>
     <button onclick="document.body.classList.toggle('hide-kr');this.classList.toggle('on')">뜻 가리기</button>
     <button onclick="shufflePlay()" id="playAllBtn">▶️ 전체 듣기</button>
@@ -211,6 +225,7 @@
       <option value="L4">Lesson 4</option>
       <option value="L5">Lesson 5</option>
       <option value="L6">Lesson 6</option>
+      <option value="L7">Lesson 7</option>
     </select>
     <button onclick="sqStart()">🔀 다시 시작</button>
   </div>
@@ -301,7 +316,18 @@ const ALL_SENTENCES=[
   {jp:"明日チェックアウトする予定です", yomi:"あしたちぇっくあうとするよていです", kr:"내일 체크아웃할 예정입니다", lesson:"L6"},
   {jp:"ホテルで朝食を食べる予定です", yomi:"ほてるでちょうしょくをたべるよていです", kr:"호텔에서 아침을 먹을 예정입니다", lesson:"L6"},
   {jp:"いつ出発する予定ですか", yomi:"いつしゅっぱつするよていですか", kr:"언제 출발할 예정입니까?", lesson:"L6"},
-  {jp:"何泊する予定ですか", yomi:"なんぱくするよていですか", kr:"몇 박 할 예정입니까?", lesson:"L6"}
+  {jp:"何泊する予定ですか", yomi:"なんぱくするよていですか", kr:"몇 박 할 예정입니까?", lesson:"L6"},
+  // L7 조사
+  {jp:"私は日本語を勉強します", yomi:"わたしはにほんごをべんきょうします", kr:"저는 일본어를 공부합니다", lesson:"L7"},
+  {jp:"ご飯を食べます", yomi:"ごはんをたべます", kr:"밥을 먹습니다", lesson:"L7"},
+  {jp:"学校に行きます", yomi:"がっこうにいきます", kr:"학교에 갑니다", lesson:"L7"},
+  {jp:"7時に起きます", yomi:"しちじにおきます", kr:"7시에 일어납니다", lesson:"L7"},
+  {jp:"友達に会います", yomi:"ともだちにあいます", kr:"친구를 만납니다", lesson:"L7"},
+  {jp:"学校で勉強します", yomi:"がっこうでべんきょうします", kr:"학교에서 공부합니다", lesson:"L7"},
+  {jp:"電車で行きます", yomi:"でんしゃでいきます", kr:"전철로 갑니다", lesson:"L7"},
+  {jp:"箸で食べます", yomi:"はしでたべます", kr:"젓가락으로 먹습니다", lesson:"L7"},
+  {jp:"私は日本で日本語を勉強します", yomi:"わたしはにほんでにほんごをべんきょうします", kr:"저는 일본에서 일본어를 공부합니다", lesson:"L7"},
+  {jp:"週末はどこに行きますか", yomi:"しゅうまつはどこにいきますか", kr:"주말에는 어디에 갑니까?", lesson:"L7"}
 ];
 // ================================================================
 

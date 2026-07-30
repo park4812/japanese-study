@@ -91,6 +91,7 @@
   <a href="lesson5.html">✈️ Lesson 5 · 공항</a>
   <a href="lesson6.html">🏨 Lesson 6 · 호텔</a>
   <a href="lesson7.html">🔗 Lesson 7 · 조사</a>
+  <a href="lesson8.html">🗺️ Lesson 8 · 길 묻기</a>
   <div class="dsec">복습 · 연습</div>
   <a href="review.html">📚 종합 복습</a>
   <a href="numbers.html">🔢 숫자 · 날짜 · 요일</a>
@@ -388,9 +389,30 @@ const WORDS = [
   {jp:"勉強します", yomi:"べんきょうします", romaji:"benkyou shimasu", kr:"공부합니다", lesson:"L7", cat:"동사"},
   {jp:"起きます", yomi:"おきます", romaji:"okimasu", kr:"일어납니다", lesson:"L7", cat:"동사"},
   {jp:"会います", yomi:"あいます", romaji:"aimasu", kr:"만납니다", lesson:"L7", cat:"동사"},
-  {jp:"働きます", yomi:"はたらきます", romaji:"hatarakimasu", kr:"일합니다", lesson:"L7", cat:"동사"}
+  {jp:"働きます", yomi:"はたらきます", romaji:"hatarakimasu", kr:"일합니다", lesson:"L7", cat:"동사"},
+  // ---- Lesson 8: 길 묻기 (あります/います·위치) ----
+  {jp:"駅", yomi:"えき", romaji:"eki", kr:"역", lesson:"L8", cat:"장소"},
+  {jp:"コンビニ", yomi:"こんびに", romaji:"konbini", kr:"편의점", lesson:"L8", cat:"장소"},
+  {jp:"スーパー", yomi:"すーぱー", romaji:"su-pa-", kr:"슈퍼", lesson:"L8", cat:"장소"},
+  {jp:"病院", yomi:"びょういん", romaji:"byouin", kr:"병원", lesson:"L8", cat:"장소"},
+  {jp:"銀行", yomi:"ぎんこう", romaji:"ginkou", kr:"은행", lesson:"L8", cat:"장소"},
+  {jp:"郵便局", yomi:"ゆうびんきょく", romaji:"yuubinkyoku", kr:"우체국", lesson:"L8", cat:"장소"},
+  {jp:"公園", yomi:"こうえん", romaji:"kouen", kr:"공원", lesson:"L8", cat:"장소"},
+  {jp:"上", yomi:"うえ", romaji:"ue", kr:"위", lesson:"L8", cat:"위치"},
+  {jp:"下", yomi:"した", romaji:"shita", kr:"아래", lesson:"L8", cat:"위치"},
+  {jp:"前", yomi:"まえ", romaji:"mae", kr:"앞", lesson:"L8", cat:"위치"},
+  {jp:"後ろ", yomi:"うしろ", romaji:"ushiro", kr:"뒤", lesson:"L8", cat:"위치"},
+  {jp:"右", yomi:"みぎ", romaji:"migi", kr:"오른쪽", lesson:"L8", cat:"위치"},
+  {jp:"左", yomi:"ひだり", romaji:"hidari", kr:"왼쪽", lesson:"L8", cat:"위치"},
+  {jp:"隣", yomi:"となり", romaji:"tonari", kr:"옆", lesson:"L8", cat:"위치"},
+  {jp:"中", yomi:"なか", romaji:"naka", kr:"안", lesson:"L8", cat:"위치"},
+  {jp:"外", yomi:"そと", romaji:"soto", kr:"밖", lesson:"L8", cat:"위치"},
+  {jp:"近く", yomi:"ちかく", romaji:"chikaku", kr:"근처", lesson:"L8", cat:"위치"},
+  {jp:"向かい", yomi:"むかい", romaji:"mukai", kr:"맞은편", lesson:"L8", cat:"위치"},
+  {jp:"あります", yomi:"", romaji:"arimasu", kr:"있습니다 (사물·장소)", lesson:"L8", cat:"동사"},
+  {jp:"います", yomi:"", romaji:"imasu", kr:"있습니다 (사람·동물)", lesson:"L8", cat:"동사"}
 ];
-const LESSON_NAMES = { "L1": "Lesson 1 · 자기소개", "L2": "Lesson 2 · 주문", "L3": "Lesson 3 · 여행 일정", "L4": "Lesson 4 · 여행 추억", "L5": "Lesson 5 · 공항", "L6": "Lesson 6 · 호텔", "L7": "Lesson 7 · 조사" };
+const LESSON_NAMES = { "L1": "Lesson 1 · 자기소개", "L2": "Lesson 2 · 주문", "L3": "Lesson 3 · 여행 일정", "L4": "Lesson 4 · 여행 추억", "L5": "Lesson 5 · 공항", "L6": "Lesson 6 · 호텔", "L7": "Lesson 7 · 조사", "L8": "Lesson 8 · 길 묻기" };
 /* ============================================================ */
 
 // 레슨 선택 옵션 채우기

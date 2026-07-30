@@ -72,6 +72,7 @@
   <a href="lesson5.html">✈️ Lesson 5 · 공항</a>
   <a href="lesson6.html">🏨 Lesson 6 · 호텔</a>
   <a href="lesson7.html">🔗 Lesson 7 · 조사</a>
+  <a href="lesson8.html">🗺️ Lesson 8 · 길 묻기</a>
   <div class="dsec">복습 · 연습</div>
   <a href="review.html">📚 종합 복습</a>
   <a href="numbers.html">🔢 숫자 · 날짜 · 요일</a>
@@ -102,6 +103,7 @@
       <option value="L5">Lesson 5 · 공항</option>
       <option value="L6">Lesson 6 · 호텔</option>
       <option value="L7">Lesson 7 · 조사</option>
+      <option value="L8">Lesson 8 · 길 묻기</option>
     </select>
   </div>
   <div class="modes">
@@ -244,7 +246,24 @@ const WORDS=[
   {jp:"勉強します",yomi:"べんきょうします",kr:"공부합니다",lesson:"L7"},
   {jp:"起きます",yomi:"おきます",kr:"일어납니다",lesson:"L7"},
   {jp:"会います",yomi:"あいます",kr:"만납니다",lesson:"L7"},
-  {jp:"働きます",yomi:"はたらきます",kr:"일합니다",lesson:"L7"}
+  {jp:"働きます",yomi:"はたらきます",kr:"일합니다",lesson:"L7"},
+  // L8 길 묻기
+  {jp:"駅",yomi:"えき",kr:"역",lesson:"L8"},
+  {jp:"コンビニ",yomi:"こんびに",kr:"편의점",lesson:"L8"},
+  {jp:"病院",yomi:"びょういん",kr:"병원",lesson:"L8"},
+  {jp:"銀行",yomi:"ぎんこう",kr:"은행",lesson:"L8"},
+  {jp:"郵便局",yomi:"ゆうびんきょく",kr:"우체국",lesson:"L8"},
+  {jp:"公園",yomi:"こうえん",kr:"공원",lesson:"L8"},
+  {jp:"上",yomi:"うえ",kr:"위",lesson:"L8"},
+  {jp:"下",yomi:"した",kr:"아래",lesson:"L8"},
+  {jp:"前",yomi:"まえ",kr:"앞",lesson:"L8"},
+  {jp:"後ろ",yomi:"うしろ",kr:"뒤",lesson:"L8"},
+  {jp:"右",yomi:"みぎ",kr:"오른쪽",lesson:"L8"},
+  {jp:"左",yomi:"ひだり",kr:"왼쪽",lesson:"L8"},
+  {jp:"隣",yomi:"となり",kr:"옆",lesson:"L8"},
+  {jp:"中",yomi:"なか",kr:"안",lesson:"L8"},
+  {jp:"近く",yomi:"ちかく",kr:"근처",lesson:"L8"},
+  {jp:"向かい",yomi:"むかい",kr:"맞은편",lesson:"L8"}
 ];
 const SENTENCES=[
   // L1
@@ -324,7 +343,18 @@ const SENTENCES=[
   {jp:"電車で行きます",yomi:"でんしゃでいきます",kr:"전철로 갑니다",lesson:"L7"},
   {jp:"箸で食べます",yomi:"はしでたべます",kr:"젓가락으로 먹습니다",lesson:"L7"},
   {jp:"私は日本で日本語を勉強します",yomi:"わたしはにほんでにほんごをべんきょうします",kr:"저는 일본에서 일본어를 공부합니다",lesson:"L7"},
-  {jp:"週末はどこに行きますか",yomi:"しゅうまつはどこにいきますか",kr:"주말에는 어디에 갑니까?",lesson:"L7"}
+  {jp:"週末はどこに行きますか",yomi:"しゅうまつはどこにいきますか",kr:"주말에는 어디에 갑니까?",lesson:"L7"},
+  // L8
+  {jp:"本は机の上にあります",yomi:"ほんはつくえのうえにあります",kr:"책은 책상 위에 있습니다",lesson:"L8"},
+  {jp:"猫はいすの上にいます",yomi:"ねこはいすのうえにいます",kr:"고양이는 의자 위에 있습니다",lesson:"L8"},
+  {jp:"先生は教室にいます",yomi:"せんせいはきょうしつにいます",kr:"선생님은 교실에 있습니다",lesson:"L8"},
+  {jp:"コンビニは駅の前にあります",yomi:"こんびにはえきのまえにあります",kr:"편의점은 역 앞에 있습니다",lesson:"L8"},
+  {jp:"銀行はスーパーの隣にあります",yomi:"ぎんこうはすーぱーのとなりにあります",kr:"은행은 슈퍼 옆에 있습니다",lesson:"L8"},
+  {jp:"病院は公園の向かいにあります",yomi:"びょういんはこうえんのむかいにあります",kr:"병원은 공원 맞은편에 있습니다",lesson:"L8"},
+  {jp:"犬はテーブルの下にいます",yomi:"いぬはてーぶるのしたにいます",kr:"강아지는 테이블 아래에 있습니다",lesson:"L8"},
+  {jp:"駅はどこにありますか",yomi:"えきはどこにありますか",kr:"역은 어디에 있습니까?",lesson:"L8"},
+  {jp:"まっすぐ行ってください",yomi:"まっすぐいってください",kr:"곧장 가세요",lesson:"L8"},
+  {jp:"本はかばんの中にあります",yomi:"ほんはかばんのなかにあります",kr:"책은 가방 안에 있습니다",lesson:"L8"}
 ];
 // ================================================================
 

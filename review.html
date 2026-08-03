@@ -426,7 +426,10 @@ function saveRecord(type,ok){
 document.querySelectorAll('.pat,.pex').forEach(el=>{
   el.addEventListener('click',()=>{
     const c=el.cloneNode(true);
-    c.querySelectorAll('rt').forEach(r=>r.remove());
+    c.querySelectorAll('ruby').forEach(r=>{
+      const rt=r.querySelector('rt');
+      r.replaceWith(document.createTextNode(rt?rt.textContent:r.textContent));
+    });
     const t=c.textContent.split('→')[0].replace(/（[^）]*）/g,'').trim();
     speakJa(t);
   });

@@ -438,10 +438,29 @@ function jpText(el){
   c.querySelectorAll('rt').forEach(r=>r.remove());
   return c.textContent.replace(/（[^）]*）/g,'').replace(/[✅⚠️📝💡→🗣]/g,'').trim();
 }
+function readingText(el){
+  // 한자를 후리가나(rt) 읽기로 바꿔서 정확한 발음으로 재생
+  const c=el.cloneNode(true);
+  c.querySelectorAll('ruby').forEach(r=>{
+    const rt=r.querySelector('rt');
+    r.replaceWith(document.createTextNode(rt?rt.textContent:r.textContent));
+  });
+  return c.textContent.replace(/（[^）]*）/g,'').replace(/[✅⚠️📝💡→🗣❌⭕⭐①②③]/g,'').trim();
+}
 document.querySelectorAll('.jp').forEach(el=>{
   el.style.cursor='pointer';
   el.title='클릭하면 발음 재생 🔊';
-  el.addEventListener('click',()=>speakJa(jpText(el)));
+  el.addEventListener('click',()=>{
+    // 단어 표: 옆 칸의 '읽기'(히라가나)를 읽음
+    if(el.tagName==='TD'){
+      const n=el.nextElementSibling;
+      if(n){
+        const y=n.textContent.trim();
+        if(y && /^[ぁ-ゖァ-ヺー・\s]+$/.test(y)){ speakJa(y); return; }
+      }
+    }
+    speakJa(readingText(el));
+  });
 });
 
 // ---------- 문장 말하기 퀴즈 (Lesson 4) ----------

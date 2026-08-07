@@ -22,7 +22,7 @@
   .controls button.on{background:var(--accent);color:#fff;}
   .gcard{border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:12px 0;}
   .gcard .lbadge{display:inline-block;color:#fff;border-radius:8px;font-size:.75rem;font-weight:700;padding:2px 10px;margin-bottom:8px;}
-  .L1{background:#3b6fe0;} .L2{background:#d96a2f;} .L3{background:#18927c;} .L4{background:#b23a78;} .L5{background:#1f7ac2;} .L6{background:#a0623d;} .L7{background:#4a5ac9;} .L8{background:#178a72;} .L9{background:#c4453a;}
+  .L1{background:#3b6fe0;} .L2{background:#d96a2f;} .L3{background:#18927c;} .L4{background:#b23a78;} .L5{background:#1f7ac2;} .L6{background:#a0623d;} .L7{background:#4a5ac9;} .L8{background:#178a72;} .L9{background:#c4453a;} .L10{background:#2f6fa8;}
   .pat{font-size:1.05rem;font-weight:700;color:var(--jp);cursor:pointer;}
   .pat:hover{text-decoration:underline dotted;}
   rt{font-size:.58em;color:#8a93a8;font-weight:400;}
@@ -80,6 +80,7 @@
   <a href="lesson7.html">🔗 Lesson 7 · 조사</a>
   <a href="lesson8.html">🗺️ Lesson 8 · 길 묻기</a>
   <a href="lesson9.html">🧳 Lesson 9 · 여행 · ています</a>
+  <a href="lesson10.html">🙏 Lesson 10 · 허락 구하기</a>
   <div class="dsec">복습 · 연습</div>
   <a href="review.html">📚 종합 복습</a>
   <a href="numbers.html">🔢 숫자 · 날짜 · 요일</a>
@@ -94,7 +95,7 @@
 
 <header>
   <h1>📚 종합 복습</h1>
-  <p>Lesson 1~9 문법 총정리 · 핵심 문장 · 종합 말하기</p>
+  <p>Lesson 1~10 문법 총정리 · 핵심 문장 · 종합 말하기</p>
 </header>
 
 <div class="wrap">
@@ -208,6 +209,15 @@
     <div class="pex"><ruby>写真<rt>しゃしん</rt></ruby>を<ruby>撮<rt>と</rt></ruby>っています。 → 사진을 찍고 있습니다.</div>
   </div>
 
+  <div class="gcard">
+    <span class="lbadge L10">Lesson 10 · 허락 구하기</span>
+    <div><span class="pat">～てもいいですか</span><span class="pmean">~해도 됩니까? (て형 + もいいですか)</span></div>
+    <div class="pex">ここで<ruby>写真<rt>しゃしん</rt></ruby>を<ruby>撮<rt>と</rt></ruby>ってもいいですか。 → 여기에서 사진을 찍어도 됩니까?</div>
+    <div><span class="pat">✅ OK</span><span class="pmean">はい、いいですよ／どうぞ</span></div>
+    <div><span class="pat">🙅 NG</span><span class="pmean">すみません、ここではちょっと……</span></div>
+    <div class="pex">Wi-Fiを<ruby>使<rt>つか</rt></ruby>ってもいいですか。 → 와이파이를 사용해도 됩니까?</div>
+  </div>
+
   <div class="gcard" style="background:var(--accent-soft);border-color:var(--accent);">
     <b>⏱ 시제 한눈에 보기</b><br>
     <span style="font-size:.95rem;">
@@ -232,6 +242,7 @@
       <option value="L7">Lesson 7 · 조사</option>
       <option value="L8">Lesson 8 · 길 묻기</option>
       <option value="L9">Lesson 9 · 여행 · ています</option>
+      <option value="L10">Lesson 10 · 허락 구하기</option>
     </select>
     <button onclick="document.body.classList.toggle('hide-kr');this.classList.toggle('on')">뜻 가리기</button>
     <button onclick="shufflePlay()" id="playAllBtn">▶️ 전체 듣기</button>
@@ -254,6 +265,7 @@
       <option value="L7">Lesson 7</option>
       <option value="L8">Lesson 8</option>
       <option value="L9">Lesson 9</option>
+      <option value="L10">Lesson 10</option>
     </select>
     <button onclick="sqStart()">🔀 다시 시작</button>
   </div>
@@ -373,7 +385,14 @@ const ALL_SENTENCES=[
   {jp:"電車を待っています", yomi:"でんしゃをまっています", kr:"전철을 기다리고 있습니다", lesson:"L9"},
   {jp:"お寺を見ています", yomi:"おてらをみています", kr:"절을 보고 있습니다", lesson:"L9"},
   {jp:"京都を歩いています", yomi:"きょうとをあるいています", kr:"교토를 걷고 있습니다", lesson:"L9"},
-  {jp:"お土産を買っています", yomi:"おみやげをかっています", kr:"기념품을 사고 있습니다", lesson:"L9"}
+  {jp:"お土産を買っています", yomi:"おみやげをかっています", kr:"기념품을 사고 있습니다", lesson:"L9"},
+  // L10 허락 구하기
+  {jp:"ここで写真を撮ってもいいですか", yomi:"ここでしゃしんをとってもいいですか", kr:"여기에서 사진을 찍어도 됩니까?", lesson:"L10"},
+  {jp:"ここに座ってもいいですか", yomi:"ここにすわってもいいですか", kr:"여기에 앉아도 됩니까?", lesson:"L10"},
+  {jp:"Wi-Fiを使ってもいいですか", yomi:"わいふぁいをつかってもいいですか", kr:"와이파이를 사용해도 됩니까?", lesson:"L10"},
+  {jp:"中に入ってもいいですか", yomi:"なかにはいってもいいですか", kr:"안에 들어가도 됩니까?", lesson:"L10"},
+  {jp:"ここに荷物を置いてもいいですか", yomi:"ここににもつをおいてもいいですか", kr:"여기에 짐을 놓아도 됩니까?", lesson:"L10"},
+  {jp:"これを試着してもいいですか", yomi:"これをしちゃくしてもいいですか", kr:"이것을 입어 봐도 됩니까?", lesson:"L10"}
 ];
 // ================================================================
 

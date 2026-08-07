@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>일본어 Lesson 10 — 허락 구하기 · ～てもいいですか</title>
+<style>
+  :root{
+    --bg:#f4f7fb; --card:#ffffff; --ink:#1e2433; --sub:#5b6478;
+    --accent:#2f6fa8; --accent-soft:#e6eefb; --line:#dbe6f4;
+    --jp:#173a5e; --kr:#7a3fa8; --warn-bg:#fff6e5; --warn-bd:#f0c36d;
+    --ok:#1f9d55; --no:#d64545;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:'Apple SD Gothic Neo','Noto Sans KR','Hiragino Sans','Noto Sans JP',sans-serif;
+       background:var(--bg); color:var(--ink); line-height:1.75; padding-bottom:80px;}
+  header{background:linear-gradient(135deg,#1c4e78,#5590c4); color:#fff; padding:44px 20px 36px; text-align:center;}
+  header h1{font-size:1.65rem; margin-bottom:6px;}
+  header p{opacity:.9; font-size:.95rem;}
+  .wrap{max-width:860px; margin:0 auto; padding:0 16px;}
+  nav.wrap{position:sticky; top:50px; z-index:10; background:rgba(255,255,255,.95); backdrop-filter:blur(6px);
+      border-bottom:1px solid var(--line); overflow-x:auto; white-space:nowrap; padding:8px 12px;}
+  nav.wrap a{display:inline-block; padding:6px 12px; margin:2px; border-radius:16px; font-size:.85rem;
+        color:var(--sub); text-decoration:none;}
+  nav.wrap a:hover{background:var(--accent-soft); color:var(--accent);}
+  .toolbar{display:flex; gap:10px; justify-content:center; margin:20px auto 4px; flex-wrap:wrap;}
+  .toolbar button{border:1.5px solid var(--accent); background:#fff; color:var(--accent);
+        padding:8px 18px; border-radius:22px; font-size:.9rem; cursor:pointer; font-weight:600;}
+  .toolbar button.on{background:var(--accent); color:#fff;}
+  section{background:var(--card); border:1px solid var(--line); border-radius:14px;
+          padding:26px 24px; margin:22px 0; scroll-margin-top:110px;}
+  h2{font-size:1.25rem; color:var(--accent); border-left:5px solid var(--accent);
+     padding-left:12px; margin-bottom:16px;}
+  h3{font-size:1.02rem; margin:20px 0 8px; color:var(--jp);}
+  .jp{font-size:1.08rem; color:var(--jp); font-weight:600;}
+  rt{font-size:.62em; color:#8fb2d1; font-weight:400;}
+  .kr{color:var(--kr); font-size:.93rem;}
+  .kr::before{content:"→ ";}
+  body.hide-kr .kr{filter:blur(6px); cursor:pointer; transition:filter .15s;}
+  body.hide-kr .kr:hover, body.hide-kr .kr:active{filter:none;}
+  body.hide-furi rt{visibility:hidden;}
+  table{width:100%; border-collapse:collapse; margin:10px 0;}
+  th,td{border:1px solid var(--line); padding:9px 12px; text-align:left; font-size:.98rem;}
+  th{background:var(--accent-soft); color:var(--jp); font-size:.88rem;}
+  td.krcell{color:var(--kr); font-size:.93rem;}
+  body.hide-kr td.krcell{filter:blur(6px); cursor:pointer;}
+  body.hide-kr td.krcell:hover, body.hide-kr td.krcell:active{filter:none;}
+  ul{list-style:none;}
+  li.pair{padding:9px 0; border-bottom:1px dashed var(--line);}
+  li.pair:last-child{border-bottom:none;}
+  .box{background:var(--accent-soft); border-radius:10px; padding:14px 16px; margin:10px 0;}
+  .warn{background:var(--warn-bg); border:1px solid var(--warn-bd); border-radius:10px;
+        padding:14px 16px; margin:10px 0;}
+  .warn strong{color:#9a6b00;}
+  .tag{display:inline-block; background:var(--accent); color:#fff; border-radius:6px;
+       font-size:.75rem; padding:2px 8px; margin-right:8px; vertical-align:middle;}
+  .pbadge{display:inline-block;background:var(--accent);color:#fff;border-radius:10px;font-size:1.05rem;font-weight:800;padding:2px 16px;margin-right:8px;vertical-align:middle;}
+  .hint{font-size:.82rem; color:var(--sub); text-align:center; margin-top:4px;}
+  .sqbtn{border:none;color:#fff;padding:10px 20px;border-radius:22px;font-weight:700;cursor:pointer;margin:4px;font-size:.92rem;}
+  #sqFb.ok{color:var(--ok);} #sqFb.no{color:var(--no);}
+  footer{text-align:center; color:var(--sub); font-size:.82rem; margin-top:30px;}
+  .tablewrap{overflow-x:auto;}
+  .scene{font-weight:700; color:var(--accent); margin-top:16px;}
+  /* 퀴즈 */
+  .pq-sent{font-size:1.35rem;font-weight:700;color:var(--jp);text-align:center;margin:16px 0 4px;line-height:1.7;}
+  .pq-yomi{font-size:.92rem;color:#8fb2d1;text-align:center;min-height:24px;}
+  .pq-kr{font-size:.95rem;color:var(--kr);text-align:center;margin-bottom:10px;}
+  .pq-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:12px 0;}
+  .pq-btns button{border:2px solid var(--line);background:#fff;font-size:1.05rem;font-weight:700;min-width:64px;padding:12px 18px;border-radius:14px;cursor:pointer;color:var(--jp);}
+  .pq-btns button:hover{border-color:var(--accent);}
+  .pq-btns button.correct{background:#e5f6ec;border-color:var(--ok);color:var(--ok);}
+  .pq-btns button.wrong{background:#fdeaea;border-color:var(--no);color:var(--no);}
+  .pq-btns button:disabled{cursor:default;}
+  .pq-fb{text-align:center;font-weight:700;min-height:30px;}
+  .pq-fb.ok{color:var(--ok);} .pq-fb.no{color:var(--no);}
+  .pq-score{text-align:center;font-size:.9rem;color:var(--sub);}
+  @media (max-width:560px){
+    th,td{padding:7px 8px;font-size:.88rem;}
+    section{padding:20px 14px;}
+    header h1{font-size:1.3rem;}
+    .jp{font-size:1.02rem;}
+    .pq-sent{font-size:1.1rem;}
+  }
+  /* ---- 햄버거 메뉴 ---- */
+  .topbar{position:sticky;top:0;z-index:40;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.97);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);border-bottom:1px solid rgba(0,0,0,.08);padding:0 14px;height:50px;}
+  .topbar .brand{font-weight:800;text-decoration:none;color:#1e2433;font-size:.98rem;}
+  .topbar .menu-btn{border:none;background:none;font-size:1.55rem;cursor:pointer;color:#1e2433;padding:2px 6px;line-height:1;}
+  .drawer{position:fixed;top:0;right:-290px;width:270px;height:100vh;background:#fff;z-index:60;box-shadow:-4px 0 24px rgba(0,0,0,.18);transition:right .25s;padding:16px 12px 40px;overflow-y:auto;}
+  .drawer.open{right:0;}
+  .drawer a{display:block;padding:11px 14px;border-radius:10px;color:#1e2433;text-decoration:none;font-size:.97rem;margin:2px 0;}
+  .drawer a:hover{background:#eef2fb;}
+  .drawer a.cur{background:#3b6fe0;color:#fff;font-weight:700;}
+  .drawer .dsec{font-size:.72rem;color:#8a93a8;margin:14px 8px 4px;font-weight:700;letter-spacing:.05em;}
+  .drawer .dclose{text-align:right;font-size:1.3rem;cursor:pointer;color:#8a93a8;padding:0 6px 6px;}
+  .overlay{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:50;display:none;}
+  .overlay.show{display:block;}
+</style>
+</head>
+<body>
+
+<nav class="topbar">
+  <a class="brand" href="index.html">🇯🇵 나의 일본어 교실</a>
+  <button class="menu-btn" onclick="toggleMenu()" aria-label="메뉴">☰</button>
+</nav>
+<div id="menuDrawer" class="drawer">
+  <div class="dclose" onclick="toggleMenu()">✕</div>
+  <a href="index.html">🏠 홈</a>
+  <div class="dsec">레슨</div>
+  <a href="lesson1.html">🙋 Lesson 1 · 자기소개</a>
+  <a href="lesson2.html">🍜 Lesson 2 · 레스토랑 주문</a>
+  <a href="lesson3.html">🗓️ Lesson 3 · 여행 일정</a>
+  <a href="lesson4.html">📸 Lesson 4 · 여행 추억</a>
+  <a href="lesson5.html">✈️ Lesson 5 · 공항</a>
+  <a href="lesson6.html">🏨 Lesson 6 · 호텔</a>
+  <a href="lesson7.html">🔗 Lesson 7 · 조사</a>
+  <a href="lesson8.html">🗺️ Lesson 8 · 길 묻기</a>
+  <a href="lesson9.html">🧳 Lesson 9 · 여행 · ています</a>
+  <a href="lesson10.html">🙏 Lesson 10 · 허락 구하기</a>
+  <div class="dsec">복습 · 연습</div>
+  <a href="review.html">📚 종합 복습</a>
+  <a href="numbers.html">🔢 숫자 · 날짜 · 요일</a>
+  <a href="kana.html">🔤 가나 연습</a>
+  <a href="vocab.html">🃏 단어 복습</a>
+  <a href="quiz.html">🎲 랜덤 퀴즈</a>
+  <div class="dsec">기록</div>
+  <a href="records.html">🏆 학습 기록</a>
+</div>
+<div id="menuOverlay" class="overlay" onclick="toggleMenu()"></div>
+
+<nav class="wrap">
+  <a href="#goal">목표</a>
+  <a href="#review">복습</a>
+  <a href="#vocab">단어</a>
+  <a href="#g1">てもいいですか</a>
+  <a href="#answer">대답하기</a>
+  <a href="#pquiz">🎯 문장 퀴즈</a>
+  <a href="#scenes">장면별 표현</a>
+  <a href="#roleplay">롤플레이</a>
+  <a href="#speakquiz">🎤 말하기 퀴즈</a>
+  <a href="#summary">정리·숙제</a>
+</nav>
+
+<header>
+  <h1>Lesson 10 · <ruby>旅行先<rt>りょこうさき</rt></ruby>で<ruby>許可<rt>きょか</rt></ruby>を<ruby>聞<rt>き</rt></ruby>こう！</h1>
+  <p>여행지에서 허락을 구해 봅시다 — ～てもいいですか (~해도 됩니까?)</p>
+</header>
+
+<div class="wrap">
+
+<div class="toolbar">
+  <button id="btnKr" onclick="toggle('hide-kr',this)">한국어 뜻 가리기</button>
+  <button id="btnFuri" onclick="toggle('hide-furi',this)">후리가나 가리기</button>
+</div>
+<p class="hint">뜻을 가린 상태에서 마우스를 올리면(모바일은 터치) 잠깐 보여요.<br>🔊 <b>일본어 문장을 클릭하면 발음이 재생됩니다.</b></p>
+
+<section id="goal">
+  <h2>오늘의 목표 <span class="jp">今日（きょう）の目標（もくひょう）</span></h2>
+  <ul>
+    <li class="pair"><span class="jp">✅ 「～てもいいですか」の<ruby>意味<rt>いみ</rt></ruby>と<ruby>使<rt>つか</rt></ruby>い<ruby>方<rt>かた</rt></ruby>がわかる。</span><br><span class="kr">「～てもいいですか」의 의미와 사용법을 이해할 수 있다.</span></li>
+    <li class="pair"><span class="jp">✅ 「て<ruby>形<rt>けい</rt></ruby>」を<ruby>使<rt>つか</rt></ruby>って「～てもいいですか」が<ruby>作<rt>つく</rt></ruby>れる。</span><br><span class="kr">て형을 사용해서 「～てもいいですか」를 만들 수 있다.</span></li>
+    <li class="pair"><span class="jp">✅ <ruby>旅行中<rt>りょこうちゅう</rt></ruby>に<ruby>相手<rt>あいて</rt></ruby>へ<ruby>許可<rt>きょか</rt></ruby>を<ruby>聞<rt>き</rt></ruby>ける。</span><br><span class="kr">여행 중에 상대방에게 허락을 구할 수 있다.</span></li>
+    <li class="pair"><span class="jp">✅ <ruby>許可<rt>きょか</rt></ruby>を<ruby>聞<rt>き</rt></ruby>かれたときに<ruby>答<rt>こた</rt></ruby>えられる。</span><br><span class="kr">허락을 구하는 질문을 받았을 때 대답할 수 있다.</span></li>
+  </ul>
+</section>
+
+<section id="review">
+  <h2>복습 — Lesson 9 ～ています <span class="jp">前回（ぜんかい）の復習（ふくしゅう）</span></h2>
+  <ul>
+    <li class="pair"><span class="jp"><ruby>今<rt>いま</rt></ruby>、<ruby>何<rt>なに</rt></ruby>をしていますか。</span><br><span class="kr">지금 무엇을 하고 있습니까?</span></li>
+    <li class="pair"><span class="jp"><ruby>今<rt>いま</rt></ruby>、<ruby>何<rt>なに</rt></ruby>を<ruby>勉強<rt>べんきょう</rt></ruby>していますか。</span><br><span class="kr">지금 무엇을 공부하고 있습니까?</span></li>
+    <li class="pair"><span class="jp"><ruby>家族<rt>かぞく</rt></ruby>は<ruby>今<rt>いま</rt></ruby>、<ruby>何<rt>なに</rt></ruby>をしていますか。</span><br><span class="kr">가족은 지금 무엇을 하고 있습니까?</span></li>
+  </ul>
+</section>
+
+<section id="vocab">
+  <h2>오늘의 단어 <span class="jp">旅行中（りょこうちゅう）に使（つか）う言葉（ことば）</span> — 14개</h2>
+  <table>
+    <tr><th>日本語</th><th>읽기</th><th>한국어</th></tr>
+    <tr><td class="jp">写真</td><td>しゃしん</td><td class="krcell">사진</td></tr>
+    <tr><td class="jp">動画</td><td>どうが</td><td class="krcell">동영상</td></tr>
+    <tr><td class="jp">荷物</td><td>にもつ</td><td class="krcell">짐</td></tr>
+    <tr><td class="jp">席</td><td>せき</td><td class="krcell">자리</td></tr>
+    <tr><td class="jp">入口</td><td>いりぐち</td><td class="krcell">입구</td></tr>
+    <tr><td class="jp">出口</td><td>でぐち</td><td class="krcell">출구</td></tr>
+    <tr><td class="jp">試着</td><td>しちゃく</td><td class="krcell">시착(입어보기)</td></tr>
+    <tr><td class="jp">充電</td><td>じゅうでん</td><td class="krcell">충전</td></tr>
+    <tr><td class="jp">Wi-Fi</td><td>ワイファイ</td><td class="krcell">와이파이</td></tr>
+    <tr><td class="jp">撮ります</td><td>とります</td><td class="krcell">찍습니다</td></tr>
+    <tr><td class="jp">座ります</td><td>すわります</td><td class="krcell">앉습니다</td></tr>
+    <tr><td class="jp">入ります</td><td>はいります</td><td class="krcell">들어갑니다</td></tr>
+    <tr><td class="jp">置きます</td><td>おきます</td><td class="krcell">놓습니다</td></tr>
+    <tr><td class="jp">触ります</td><td>さわります</td><td class="krcell">만집니다</td></tr>
+  </table>
+</section>
+
+<section id="g1">
+  <h2><span class="pbadge">～てもいいですか</span> ~해도 됩니까?</h2>
+  <div class="box">
+    「～てもいいですか」는 <b>상대방에게 허락을 구할 때</b> 사용<br>
+    <b>문형:</b> <span class="jp">動詞のて形＋もいいですか</span> <span class="kr">동사의 て형 + もいいですか</span>
+  </div>
+  <h3>만드는 법</h3>
+  <ul>
+    <li class="pair"><span class="jp"><ruby>撮<rt>と</rt></ruby>ります → <ruby>撮<rt>と</rt></ruby>って → <ruby>撮<rt>と</rt></ruby>ってもいいですか。</span><br><span class="kr">찍습니다 → 찍고 → 찍어도 됩니까?</span></li>
+    <li class="pair"><span class="jp"><ruby>使<rt>つか</rt></ruby>います → <ruby>使<rt>つか</rt></ruby>って → <ruby>使<rt>つか</rt></ruby>ってもいいですか。</span><br><span class="kr">사용합니다 → 사용하고 → 사용해도 됩니까?</span></li>
+    <li class="pair"><span class="jp"><ruby>座<rt>すわ</rt></ruby>ります → <ruby>座<rt>すわ</rt></ruby>って → <ruby>座<rt>すわ</rt></ruby>ってもいいですか。</span><br><span class="kr">앉습니다 → 앉고 → 앉아도 됩니까?</span></li>
+    <li class="pair"><span class="jp"><ruby>食<rt>た</rt></ruby>べます → <ruby>食<rt>た</rt></ruby>べて → <ruby>食<rt>た</rt></ruby>べてもいいですか。</span><br><span class="kr">먹습니다 → 먹고 → 먹어도 됩니까?</span></li>
+  </ul>
+  <div class="warn"><strong>💡 힌트:</strong> Lesson 9에서 배운 て형 만드는 규칙을 그대로 사용해요 (う·つ·る→って / む·ぶ·ぬ→んで / く→いて / ぐ→いで / す→して)</div>
+  <h3>예문</h3>
+  <ul>
+    <li class="pair"><span class="jp">ここで<ruby>写真<rt>しゃしん</rt></ruby>を<ruby>撮<rt>と</rt></ruby>ってもいいですか。</span><br><span class="kr">여기에서 사진을 찍어도 됩니까?</span></li>
+    <li class="pair"><span class="jp">ここに<ruby>座<rt>すわ</rt></ruby>ってもいいですか。</span><br><span class="kr">여기에 앉아도 됩니까?</span></li>
+    <li class="pair"><span class="jp">Wi-Fiを<ruby>使<rt>つか</rt></ruby>ってもいいですか。</span><br><span class="kr">와이파이를 사용해도 됩니까?</span></li>
+    <li class="pair"><span class="jp"><ruby>中<rt>なか</rt></ruby>に<ruby>入<rt>はい</rt></ruby>ってもいいですか。</span><br><span class="kr">안에 들어가도 됩니까?</span></li>
+  </ul>
+</section>
+
+<section id="answer">
+  <h2>허락을 구하고 대답하기 <span class="jp">許可（きょか）を聞（き）く・答（こた）える</span></h2>
+  <div class="tablewrap"><table>
+    <tr><th>상황</th><th>표현</th><th>한국어</th></tr>
+    <tr><td class="jp">허락 구하기</td><td class="jp">～てもいいですか。</td><td class="krcell">~해도 됩니까?</td></tr>
+    <tr><td class="jp">✅ OK</td><td class="jp">はい、いいですよ。</td><td class="krcell">네, 괜찮습니다.</td></tr>
+    <tr><td class="jp">✅ OK</td><td class="jp">はい、どうぞ。</td><td class="krcell">네, 그러세요.</td></tr>
+    <tr><td class="jp">✅ OK</td><td class="jp">大丈夫です。</td><td class="krcell">괜찮습니다.</td></tr>
+    <tr><td class="jp">🙅 NG</td><td class="jp">すみません、できません。</td><td class="krcell">죄송하지만 안 됩니다.</td></tr>
+    <tr><td class="jp">🙅 NG</td><td class="jp">すみません、ここではちょっと……。</td><td class="krcell">죄송하지만 여기에서는 조금…….</td></tr>
+  </table></div>
+  <h3>회화 예시</h3>
+  <ul>
+    <li class="pair"><span class="tag">A</span><span class="jp">ここで<ruby>写真<rt>しゃしん</rt></ruby>を<ruby>撮<rt>と</rt></ruby>ってもいいですか。</span><br><span class="kr">여기에서 사진을 찍어도 됩니까?</span></li>
+    <li class="pair"><span class="tag">B</span><span class="jp">はい、いいですよ。</span><br><span class="kr">네, 괜찮습니다.</span></li>
+    <li class="pair"><span class="tag">A</span><span class="jp">ここに<ruby>荷物<rt>にもつ</rt></ruby>を<ruby>置<rt>お</rt></ruby>いてもいいですか。</span><br><span class="kr">여기에 짐을 놓아도 됩니까?</span></li>
+    <li class="pair"><span class="tag">B</span><span class="jp">すみません、ここではちょっと……。</span><br><span class="kr">죄송하지만 여기에서는 조금…….</span></li>
+  </ul>
+</section>
+
+<section id="pquiz">
+  <h2>🎯 문장 퀴즈 — 알맞은 て형을 골라 문장을 완성하세요</h2>
+  <div class="pq-sent" id="pqSent"></div>
+  <div class="pq-yomi" id="pqYomi"></div>
+  <div class="pq-kr" id="pqKr"></div>
+  <div class="pq-btns" id="pqBtns"></div>
+  <div class="pq-fb" id="pqFb"></div>
+  <div class="pq-score" id="pqScore">정답 0 / 시도 0</div>
+  <p class="hint">「～てもいいですか」 문제 14개가 랜덤으로 나옵니다 · 자주 틀리는 문제가 더 자주 출제 · 결과는 🏆 기록에 저장</p>
+</section>
+
+<section id="scenes">
+  <h2>장면별 표현 <span class="jp">場面（ばめん）で使（つか）おう！</span></h2>
+  <div class="scene">🏯 관광지 <span class="jp">観光地（かんこうち）</span></div>
+  <ul>
+    <li class="pair"><span class="jp">ここで<ruby>写真<rt>しゃしん</rt></ruby>を<ruby>撮<rt>と</rt></ruby>ってもいいですか。</span><br><span class="kr">여기에서 사진을 찍어도 됩니까?</span></li>
+    <li class="pair"><span class="jp"><ruby>動画<rt>どうが</rt></ruby>を<ruby>撮<rt>と</rt></ruby>ってもいいですか。</span><br><span class="kr">동영상을 찍어도 됩니까?</span></li>
+    <li class="pair"><span class="jp"><ruby>中<rt>なか</rt></ruby>に<ruby>入<rt>はい</rt></ruby>ってもいいですか。</span><br><span class="kr">안에 들어가도 됩니까?</span></li>
+    <li class="pair"><span class="jp">これに<ruby>触<rt>さわ</rt></ruby>ってもいいですか。</span><br><span class="kr">이것을 만져도 됩니까?</span></li>
+  </ul>
+  <div class="scene">🏨 호텔 <span class="jp">ホテル</span></div>
+  <ul>
+    <li class="pair"><span class="jp">ここに<ruby>荷物<rt>にもつ</rt></ruby>を<ruby>置<rt>お</rt></ruby>いてもいいですか。</span><br><span class="kr">여기에 짐을 놓아도 됩니까?</span></li>
+    <li class="pair"><span class="jp">Wi-Fiを<ruby>使<rt>つか</rt></ruby>ってもいいですか。</span><br><span class="kr">와이파이를 사용해도 됩니까?</span></li>
+    <li class="pair"><span class="jp">ここで<ruby>充電<rt>じゅうでん</rt></ruby>してもいいですか。</span><br><span class="kr">여기에서 충전해도 됩니까?</span></li>
+    <li class="pair"><span class="jp">ロビーで<ruby>待<rt>ま</rt></ruby>ってもいいですか。</span><br><span class="kr">로비에서 기다려도 됩니까?</span></li>
+  </ul>
+  <div class="scene">🍜 레스토랑·카페 <span class="jp">レストラン・カフェ</span></div>
+  <ul>
+    <li class="pair"><span class="jp">ここに<ruby>座<rt>すわ</rt></ruby>ってもいいですか。</span><br><span class="kr">여기에 앉아도 됩니까?</span></li>
+    <li class="pair"><span class="jp">ここで<ruby>食<rt>た</rt></ruby>べてもいいですか。</span><br><span class="kr">여기에서 먹어도 됩니까?</span></li>
+    <li class="pair"><span class="jp">この<ruby>席<rt>せき</rt></ruby>を<ruby>使<rt>つか</rt></ruby>ってもいいですか。</span><br><span class="kr">이 자리를 사용해도 됩니까?</span></li>
+  </ul>
+  <div class="scene">🛍️ 가게·쇼핑 <span class="jp">お店（みせ）・買（か）い物（もの）</span></div>
+  <ul>
+    <li class="pair"><span class="jp">これを<ruby>試着<rt>しちゃく</rt></ruby>してもいいですか。</span><br><span class="kr">이것을 입어 봐도 됩니까?</span></li>
+    <li class="pair"><span class="jp">これを<ruby>見<rt>み</rt></ruby>てもいいですか。</span><br><span class="kr">이것을 봐도 됩니까?</span></li>
+    <li class="pair"><span class="jp">カードを<ruby>使<rt>つか</rt></ruby>ってもいいですか。</span><br><span class="kr">카드를 사용해도 됩니까?</span></li>
+  </ul>
+</section>
+
+<section id="roleplay">
+  <h2>롤플레이 <span class="jp">ロールプレイ — 日本旅行（にほんりょこう）で使（つか）ってみよう！</span></h2>
+  <h3>① 절 <span class="jp">お寺（てら）</span> — 생도: 여행객 / 선생님: 직원</h3>
+  <ul>
+    <li class="pair"><span class="tag">A</span><span class="jp">お<ruby>寺<rt>てら</rt></ruby>の<ruby>中<rt>なか</rt></ruby>で<ruby>写真<rt>しゃしん</rt></ruby>を<ruby>撮<rt>と</rt></ruby>ってもいいですか。</span><br><span class="kr">절 안에서 사진을 찍어도 됩니까?</span></li>
+    <li class="pair"><span class="tag">B</span><span class="jp">はい、どうぞ。</span><br><span class="kr">네, 그러세요.</span></li>
+  </ul>
+  <h3>② 호텔 <span class="jp">ホテル</span> — 생도: 투숙객 / 선생님: 호텔 직원</h3>
+  <ul>
+    <li class="pair"><span class="tag">A</span><span class="jp">チェックインの<ruby>前<rt>まえ</rt></ruby>に<ruby>荷物<rt>にもつ</rt></ruby>を<ruby>置<rt>お</rt></ruby>いてもいいですか。</span><br><span class="kr">체크인 전에 짐을 맡겨도 됩니까?</span></li>
+    <li class="pair"><span class="tag">B</span><span class="jp">はい、いいですよ。</span><br><span class="kr">네, 괜찮습니다.</span></li>
+  </ul>
+  <h3>③ 가게 <span class="jp">お店（みせ）</span> — 생도: 손님 / 선생님: 점원</h3>
+  <ul>
+    <li class="pair"><span class="tag">A</span><span class="jp">この<ruby>服<rt>ふく</rt></ruby>を<ruby>試着<rt>しちゃく</rt></ruby>してもいいですか。</span><br><span class="kr">이 옷을 입어 봐도 됩니까?</span></li>
+    <li class="pair"><span class="tag">B</span><span class="jp">はい、どうぞ。</span><br><span class="kr">네, 그러세요.</span></li>
+  </ul>
+</section>
+
+<section id="speakquiz">
+  <h2>🎤 문장 말하기 퀴즈</h2>
+  <p style="font-size:.88rem;color:var(--sub);">한국어 문장을 보고 일본어로 말해 보세요. 발음을 인식해서 정답을 판정합니다. (크롬 권장)</p>
+  <div style="text-align:center;">
+    <div id="sqPrompt" style="font-size:1.35rem;font-weight:700;color:var(--kr);margin:18px 8px;"></div>
+    <div id="sqHint" style="min-height:30px;color:var(--sub);font-size:1.05rem;"></div>
+    <div>
+      <button id="sqMicBtn" class="sqbtn" style="background:#d64545;font-size:1.02rem;padding:12px 26px;" onclick="sqToggle()">🎤 연습 시작</button>
+      <button class="sqbtn" style="background:#5b6478;" onclick="sqHintShow()">💡 힌트</button>
+      <button class="sqbtn" style="background:#3b6fe0;" onclick="sqModel()">🔊 정답 발음</button>
+      <button class="sqbtn" style="background:#aab2c4;" onclick="sqNext()">건너뛰기 →</button>
+    </div>
+    <div id="sqFb" style="min-height:54px;font-weight:600;margin-top:10px;"></div>
+    <div id="sqProg" style="font-size:.85rem;color:var(--sub);"></div>
+  </div>
+  <p class="hint">연습 시작을 누르면 마이크가 계속 켜진 채 진행되고, 정답이면 자동으로 다음 문장으로 넘어갑니다.</p>
+</section>
+
+<section id="summary">
+  <h2>오늘의 정리 & 숙제 <span class="jp">まとめ・宿題（しゅくだい）</span></h2>
+  <div class="box">
+    ✔️ <b>～てもいいですか</b> = ~해도 됩니까? (て형 + もいいですか)<br>
+    ✔️ OK: <b>はい、いいですよ／どうぞ</b> · NG: <b>すみません、ここではちょっと……</b>
+  </div>
+  <h3>오늘의 중요 표현</h3>
+  <ul>
+    <li class="pair"><span class="jp">ここで<ruby>写真<rt>しゃしん</rt></ruby>を<ruby>撮<rt>と</rt></ruby>ってもいいですか。</span><br><span class="kr">여기에서 사진을 찍어도 됩니까?</span></li>
+    <li class="pair"><span class="jp">ここに<ruby>座<rt>すわ</rt></ruby>ってもいいですか。</span><br><span class="kr">여기에 앉아도 됩니까?</span></li>
+    <li class="pair"><span class="jp">Wi-Fiを<ruby>使<rt>つか</rt></ruby>ってもいいですか。</span><br><span class="kr">와이파이를 사용해도 됩니까?</span></li>
+    <li class="pair"><span class="jp">ここに<ruby>荷物<rt>にもつ</rt></ruby>を<ruby>置<rt>お</rt></ruby>いてもいいですか。</span><br><span class="kr">여기에 짐을 놓아도 됩니까?</span></li>
+    <li class="pair"><span class="jp">これを<ruby>試着<rt>しちゃく</rt></ruby>してもいいですか。</span><br><span class="kr">이것을 입어 봐도 됩니까?</span></li>
+  </ul>
+  <div class="warn">
+    <strong>📝 숙제:</strong> 일본 여행 중 「～てもいいですか」로 묻고 싶은 것 5개 문장 만들기
+    <ul style="margin-top:8px;">
+      <li class="pair"><span class="jp">ホテルで<ruby>写真<rt>しゃしん</rt></ruby>を<ruby>撮<rt>と</rt></ruby>ってもいいですか。</span><br><span class="kr">호텔에서 사진을 찍어도 됩니까? (예시)</span></li>
+    </ul>
+  </div>
+</section>
+
+<footer>Lesson 10 · 旅行先で許可を聞こう！ — 학습용 정리 페이지</footer>
+</div>
+
+<script>
+function toggleMenu(){
+  document.getElementById('menuDrawer').classList.toggle('open');
+  document.getElementById('menuOverlay').classList.toggle('show');
+}
+(function(){
+  let here=decodeURIComponent(location.pathname.split('/').pop());
+  if(!here) here='index.html';
+  document.querySelectorAll('#menuDrawer a').forEach(a=>{
+    if(decodeURIComponent(a.getAttribute('href'))===here) a.classList.add('cur');
+  });
+})();
+function toggle(cls, btn){
+  document.body.classList.toggle(cls);
+  btn.classList.toggle('on');
+}
+const TTS_URLS=[
+  t=>'https://translate.googleapis.com/translate_tts?client=gtx&ie=UTF-8&tl=ja&q='+encodeURIComponent(t),
+  t=>'https://translate.google.com/translate_tts?ie=UTF-8&tl=ja&client=tw-ob&q='+encodeURIComponent(t)
+];
+let _audio=null;
+const _acache={};
+function jaVoice(){
+  if(!('speechSynthesis' in window)) return null;
+  const vs=speechSynthesis.getVoices().filter(v=>v.lang && v.lang.startsWith('ja'));
+  return vs.find(v=>/Google/i.test(v.name))
+      || vs.find(v=>/Kyoko|Nanami|Haruka|Sayaka|Ichiro|O-?ren/i.test(v.name))
+      || vs.find(v=>!/Eddy|Flo|Grandma|Grandpa|Reed|Rocko|Sandy|Shelley|Albert|Bahh|Bells|Boing|Bubbles|Cellos|Jester|Organ|Superstar|Trinoids|Whisper|Wobble|Zarvox/i.test(v.name))
+      || vs[0] || null;
+}
+function speakJa(text){
+  if(!text) return;
+  if(_audio){try{_audio.pause();}catch(e){} _audio=null;}
+  if('speechSynthesis' in window){
+    if(speechSynthesis.speaking||speechSynthesis.pending) speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(text);
+    const v=jaVoice();
+    if(v) u.voice=v;
+    u.lang='ja-JP'; u.rate=0.85;
+    speechSynthesis.speak(u);
+    setTimeout(()=>{ try{speechSynthesis.resume();}catch(e){} },100);
+    return;
+  }
+  const c=_acache[text];
+  if(c){ _audio=c; c.currentTime=0; c.play().catch(()=>{ delete _acache[text]; tryTts(text,0,TTS_URLS.length); }); return; }
+  tryTts(text,0,TTS_URLS.length);
+}
+function tryTts(text,idx,left){
+  if(left<=0) return;
+  idx=idx%TTS_URLS.length;
+  const a=new Audio(TTS_URLS[idx](text));
+  _audio=a;
+  let done=false;
+  const fail=()=>{ if(done||_audio!==a) return; done=true; try{a.pause();}catch(e){} tryTts(text,idx+1,left-1); };
+  const timer=setTimeout(fail,2000);
+  a.onplaying=()=>{ if(_audio===a){ done=true; clearTimeout(timer); _acache[text]=a; } };
+  a.onerror=fail;
+  a.play().catch(fail);
+}
+if('speechSynthesis' in window){speechSynthesis.getVoices();}
+function sfx(ok){
+  try{
+    const ctx = window._actx || (window._actx = new (window.AudioContext||window.webkitAudioContext)());
+    if(ctx.state==='suspended') ctx.resume();
+    const t=ctx.currentTime;
+    const tone=(f,s,d,ty,g)=>{const o=ctx.createOscillator(),gn=ctx.createGain();o.type=ty||'sine';o.frequency.value=f;
+      gn.gain.setValueAtTime(g||0.15,t+s);gn.gain.exponentialRampToValueAtTime(0.001,t+s+d);
+      o.connect(gn);gn.connect(ctx.destination);o.start(t+s);o.stop(t+s+d);};
+    if(ok){tone(880,0,0.15);tone(1319,0.12,0.3);}
+    else{tone(233,0,0.25,'square',0.07);tone(196,0.12,0.35,'square',0.07);}
+  }catch(e){}
+}
+function saveRecord(type,ok){
+  try{
+    const d=new Date();
+    const date=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+    const all=JSON.parse(localStorage.getItem('jpRecords')||'{}');
+    if(!all[date]) all[date]={};
+    if(!all[date][type]) all[date][type]={c:0,t:0};
+    all[date][type].t++; if(ok) all[date][type].c++;
+    localStorage.setItem('jpRecords',JSON.stringify(all));
+  }catch(e){}
+}
+function readingText(el){
+  // 한자를 후리가나(rt) 읽기로 바꿔서 정확한 발음으로 재생
+  const c=el.cloneNode(true);
+  c.querySelectorAll('ruby').forEach(r=>{
+    const rt=r.querySelector('rt');
+    r.replaceWith(document.createTextNode(rt?rt.textContent:r.textContent));
+  });
+  return c.textContent.replace(/（[^）]*）/g,'').replace(/[✅⚠️📝💡→🗣❌⭕⭐①②③④]/g,'').trim();
+}
+document.querySelectorAll('.jp').forEach(el=>{
+  el.style.cursor='pointer';
+  el.title='클릭하면 발음 재생 🔊';
+  el.addEventListener('click',()=>{
+    // 단어 표: 옆 칸의 '읽기'(히라가나)를 읽음
+    if(el.tagName==='TD'){
+      const n=el.nextElementSibling;
+      if(n){
+        const y=n.textContent.trim();
+        if(y && /^[ぁ-ゖァ-ヺー・\s]+$/.test(y)){ speakJa(y); return; }
+      }
+    }
+    speakJa(readingText(el));
+  });
+});
+
+// ---------- 🎯 문장 퀴즈 (14문제) ----------
+const PQ=[
+  {v:"撮る（찍다）",stem:"ここで写真を撮",ans:"って",opts:["って","んで","いて","して"],yomi:"ここでしゃしんをとってもいいですか",kr:"여기에서 사진을 찍어도 됩니까?",full:"ここで写真を撮ってもいいですか"},
+  {v:"使う（사용하다）",stem:"Wi-Fiを使",ans:"って",opts:["って","して","いて","んで"],yomi:"わいふぁいをつかってもいいですか",kr:"와이파이를 사용해도 됩니까?",full:"Wi-Fiを使ってもいいですか"},
+  {v:"座る（앉다）",stem:"ここに座",ans:"って",opts:["って","んで","いで","て"],yomi:"ここにすわってもいいですか",kr:"여기에 앉아도 됩니까?",full:"ここに座ってもいいですか"},
+  {v:"入る（들어가다）",stem:"中に入",ans:"って",opts:["って","いて","んで","て"],yomi:"なかにはいってもいいですか",kr:"안에 들어가도 됩니까?",full:"中に入ってもいいですか"},
+  {v:"待つ（기다리다）",stem:"ロビーで待",ans:"って",opts:["って","んで","いて","して"],yomi:"ろびーでまってもいいですか",kr:"로비에서 기다려도 됩니까?",full:"ロビーで待ってもいいですか"},
+  {v:"置く（놓다）",stem:"荷物を置",ans:"いて",opts:["いて","って","んで","いで"],yomi:"にもつをおいてもいいですか",kr:"짐을 놓아도 됩니까?",full:"荷物を置いてもいいですか"},
+  {v:"触る（만지다）",stem:"これに触",ans:"って",opts:["って","んで","いて","して"],yomi:"これにさわってもいいですか",kr:"이것을 만져도 됩니까?",full:"これに触ってもいいですか"},
+  {v:"食べる（먹다·그룹2）",stem:"ここで食べ",ans:"て",opts:["て","って","んで","いて"],yomi:"ここでたべてもいいですか",kr:"여기에서 먹어도 됩니까?",full:"ここで食べてもいいですか"},
+  {v:"見る（보다·그룹2）",stem:"これを見",ans:"て",opts:["て","って","して","んで"],yomi:"これをみてもいいですか",kr:"이것을 봐도 됩니까?",full:"これを見てもいいですか"},
+  {v:"試着する（입어보다·그룹3）",stem:"これを試着",ans:"して",opts:["して","すって","しんで","いて"],yomi:"これをしちゃくしてもいいですか",kr:"이것을 입어 봐도 됩니까?",full:"これを試着してもいいですか"},
+  {v:"充電する（충전하다·그룹3）",stem:"ここで充電",ans:"して",opts:["して","すって","しんで","いて"],yomi:"ここでじゅうでんしてもいいですか",kr:"여기에서 충전해도 됩니까?",full:"ここで充電してもいいですか"},
+  {v:"払う（지불하다）",stem:"カードで払",ans:"って",opts:["って","んで","いて","して"],yomi:"かーどではらってもいいですか",kr:"카드로 지불해도 됩니까?",full:"カードで払ってもいいですか"},
+  {v:"聞く（묻다）",stem:"ちょっと聞",ans:"いて",opts:["いて","って","んで","いで"],yomi:"ちょっときいてもいいですか",kr:"잠깐 물어봐도 됩니까?",full:"ちょっと聞いてもいいですか"},
+  {v:"休む（쉬다）",stem:"ここで休",ans:"んで",opts:["んで","って","いて","して"],yomi:"ここでやすんでもいいですか",kr:"여기에서 쉬어도 됩니까?",full:"ここで休んでもいいですか"}
+];
+let pqCur=null, pqAnswered=false, pqTries=0, pqCorrect=0;
+function pqStats(){try{return JSON.parse(localStorage.getItem('pqStats10')||'{}');}catch(e){return {};}}
+function pqStatSave(key,ok){
+  try{
+    const s=pqStats();
+    if(!s[key]) s[key]={c:0,t:0};
+    s[key].t++; if(ok) s[key].c++;
+    localStorage.setItem('pqStats10',JSON.stringify(s));
+  }catch(e){}
+}
+function pqWeight(item,stats){
+  const s=stats[item.v];
+  if(!s) return 3;
+  return 1+Math.min(s.t-s.c,6)*2;
+}
+function pqPick(){
+  const stats=pqStats();
+  const ws=PQ.map(it=>pqWeight(it,stats));
+  let total=ws.reduce((a,b)=>a+b,0), r=Math.random()*total;
+  for(let i=0;i<PQ.length;i++){ r-=ws[i]; if(r<=0) return PQ[i]; }
+  return PQ[PQ.length-1];
+}
+function pqNext(){
+  pqAnswered=false;
+  let item=pqPick();
+  if(pqCur&&PQ.length>1){let g=0;while(item===pqCur&&g++<10){item=pqPick();}}
+  pqCur=item;
+  document.getElementById('pqSent').innerHTML=item.v+'<br>'+item.stem+'<span style="color:#e0763b;">（　？　）</span>もいいですか。';
+  document.getElementById('pqYomi').textContent='';
+  document.getElementById('pqKr').textContent=item.kr;
+  const box=document.getElementById('pqBtns');
+  box.innerHTML='';
+  item.opts.forEach(p=>{
+    const b=document.createElement('button');
+    b.textContent=p;
+    b.dataset.correct=(p===item.ans)?'1':'0';
+    b.onclick=()=>pqAnswer(b,p===item.ans,item);
+    box.appendChild(b);
+  });
+  document.getElementById('pqFb').textContent=''; document.getElementById('pqFb').className='pq-fb';
+}
+function pqAnswer(btn,ok,item){
+  if(pqAnswered) return;
+  pqAnswered=true; pqTries++;
+  sfx(ok); saveRecord('quiz',ok); pqStatSave(item.v,ok);
+  [...document.getElementById('pqBtns').children].forEach(b=>{
+    b.disabled=true;
+    if(b.dataset.correct==='1') b.classList.add('correct');
+  });
+  const fb=document.getElementById('pqFb');
+  document.getElementById('pqYomi').textContent=item.full+' ('+item.yomi+')';
+  if(ok){ pqCorrect++; fb.textContent='⭕ 정답!'; fb.className='pq-fb ok'; }
+  else{ btn.classList.add('wrong'); fb.textContent='❌ 정답: 「'+item.ans+'」 → '+item.full; fb.className='pq-fb no'; }
+  speakJa(item.yomi);
+  document.getElementById('pqScore').textContent=`정답 ${pqCorrect} / 시도 ${pqTries}`;
+  setTimeout(pqNext, ok?1300:2600);
+}
+pqNext();
+
+// ---------- 🎤 문장 말하기 퀴즈 (Lesson 10) ----------
+const SQ_SENTENCES=[
+  {jp:"ここで写真を撮ってもいいですか", yomi:"ここでしゃしんをとってもいいですか", kr:"여기에서 사진을 찍어도 됩니까?"},
+  {jp:"ここに座ってもいいですか", yomi:"ここにすわってもいいですか", kr:"여기에 앉아도 됩니까?"},
+  {jp:"Wi-Fiを使ってもいいですか", yomi:"わいふぁいをつかってもいいですか", kr:"와이파이를 사용해도 됩니까?"},
+  {jp:"中に入ってもいいですか", yomi:"なかにはいってもいいですか", kr:"안에 들어가도 됩니까?"},
+  {jp:"ここに荷物を置いてもいいですか", yomi:"ここににもつをおいてもいいですか", kr:"여기에 짐을 놓아도 됩니까?"},
+  {jp:"これを試着してもいいですか", yomi:"これをしちゃくしてもいいですか", kr:"이것을 입어 봐도 됩니까?"},
+  {jp:"ここで充電してもいいですか", yomi:"ここでじゅうでんしてもいいですか", kr:"여기에서 충전해도 됩니까?"},
+  {jp:"これに触ってもいいですか", yomi:"これにさわってもいいですか", kr:"이것을 만져도 됩니까?"},
+  {jp:"はい、いいですよ", yomi:"はい、いいですよ", kr:"네, 괜찮습니다"},
+  {jp:"すみません、ここではちょっと", yomi:"すみません、ここではちょっと", kr:"죄송하지만 여기에서는 조금……"},
+  {jp:"カードを使ってもいいですか", yomi:"かーどをつかってもいいですか", kr:"카드를 사용해도 됩니까?"},
+  {jp:"ロビーで待ってもいいですか", yomi:"ろびーでまってもいいですか", kr:"로비에서 기다려도 됩니까?"}
+];
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+let sqDeck=[], sqIdx=0, sqCorrect=0, sqSession=false, sqRec=null, _micStream=null;
+function kata2hira(s){return s.replace(/[ァ-ヶ]/g,c=>String.fromCharCode(c.charCodeAt(0)-0x60));}
+function sqNorm(s){return kata2hira((s||'')).replace(/[\s。、．，,.!?！？・〜~ー－「」]/g,'');}
+function lev(a,b){
+  const m=a.length,n=b.length;
+  if(!m)return n; if(!n)return m;
+  let prev=Array.from({length:n+1},(_,i)=>i);
+  for(let i=1;i<=m;i++){
+    const cur=[i];
+    for(let j=1;j<=n;j++){
+      cur[j]=Math.min(prev[j]+1,cur[j-1]+1,prev[j-1]+(a[i-1]===b[j-1]?0:1));
+    }
+    prev=cur;
+  }
+  return prev[n];
+}
+function sqMatch(heard,s){
+  const h=sqNorm(heard);
+  if(!h) return false;
+  const t1=sqNorm(s.jp), t2=sqNorm(s.yomi);
+  if(h.includes(t1)||h.includes(t2)) return true;
+  const sim=(a,b)=>1-lev(a,b)/Math.max(a.length,b.length);
+  return sim(h,t1)>=0.75 || sim(h,t2)>=0.75;
+}
+function sqShuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function sqStart(){ sqDeck=sqShuffle(SQ_SENTENCES.slice()); sqIdx=0; sqCorrect=0; sqShow(); }
+function sqShow(){
+  document.getElementById('sqHint').textContent='';
+  const fb=document.getElementById('sqFb'); fb.textContent=''; fb.className='';
+  if(sqIdx>=sqDeck.length){
+    document.getElementById('sqPrompt').textContent='🎉 완료!';
+    document.getElementById('sqProg').textContent=`${sqDeck.length}문장 중 ${sqCorrect}개 성공`;
+    return;
+  }
+  document.getElementById('sqPrompt').textContent=sqDeck[sqIdx].kr;
+  document.getElementById('sqProg').textContent=`${sqIdx+1} / ${sqDeck.length} · 성공 ${sqCorrect}`;
+}
+function sqHintShow(){ if(sqIdx<sqDeck.length){ const s=sqDeck[sqIdx]; document.getElementById('sqHint').textContent=s.jp+' ('+s.yomi+')'; } }
+function sqModel(){ if(sqIdx<sqDeck.length) speakJa(sqDeck[sqIdx].yomi); }
+function sqNext(){ if(sqIdx<sqDeck.length) sqIdx++; sqShow(); }
+function sqSetBtn(on){
+  const b=document.getElementById('sqMicBtn');
+  b.textContent=on?'⏹ 연습 중지 (👂 듣는 중…)':'🎤 연습 시작';
+  b.style.background=on?'#1f9d55':'#d64545';
+}
+async function ensureMic(){
+  if(_micStream && _micStream.active) return true;
+  try{ _micStream=await navigator.mediaDevices.getUserMedia({audio:true}); return true; }
+  catch(e){
+    const fb=document.getElementById('sqFb'); fb.className='no';
+    fb.textContent='마이크 권한이 필요해요. 주소창 옆 🔒에서 허용해 주세요.';
+    return false;
+  }
+}
+async function sqToggle(){
+  const fb=document.getElementById('sqFb');
+  if(sqSession){ sqSession=false; if(sqRec){try{sqRec.stop();}catch(e){}} sqSetBtn(false); return; }
+  if(!SR){ fb.textContent='이 브라우저는 음성 인식을 지원하지 않아요. 크롬(Chrome)에서 열어 주세요.'; fb.className='no'; return; }
+  if(sqIdx>=sqDeck.length) sqStart();
+  if(!(await ensureMic())) return;
+  sqSession=true; sqSetBtn(true);
+  fb.textContent='일본어로 말해 보세요!'; fb.className='';
+  sqStartRec();
+}
+function sqStartRec(){
+  sqRec=new SR();
+  sqRec.lang='ja-JP'; sqRec.continuous=true; sqRec.interimResults=false; sqRec.maxAlternatives=3;
+  sqRec.onresult=(e)=>{
+    const res=e.results[e.results.length-1];
+    sqHandle([...res].map(r=>r.transcript));
+  };
+  sqRec.onerror=(e)=>{
+    if(e.error==='not-allowed'){
+      sqSession=false; sqSetBtn(false);
+      const fb=document.getElementById('sqFb'); fb.className='no';
+      fb.textContent='마이크 권한이 필요해요. 주소창 옆 🔒에서 "허용"으로 바꿔 주세요.';
+    }
+  };
+  sqRec.onend=()=>{
+    if(sqSession){ try{sqRec.start();}catch(e){ setTimeout(()=>{if(sqSession)sqStartRec();},300); } }
+    else sqSetBtn(false);
+  };
+  sqRec.start();
+}
+function sqHandle(alts){
+  if(!sqSession || sqIdx>=sqDeck.length) return;
+  const fb=document.getElementById('sqFb');
+  const s=sqDeck[sqIdx];
+  const hit=alts.some(a=>sqMatch(a,s));
+  sfx(hit); saveRecord('sentence',hit);
+  if(hit){
+    sqCorrect++;
+    fb.innerHTML=`⭕ 정답! 「${alts[0]}」<br><span style="font-weight:400;">${s.jp} = ${s.kr}</span>`;
+    fb.className='ok';
+    sqIdx++;
+    setTimeout(()=>{
+      sqShow();
+      if(sqIdx>=sqDeck.length){ sqSession=false; if(sqRec){try{sqRec.stop();}catch(e){}} sqSetBtn(false); }
+      else if(sqSession){ document.getElementById('sqFb').textContent='일본어로 말해 보세요!'; }
+    },1600);
+  }else{
+    fb.innerHTML=`❌ 들린 말: 「${alts[0]||'(인식 실패)'}」<br><span style="font-weight:400;">다시 말하거나 💡 힌트 / 🔊 정답 발음을 들어 보세요</span>`;
+    fb.className='no';
+  }
+  document.getElementById('sqProg').textContent=`${Math.min(sqIdx+1,sqDeck.length)} / ${sqDeck.length} · 성공 ${sqCorrect}`;
+}
+sqStart();
+</script>
+</body>
+</html>
